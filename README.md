@@ -24,16 +24,22 @@ You need singularity container >=2.3. On ubuntu:
    ```
    $ ssh zoef@192.168.42.1
    ```
+5. The first time you login you will be asked to change your password (and need to login againg with the new password)
 
 ## Install zoef software on the image
 
 This step should be included in the previous step. But since we currently use a private repository. So for now we need to do this manually:
 
-1. After loggin in install all the needed software:
+1. After loggin in plug in your network cable (or on the OrangePi Lite, connect the wifi to internet (TODO))
+2. Check that you have access to the internet:
+   ```
+   $ ping google.com 
+   ```
+3. Install all the needed software:
    ```
    $ ./install_zoef.sh 
    ```
 
 ## Control the robot on the dashboard
 
-After you have installed teh zoef software you can open a browser and go to http://192.168.42.1:8080
+After you have installed the zoef software you can open a browser and go to http://192.168.42.1 and program the robot. This should also work after a reboot.
