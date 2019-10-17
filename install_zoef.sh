@@ -11,8 +11,7 @@ source /opt/ros/melodic/setup.bash
 
 # Install pymata and allow usage of usb device
 sudo apt install git python-pip -y
-python -m pip install pymata
-sudo chmod 777 /dev/ttyUSB0
+sudo -H python -m pip install --yes pymata
 
 # Install Zoef ROS package (TODO: create rosinstall/rosdep)
 sudo apt install -y ros-melodic-controller-manager ros-melodic-rosbridge-server ros-melodic-diff-drive-controller
