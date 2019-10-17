@@ -9,6 +9,11 @@ sudo apt install -y ros-melodic-ros-base python-rosinstall python-rosinstall-gen
 grep -qxF "source /opt/ros/melodic/setup.bash" ~/.bashrc || echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source /opt/ros/melodic/setup.bash
 
+# Install pymata and allow usage of usb device
+sudo apt install git python-pip -y
+python -m pip install pymata
+sudo chmod 777 /dev/ttyUSB0
+
 # Install Zoef ROS package (TODO: create rosinstall/rosdep)
 sudo apt install -y ros-melodic-controller-manager ros-melodic-rosbridge-server ros-melodic-diff-drive-controller
 mkdir -p ~/zoef_ws/src
