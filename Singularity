@@ -28,7 +28,6 @@ From: ubuntu:bionic
     mount --bind /dev/pts /mnt/armbian/dev/pts
 
     # Install wifi_ap
-    chmod +x /wifi_ap_setup.sh
     mv /wifi_ap_setup.sh /mnt/armbian
     chroot /mnt/armbian ./wifi_ap_setup.sh
 
