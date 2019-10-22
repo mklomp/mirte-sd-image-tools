@@ -66,7 +66,7 @@ sudo bash -c "echo 'After=ssh.service' >> /lib/systemd/system/zoef_web_interface
 sudo bash -c "echo 'After=network-online.target' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo '' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo '[Service]' >> /lib/systemd/system/zoef_web_interface.service"
-sudo bash -c "echo 'ExecStart=/bin/bash -c \"cd /home/zoef/web_interface/ && singularity run zoef_web_interface 2>&1 | tee\"' >> /lib/systemd/system/zoef_web_interface.service"
+sudo bash -c "echo 'ExecStart=/bin/bash -c \"cd /home/zoef/web_interface/ && singularity run -B app:/app/my_app zoef_web_interface 2>&1 | tee\"' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo '' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo '[Install]' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo 'WantedBy=multi-user.target' >> /lib/systemd/system/zoef_web_interface.service"
