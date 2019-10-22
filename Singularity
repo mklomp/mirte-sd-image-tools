@@ -11,7 +11,6 @@ From: ubuntu:bionic
     apt upgrade -y
 
     # Install prerequisites
-    echo "Install basics for building singularity image"
     apt install -y qemu qemu-user-static binfmt-support p7zip-full wget
 
     # Download and mount image
@@ -31,13 +30,14 @@ From: ubuntu:bionic
     mv /wifi_ap_setup.sh /mnt/armbian
     chroot /mnt/armbian ./wifi_ap_setup.sh
 
-    # Install Zoef related stuff (for now only putting the file there until repos are public)
-    chmod +x /install_zoef.sh
-    mv /install_zoef.sh /mnt/armbian/home/zoef
+    # Install zoef
+    mv /install_zoef.sh /mnt/armbian
+    chroot /mtn/armbian ./install_zoef.sh
 
     # Cleanup
     rm /mnt/armbian/usr/bin/qemu-arm-static
     rm /mnt/armbian/wifi_ap_setup.sh
+    rm /mnt/armbian/install_zoef.sh
 
     # Unmount
     umount /mnt/armbian/dev/pts
