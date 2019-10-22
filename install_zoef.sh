@@ -29,6 +29,7 @@ grep -qxF "source /home/zoef/zoef_ws/devel/setup.bash" ~/.bashrc || echo "source
 source /home/zoef/zoef_ws/devel/setup.bash
 
 # Add systemd service to start ROS nodes
+sudo rm /lib/systemd/system/zoef_ros.service
 sudo bash -c "echo '[Unit]' > /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo 'Description=Zoef ROS' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo 'After=network.target' >> /lib/systemd/system/zoef_ros.service"
@@ -41,10 +42,6 @@ sudo bash -c "echo '' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo '[Install]' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo 'WantedBy=multi-user.target' >> /lib/systemd/system/zoef_ros.service"
 
-#sudo bash -c "echo '#!/usr/bin/env bash' > /root/zoef_ros.sh"
-#sudo bash -c "echo 'bash -c \"source /home/zoef/zoef_ws/devel/setup.bash && roslaunch zoef_ros_package hw_control.launch\"' >> /root/zoef_ros.sh"
-#sudo chmod +x /root/zoef_ros.sh
-
 sudo systemctl daemon-reload
 sudo systemctl stop zoef_ros || /bin/true
 sudo systemctl start zoef_ros
@@ -56,10 +53,12 @@ cd ~
 git clone https://gitlab.tudelft.nl/rcj_zoef/web_interface.git
 cd web_interface
 sed -i 's/From: ubuntu:bionic/From: arm32v7\/ubuntu:bionic/g' Singularity
+sudo rm -rf zoef_web_interface
 ./run_singularity.sh build_dev
 
 # Add systemd service to start ROS nodes
 # NOTE: starting singularity image form ssystemd has some issues (https://github.com/sylabs/singularity/issues/1600)
+sudo rm /lib/systemd/system/zoef_web_interface.service
 sudo bash -c "echo '[Unit]' > /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo 'Description=Zoef Web Interface' >> /lib/systemd/system/zoef_web_interface.service"
 sudo bash -c "echo 'After=network.target' >> /lib/systemd/system/zoef_web_interface.service"
@@ -76,4 +75,3 @@ sudo systemctl daemon-reload
 sudo systemctl stop zoef_web_interface || /bin/true
 sudo systemctl start zoef_web_interface
 sudo systemctl enable zoef_web_interface
-
