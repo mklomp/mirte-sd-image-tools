@@ -57,16 +57,12 @@ From: ubuntu:bionic
 
     # Unmount
     umount /mnt/armbian/dev/pts
-    umount /mnt/armbian/dev/
-    umount /mnt/armbian/sys/
-    umount /mnt/armbian/proc/
+    umount /mnt/armbian/dev
+    umount /mnt/armbian/sys
+    umount /mnt/armbian/proc
     umount /mnt/armbian/
 
     #TODO: shrink fs, partition and image
 
     # Copy to tmp directory
-    cp Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img /tmp
-  
-    
-
-
+    cp Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img /tmp/zoef.img

@@ -51,18 +51,3 @@ After you have installed the zoef software you can open a browser and go to http
    $ ssh zoef@192.168.42.1
    ```
 5. The first time you login you will be asked to change your password (and need to login againg with the new password)
-
-## Enable NAT
-
-At the moment there is a problem with including iptables into the SD card image. To get NAT enabled you need to run a script:
-
-1. Ssh into the OrangePi 
-2. Check that you have access to the internet:
-   ```
-   $ ping google.com 
-   ```
-3. Run teh script:
-   ```
-   $ cd zoef_sd_card_image 
-   $ ./enable_NAT.sh
-   ```
