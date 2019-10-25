@@ -6,6 +6,7 @@
 
 
 # Install prerequisites
+sudo apt update
 sudo apt install -y hostapd isc-dhcp-server
 
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections

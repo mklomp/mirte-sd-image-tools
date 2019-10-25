@@ -1,15 +1,25 @@
 #!/bin/bash
 
+# Update
+sudo apt update
+
 # Install Zoef SD card scripts
 sudo apt install -y git
 cd ~
 git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_sd_card_image.git
 
+## TODO: currently not working, arduino-cli and qemu give issues
+# Install arduino firmata upload script
+sudo apt install -y singularity-container
+cd ~
+git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_arduino.git
+#cd zoef_arduino
+#sudo singularity build --sandbox arduino_dev Singularity
+
 # Install ROS Melodic
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt update
-sudo apt upgrade -y
 sudo apt install -y ros-melodic-ros-base python-rosinstall python-rosinstall-generator python-wstool build-essential python-catkin-tools
 grep -qxF "source /opt/ros/melodic/setup.bash" ~/.bashrc || echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source /opt/ros/melodic/setup.bash
@@ -53,6 +63,7 @@ cd ~
 git clone https://gitlab.tudelft.nl/rcj_zoef/web_interface.git
 cd web_interface
 sed -i 's/From: ubuntu:bionic/From: arm32v7\/ubuntu:bionic/g' Singularity
+sed -i 's/%files/%files\n    \/usr\/bin\/qemu-arm-static \/usr\/bin\//g' Singularity
 sudo rm -rf zoef_web_interface
 ./run_singularity.sh build_dev
 
