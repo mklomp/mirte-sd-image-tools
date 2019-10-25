@@ -39,7 +39,7 @@ Or, you could flash it from teh OrangePi
 
 ## Control the robot on the dashboard
 
-After you have installed the zoef software you can open a browser and go to http://192.168.42.1 and program the robot. This should also work after a reboot.
+After you have installed the zoef software you can open a browser and go to http://192.168.42.1 (or http://zoef.local) and program the robot. This should also work after a reboot.
 
 ## Login with ssh
 

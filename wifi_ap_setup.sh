@@ -103,4 +103,6 @@ passwd --expire zoef
 # Disable ssh root login
 sed -i 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 
-
+# Add avahi daemon to enable http://zoef.local
+sudo apt-get install -y avahi-daemon
+echo "zoef" > /etc/hostname
