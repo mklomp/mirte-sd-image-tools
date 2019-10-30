@@ -26,6 +26,7 @@ git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_ros_package.git
 cd ..
 catkin build
 grep -qxF "source /home/zoef/zoef_ws/devel/setup.bash" ~/.bashrc || echo "source /home/zoef/zoef_ws/devel/setup.bash" >> ~/.bashrc
+grep -qxF "export ROS_IP=127.0.0.1" ~/.bashrc || echo "export ROS_IP=127.0.0.1" >> ~/.bashrc
 source /home/zoef/zoef_ws/devel/setup.bash
 
 # Add systemd service to start ROS nodes
@@ -37,6 +38,7 @@ sudo bash -c "echo 'After=ssh.service' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo 'After=network-online.target' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo '' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo '[Service]' >> /lib/systemd/system/zoef_ros.service"
+sudo bash -c "echo 'Environment=ROS_IP=127.0.0.1' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo 'ExecStart=/bin/bash -c \"source /home/zoef/zoef_ws/devel/setup.bash && roslaunch zoef_ros_package hw_control.launch\"' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo '' >> /lib/systemd/system/zoef_ros.service"
 sudo bash -c "echo '[Install]' >> /lib/systemd/system/zoef_ros.service"
