@@ -36,7 +36,7 @@ sudo apt install -y ros-melodic-controller-manager ros-melodic-rosbridge-server 
 mkdir -p ~/zoef_ws/src
 cd ~/zoef_ws/src
 git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_ros_package.git
-git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_types.git
+git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_msgs.git
 cd ..
 catkin build
 grep -qxF "source /home/zoef/zoef_ws/devel/setup.bash" ~/.bashrc || echo "source /home/zoef/zoef_ws/devel/setup.bash" >> ~/.bashrc
