@@ -1,7 +1,9 @@
 #bin/bash
 
 if [ ! -f /etc/ssid ]; then
-    sudo bash -c "sudo echo Zoef_`cat /dev/urandom | tr -dc \'a-zA-Z0-9\' | fold -w 6 | head -n 1` > /etc/ssid"
+    UNIQUE_ID=$(openssl rand -hex 3)
+    ZOEF_SSID=Zoef_$(echo ${UNIQUE_ID^^})
+    sudo bash -c 'echo '$ZOEF_SSID' > /etc/ssid'
 fi
 
 sudo service dnsmasq stop
