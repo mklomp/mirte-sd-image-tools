@@ -2,7 +2,7 @@ Bootstrap: docker
 From: ubuntu:bionic
 
 %files
-    wifi_ap_setup.sh
+    network_install.sh
     install_zoef.sh
 
 %post
@@ -39,9 +39,9 @@ From: ubuntu:bionic
     mount --bind /proc /mnt/armbian/proc/
     mount --bind /dev/pts /mnt/armbian/dev/pts
  
-    # Install wifi_ap
-    mv /wifi_ap_setup.sh /mnt/armbian
-    chroot /mnt/armbian ./wifi_ap_setup.sh
+    # Install network
+    mv /network_install.sh /mnt/armbian
+    chroot /mnt/armbian ./network_install.sh
 
     # Install zoef
     sed -i 's/~/\/home\/zoef/g' /install_zoef.sh
@@ -51,7 +51,7 @@ From: ubuntu:bionic
 
     # Cleanup
     rm /mnt/armbian/usr/bin/qemu-arm-static
-    rm /mnt/armbian/wifi_ap_setup.sh
+    rm /mnt/armbian/network_install.sh
     rm /mnt/armbian/install_zoef.sh
     losetup -d $loopvar
 
