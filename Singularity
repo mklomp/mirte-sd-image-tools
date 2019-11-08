@@ -1,16 +1,12 @@
 Bootstrap: docker
 From: ubuntu:bionic
 
-%files
-    network_install.sh
-    install_zoef.sh
-
 %post
     # Update system
     apt update
 
     # Install prerequisites
-    apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted
+    apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
 
     # Download image
     cd /
@@ -38,14 +34,17 @@ From: ubuntu:bionic
     mount --bind /sys /mnt/armbian/sys/
     mount --bind /proc /mnt/armbian/proc/
     mount --bind /dev/pts /mnt/armbian/dev/pts
+
+    # Get install scripts
+    git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_install_scripts
  
     # Install network
-    mv /network_install.sh /mnt/armbian
+    mv zoef_install_scripts/network_install.sh /mnt/armbian
     chroot /mnt/armbian ./network_install.sh
 
     # Install zoef
-    sed -i 's/~/\/home\/zoef/g' /install_zoef.sh
-    mv /install_zoef.sh /mnt/armbian
+    sed -i 's/~/\/home\/zoef/g' zoef_install_scripts/install_zoef.sh
+    mv zoef_install_scripts/install_zoef.sh /mnt/armbian
     chroot /mnt/armbian ./install_zoef.sh
     chroot /mnt/armbian /bin/bash -c "/bin/chown -R zoef:zoef /home/zoef"
 
