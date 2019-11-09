@@ -1,23 +1,29 @@
 ## Prerequisites
 
-You need singularity container >=2.3. On ubuntu:
+You need singularity container >=2.3. On ubuntu (16.10+):
    ```
-   $ sudo apt install singularuty-container
+   $ sudo apt install singularity-container
    ```
+   
+For other versions of Ubuntu you can follow the installation guide on the [Singularity website](https://sylabs.io/guides/3.0/user-guide/installation.html#install-the-debian-ubuntu-package-using-apt).
 
 ## Generating the image
 
 1. git clone this repository
+   ```
+   $ sudo apt install git
+   $ git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_sd_card_image
+   ```
 2. create the image with singularity (this may take some time ~20 mins)
    ```
-   $ sudo singularity build --sandbox zoef_dev Singularity 
+   $ sudo ./build_image.sh
    ```
-3. You will now have an image file Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img in your /tmp folder
+3. You will now have an image file zoef.img in your /tmp folder
 4. Use an image burning tool (e.g. dd or etcher ([link](https://www.balena.io/etcher/)) to burn it to an SD card
 
 ## Install Firmata on the Arduino
 
-At the moment there is still an issue with enabeling the arduino-cli in the installer. You could do two things to get FirmataPlus installed on your arduino:
+At the moment there is still an issue with enabeling the arduino-cli in the installer. You could do two things to get FirmataPlus installed. Curretnly the preferred way is using the arduino IDE:
 
 1. Flash the FirmataPlus software on your arduino on you host ([link](https://github.com/MrYsLab/pymata-aio/wiki/Uploading-FirmataPlus-to-Arduino))
 
@@ -36,6 +42,11 @@ Or, you could flash it from the OrangePi
    ```
    $ sudo singularity run zoef_dev
    ```
+
+## Connecting to zoef
+
+After you have created the sd-card, you have to put the SD card in the Orange Pi and boot up the Orange Pi by plugging in the usb power cable. After some time a wireless network with ssid 'Zoef_<uiniqueID>' should be visible. You can connect your pc to this network (password: zoef_zoef). 
+
 
 ## Control the robot on the dashboard
 
