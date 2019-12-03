@@ -15,16 +15,16 @@ From: ubuntu:bionic
     7z e Ubuntu_bionic_next.7z
 
     # Resize image and partition (add 3Gb)
-    dd if=/dev/zero bs=1MiB of=/Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img conv=notrunc oflag=append count=3000
+    dd if=/dev/zero bs=1MiB of=`ls Armbian_*.img` conv=notrunc oflag=append count=3000
     loopvar=`losetup -f`
-    losetup $loopvar /Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img
+    losetup $loopvar `ls Armbian_*.img`
     parted $loopvar resizepart 1 100%
     losetup -d $loopvar
     loopvar=`losetup -f`
 
     # Mount image and resize filesystem
     mkdir -p /mnt/armbian
-    mount -o loop=$loopvar,offset=4194304 /Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img /mnt/armbian
+    mount -o loop=$loopvar,offset=4194304 `ls Armbian_*.img` /mnt/armbian
     losetup -c $loopvar
     resize2fs -f $loopvar
 
@@ -64,4 +64,4 @@ From: ubuntu:bionic
     #TODO: shrink fs, partition and image
 
     # Copy to tmp directory
-    cp Armbian_5.90_Orangepizero_Ubuntu_bionic_next_4.19.57.img /tmp/zoef.img
+    cp `ls Armbian_*.img` /tmp/zoef.img
