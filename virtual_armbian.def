@@ -1,0 +1,47 @@
+Bootstrap: docker
+From: ubuntu:bionic
+
+%files
+    scripts/mount_image.sh /
+    scripts/umount_image.sh /
+    scripts/install_zoef.sh /
+
+%post
+    # Update system
+    apt update
+
+    # Install prerequisites
+    apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
+
+    # Download latest armbian image
+    wget https://dl.armbian.com/orangepizero/Ubuntu_bionic_next.7z -P /
+    7z e Ubuntu_bionic_next.7z
+    mv Armbian*.img zoef_sd.img
+    rm Armbian* Ubuntu_bionic_next.7z
+
+    # Resize image and partition (add 3Gb)
+    dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=3000
+    loopvar=`losetup -f`
+    losetup $loopvar zoef_sd.img
+    parted $loopvar resizepart 1 100%
+    losetup -d $loopvar
+    loopvar=`losetup -f`
+
+    # Mount image and resize filesystem
+    mkdir -p /mnt/armbian
+    mount -o loop=$loopvar,offset=4194304 /zoef_sd.img /mnt/armbian
+    losetup -c $loopvar
+    resize2fs -f $loopvar
+
+    # Unmount
+    losetup -d $loopvar
+    umount /mnt/armbian/
+
+    # Setting permissions on scripts
+    chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh
+
+%runscript
+    /mount_image.sh && cp -R /working_dir /mnt/armbian 2> /dev/null || /bin/true
+
+%apprun shell
+    /mount_image.sh && cp -R /working_dir /mnt/armbian 2> /dev/null || /bin/true && chroot /mnt/armbian
