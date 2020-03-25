@@ -7,13 +7,18 @@ cd /
 git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_install_scripts
 
 # Install network
-mv zoef_install_scripts/network_install.sh /mnt/armbian
-chroot /mnt/armbian ./network_install.sh
+mv zoef_install_scripts /mnt/armbian
+chroot /mnt/armbian ./zoef_install_scripts/network_install.sh
+
+# Merge repos.yaml. With this you ar able to override the install repos
+apt install -y make build-essential 
+cpan -fi YAML Hash::Merge::Simple    #TODO: this instales it in /root of the host
+perl -MYAML=LoadFile,Dump -MHash::Merge::Simple=merge -E 'say Dump(merge(map{LoadFile($_)}@ARGV))' /mnt/armbian/zoef_install_scripts/repos.yaml /working_dir/repos.yaml > /mnt/armbian/zoef_install_scripts/merged_repos.yaml
+mv /mnt/armbian/zoef_install_scripts/repos.yaml /mnt/armbian/zoef_install_scripts/repos_orig.yaml
+mv /mnt/armbian/zoef_install_scripts/merged_repos.yaml /mnt/armbian/zoef_install_scripts/repos.yaml
 
 # Install zoef
-sed -i 's/~/\/home\/zoef/g' zoef_install_scripts/install_zoef.sh
-mv zoef_install_scripts/install_zoef.sh /mnt/armbian
-chroot /mnt/armbian ./install_zoef.sh
+chroot /mnt/armbian /bin/bash -c "cd /zoef_install_scripts/ && ./install_zoef.sh"
 chroot /mnt/armbian /bin/bash -c "/bin/chown -R zoef:zoef /home/zoef"
 
 # Move image

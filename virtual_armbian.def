@@ -19,8 +19,8 @@ From: ubuntu:bionic
     mv Armbian*.img zoef_sd.img
     rm Armbian* Ubuntu_bionic_next.7z
 
-    # Resize image and partition (add 3Gb)
-    dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=3000
+    # Resize image and partition (add 5Gb)
+    dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=5000
     loopvar=`losetup -f`
     losetup $loopvar zoef_sd.img
     parted $loopvar resizepart 1 100%
