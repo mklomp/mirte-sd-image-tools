@@ -1,9 +1,10 @@
 #!/bin/bash
 
+SD_IMAGE="${SD_IMAGE:-/zoef_sd.img}"
+
 # Mount image and resize filesystem
-loopvar=`losetup -f`
 mkdir -p /mnt/armbian
-mount -o loop=$loopvar,offset=4194304 /zoef_sd.img /mnt/armbian
+mount -o loop,offset=4194304 $SD_IMAGE /mnt/armbian  #TODO: mount without offset
 
 # Mount other folders
 cp /usr/bin/qemu-arm-static /mnt/armbian/usr/bin/

@@ -5,6 +5,7 @@ From: ubuntu:bionic
     scripts/mount_image.sh /
     scripts/umount_image.sh /
     scripts/install_zoef.sh /
+    scripts/resize_image.sh /
 
 %post
     # Update system
@@ -14,26 +15,26 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
 
     # Download latest armbian image
-    wget https://dl.armbian.com/orangepizero/Ubuntu_bionic_next.7z -P /
-    7z e Ubuntu_bionic_next.7z
+    wget https://dl.armbian.com/orangepizero/archive/Armbian_19.11.6_Orangepizero_bionic_current_5.4.8.7z -P /
+    7z e *.7z
     mv Armbian*.img zoef_sd.img
-    rm Armbian* Ubuntu_bionic_next.7z
+    #rm Armbian* *.7z
 
-    # Resize image and partition (add 5Gb)
+    # Resize image and partition (add 5Gb) TODO: or can I mount the image and then grow it
     dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=5000
+
+    # Resize partition
     loopvar=`losetup -f`
     losetup $loopvar zoef_sd.img
     parted $loopvar resizepart 1 100%
     losetup -d $loopvar
-    loopvar=`losetup -f`
 
-    # Mount image and resize filesystem
+    # Resize filesystem (TODO: call mount and umount scripts?)
+    loopvar=`losetup -f`
     mkdir -p /mnt/armbian
-    mount -o loop=$loopvar,offset=4194304 /zoef_sd.img /mnt/armbian
+    mount -o loop=$loopvar,offset=4194304 /zoef_sd.img /mnt/armbian #TODO: check if cnoun be mounted like in resize_image
     losetup -c $loopvar
     resize2fs -f $loopvar
-
-    # Unmount
     losetup -d $loopvar
     umount /mnt/armbian/
 
