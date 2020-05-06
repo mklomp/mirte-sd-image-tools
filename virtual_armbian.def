@@ -40,6 +40,7 @@ From: ubuntu:bionic
 
     # Setting permissions on scripts
     chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh
+    mkdir /working_dir
 
 %runscript
     /mount_image.sh && cp -R /working_dir /mnt/armbian 2> /dev/null || /bin/true
