@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install git
+sudo apt install -y git
 
 # Get install scripts
 cd /
