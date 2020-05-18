@@ -11,6 +11,12 @@ From: ubuntu:bionic
     # Update system
     apt update
 
+    # Install locales
+    apt install -y locales
+    locale-gen "nl_NL.UTF-8"
+    locale-gen "en_US.UTF-8"
+    update-locale LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
+
     # Install prerequisites
     apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
 
@@ -39,7 +45,7 @@ From: ubuntu:bionic
     umount /mnt/armbian/
 
     # Setting permissions on scripts
-    chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh
+    chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh /resize_image.sh
     mkdir /working_dir
 
 %runscript

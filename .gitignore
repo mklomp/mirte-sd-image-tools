@@ -1,2 +1,4 @@
 *.simg
 *.img
+git_local/
+repos.yaml
