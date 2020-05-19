@@ -11,6 +11,8 @@ if grep -q "/working_dir/git_local/zoef_install_scripts" /working_dir/repos.yaml
    echo "Using local repository of zoef_install_scripts"
 else
    echo "Using remote repository of zoef_install_scripts"
+   mkdir git_local
+   cd git_local
    git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_install_scripts
 fi 
 
