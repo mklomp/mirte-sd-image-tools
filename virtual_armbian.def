@@ -21,7 +21,7 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
 
     # Download latest armbian image
-    wget https://dl.armbian.com/orangepizero/archive/Armbian_19.11.6_Orangepizero_bionic_current_5.4.8.7z -P /
+    wget https://dl.armbian.com/orangepizero/archive/Armbian_20.02.1_Orangepizero_bionic_current_5.4.20.7z -P /
     7z e *.7z
     mv Armbian*.img zoef_sd.img
     #rm Armbian* *.7z
@@ -47,6 +47,10 @@ From: ubuntu:bionic
     # Setting permissions on scripts
     chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh /resize_image.sh
     mkdir /working_dir
+
+    # Installing the yaml merge script
+    apt install -y make build-essential 
+    cpan -fi YAML Hash::Merge::Simple 
 
 %runscript
     /mount_image.sh && cp -R /working_dir /mnt/armbian 2> /dev/null || /bin/true

@@ -17,10 +17,7 @@ else
 fi 
 
 # Merge repos.yaml. With this you ar able to override the install repos
-#TODO: can this be done with another program?
 if [ -f /working_dir/repos.yaml ]; then
-  apt install -y make build-essential 
-  cpan -fi YAML Hash::Merge::Simple    #TODO: this installes it in /root of the host (maybe other may to merge them?)
   perl -MYAML=LoadFile,Dump -MHash::Merge::Simple=merge -E 'say Dump(merge(map{LoadFile($_)}@ARGV))' /mnt/armbian/working_dir/git_local/zoef_install_scripts/repos.yaml /working_dir/repos.yaml > /mnt/armbian/working_dir/git_local/zoef_install_scripts/merged2_repos.yaml
   mv /mnt/armbian/working_dir/git_local/zoef_install_scripts/repos.yaml /mnt/armbian/working_dir/git_local/zoef_install_scripts/repos_orig.yaml
   mv /mnt/armbian/working_dir/git_local/zoef_install_scripts/merged2_repos.yaml /mnt/armbian/working_dir/git_local/zoef_install_scripts/repos.yaml
