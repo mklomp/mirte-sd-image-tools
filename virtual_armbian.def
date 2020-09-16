@@ -18,16 +18,16 @@ From: ubuntu:bionic
     update-locale LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
     # Install prerequisites
-    apt install -y qemu qemu-user-static binfmt-support p7zip-full wget parted git
+    apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
 
     # Download latest armbian image
-    wget https://dl.armbian.com/orangepizero/archive/Armbian_20.02.1_Orangepizero_bionic_current_5.4.20.7z -P /
-    7z e *.7z
+    wget https://dl.armbian.com/orangepizero/archive/Armbian_20.08_Orangepizero_bionic_current_5.7.15.img.xz -P /
+    unxz *.xz
     mv Armbian*.img zoef_sd.img
     #rm Armbian* *.7z
 
-    # Resize image and partition (add 5Gb) TODO: or can I mount the image and then grow it
-    dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=5000
+    # Resize image and partition (add 6Gb) TODO: or can I mount the image and then grow it
+    dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=6000
 
     # Resize partition
     loopvar=`losetup -f`
