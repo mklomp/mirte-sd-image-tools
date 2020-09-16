@@ -21,7 +21,7 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
 
     # Download latest armbian image
-    wget https://dl.armbian.com/orangepizero/archive/Armbian_20.08_Orangepizero_bionic_current_5.7.15.img.xz -P /
+    wget https://archive.armbian.com/orangepizero/archive/Armbian_20.08_Orangepizero_bionic_current_5.7.15.img.xz -P /
     unxz *.xz
     mv Armbian*.img zoef_sd.img
     #rm Armbian* *.7z
