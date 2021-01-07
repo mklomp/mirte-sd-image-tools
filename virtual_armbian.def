@@ -21,10 +21,9 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
 
     # Download latest armbian image
-    wget https://archive.armbian.com/orangepizero/archive/Armbian_20.08_Orangepizero_bionic_current_5.7.15.img.xz -P /
+    wget https://cdimage.ubuntu.com/releases/18.04.5/release/ubuntu-18.04.5-preinstalled-server-armhf+raspi3.img.xz -P /
     unxz *.xz
-    mv Armbian*.img zoef_sd.img
-    #rm Armbian* *.7z
+    mv *.img zoef_sd.img
 
     # Resize image and partition (add 6Gb) TODO: or can I mount the image and then grow it
     dd if=/dev/zero bs=1MiB of=zoef_sd.img conv=notrunc oflag=append count=6000
@@ -32,13 +31,13 @@ From: ubuntu:bionic
     # Resize partition
     loopvar=`losetup -f`
     losetup $loopvar zoef_sd.img
-    parted $loopvar resizepart 1 100%
+    parted $loopvar resizepart 2 100%
     losetup -d $loopvar
 
     # Resize filesystem (TODO: call mount and umount scripts?)
     loopvar=`losetup -f`
     mkdir -p /mnt/armbian
-    mount -o loop=$loopvar,offset=4194304 /zoef_sd.img /mnt/armbian #TODO: check if cnoun be mounted like in resize_image
+    mount -o loop=$loopvar,offset=269484032 /zoef_sd.img /mnt/armbian #TODO: check if cnoun be mounted like in resize_image
     losetup -c $loopvar
     resize2fs -f $loopvar
     losetup -d $loopvar
