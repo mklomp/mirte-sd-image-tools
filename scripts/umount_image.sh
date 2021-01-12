@@ -2,11 +2,12 @@
 
 # Cleanup
 rm /mnt/armbian/usr/bin/qemu-arm-static
-rm -/mnt/armbian/working_dir
+rm -rf /mnt/armbian/working_dir
 
 # Unmount
-umount /mnt/armbian/dev/pts
-umount /mnt/armbian/dev
-umount /mnt/armbian/sys
-umount /mnt/armbian/proc
-umount /mnt/armbian/
+umount -l /mnt/armbian/dev/pts
+umount -l /mnt/armbian/dev
+umount -l /mnt/armbian/sys
+umount -l /mnt/armbian/proc
+umount -l /mnt/armbian/
+
