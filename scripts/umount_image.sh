@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # Cleanup
-rm /mnt/armbian/usr/bin/qemu-arm-static
-rm -rf /mnt/armbian/working_dir
+rm /mnt/image/usr/bin/qemu-arm-static
+rm -rf /mnt/image/working_dir
 
 # Unmount
-umount -l /mnt/armbian/dev/pts
-umount -l /mnt/armbian/dev
-umount -l /mnt/armbian/sys
-umount -l /mnt/armbian/proc
-umount -l /mnt/armbian/
+umount -l /mnt/image/dev/pts
+umount -l /mnt/image/dev
+umount -l /mnt/image/sys
+umount -l /mnt/image/proc
 
+# Remove loop device
+loopdev=`mount | grep image | awk '{print $1}' | rev |  cut -c 3- | rev`
+umount -l /mnt/image/
+losetup -d $loopvar

@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: ubuntu:bionic
+
+%files
+    scripts/download_image.sh /
+    scripts/mount_image.sh /
+    scripts/umount_image.sh /
+    scripts/install_zoef.sh /
+    scripts/resize_image.sh /
+    scripts/prepare_image.sh /
+
+%post
+    # Update system
+    apt update
+
+    # Install prerequisites
+    apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
+
+    # Setting permissions on scripts
+    chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh /resize_image.sh /prepare_image.sh /download_image.sh
+    mkdir -p /mnt/image
+    mkdir -p /git_local
+
+    # Installing the yaml merge script (TODO: replsy with yq?)
+    apt install -y make build-essential 
+    cpan -fi YAML Hash::Merge::Simple 
+
+%apprun load_image
+    /mount_image.sh && chroot /mnt/image
+
+%apprun download_image
+    /download_image.sh "$1"
+
+%apprun prepare_image
+    /prepare_image.sh
+
+%apprun install_zoef
+    /mount_image.sh && /install_zoef.sh && /umount_image.sh
+
+%apprun shrink_image
+    /resize_image.sh
