@@ -1,7 +1,7 @@
 #!/bin/sh
 
-raspberry_pi_link="https://cdimage.ubuntu.com/releases/18.04.5/release/ubuntu-18.04.5-preinstalled-server-armhf+raspi3.img.xz"
-orange_pi_link="https://archive.armbian.com/orangepizero/archive/Armbian_20.08_Orangepizero_bionic_current_5.7.15.img.xz"
+raspberry_pi_link="https://cdimage.ubuntu.com/releases/20.04.2/release/ubuntu-20.04.2-preinstalled-server-armhf+raspi.img.xz"
+orange_pi_link="https://archive.armbian.com/orangepizero/archive/Armbian_21.02.3_Orangepizero_focal_current_5.10.21.img.xz"
 
 image="custom"
 if [ "$1" = "" ] || [ "$1" = "orangepi" ]; then

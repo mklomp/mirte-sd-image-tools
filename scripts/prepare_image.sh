@@ -5,8 +5,8 @@
 # image to /zoef_sd.img
 # TODO: is there a way to do this in userspace?
 
-# Resize image and partition to a total of 7Gb
-dd if=/dev/zero bs=1G seek=7 count=0 of=/zoef_sd.img
+# Resize image and partition to a total of 8Gb
+dd if=/dev/zero bs=1G seek=8 count=0 of=/zoef_sd.img
 
 # Resize last partition
 loopvar=`losetup --partscan --show --find /zoef_sd.img`

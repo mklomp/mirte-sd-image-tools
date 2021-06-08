@@ -1,5 +1,7 @@
 Bootstrap: docker
 From: ubuntu:bionic
+# NOTE: chroot will not run bash when moving this to focal,
+# so currentyl still using bionic
 
 %files
     scripts/download_image.sh /
