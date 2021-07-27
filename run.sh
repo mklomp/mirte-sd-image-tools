@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Ask for sudo password once, and make sure the timeout will
+# not expire.
+sudo -v
+while true; do
+   sudo -nv; sleep 1m
+   kill -0 $$ 2>/dev/null || exit
+done &
+
+
 if test "$1" == "shell_local"
 then
    sudo singularity run --app load_image --bind ./zoef_${2}_sd.img:/zoef_sd.img image_tools.sif
