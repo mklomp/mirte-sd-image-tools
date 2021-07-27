@@ -3,6 +3,7 @@ From: ubuntu:bionic
 # NOTE: chroot will not run bash when moving this to focal,
 # so currentyl still using bionic
 
+#TODO: or to thind using binds?
 %files
     scripts/download_image.sh /
     scripts/mount_image.sh /

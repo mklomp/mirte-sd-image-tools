@@ -9,9 +9,14 @@ while true; do
 done &
 
 
-if test "$1" == "shell_local"
+if test "$1" == "image_shell"
 then
    sudo singularity run --app load_image --bind ./zoef_${2}_sd.img:/zoef_sd.img image_tools.sif
+fi
+if test "$1" == "singularity_shell"
+then
+   #TODO: also bind the repos.yaml and git_local?
+   sudo singularity shell --bind ./zoef_${2}_sd.img:/zoef_sd.img image_tools.sif
 fi
 if test "$1" == "build_sd_image"
 then
