@@ -1,11 +1,13 @@
 ## Prerequisites
 
-You need singularity container >=2.3. On Ubuntu (16.10+):
+You need singularity container >=2.3. You can follow the instructions of the singulairy manal to compile it ([from source](https://sylabs.io/guides/3.0/user-guide/installation.html)), or use a ([package](https://sylabs.io/guides/3.0/user-guide/installation.html#distribution-packages-of-singularity)). For Ubuntu 20.04 this means:
+
    ```
+   $ sudo wget -O- http://neuro.debian.net/lists/focal.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list && \
+     sudo apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9 && \
+     sudo apt-get update
    $ sudo apt install singularity-container
    ```
-
-For other versions of Ubuntu you can follow the installation guide on the [Singularity website](https://sylabs.io/guides/3.0/user-guide/installation.html#install-the-debian-ubuntu-package-using-apt).
 
 ## Installing the image builder
 
@@ -44,8 +46,7 @@ repositories:
 ```
 
 3. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```
-   $ sudo ./run.sh build_sd_card
+   ```   $ sudo ./run.sh build_sd_card
    ```
 
 ## (For Developer) Generating an SD card image using a local repository
@@ -73,26 +74,16 @@ repositories:
    $ sudo ./run.sh build_sd_card
    ```
 
-## (For Developer) Generating an SD card image using modifications made on a Zoef robot
+## Generating an SD card image using modifications made on a Zoef robot
+TODO
 
 
-## (For Developer) Run clean Armbian image on non ARM machine
-
-1. Start an ARM shell
-   ```
-   $ sudo ./run.sh shell
-   ```
-2. You can now run commands as if it was on ARM
-   ```
-   $ uname -a
-   ```
-
-## (For Developer) Run created Armbian image on non ARM machine
-1. Make sure you have a Zoef image called zoef_sd.img in the repository directory
+## Run created Armbian image on non ARM machine
+1. Make sure you have a Zoef image called zoef_orangepi_sd.img in the repository directory
 
 2. Start an ARM shell
    ```
-   $ sudo ./run.sh shell_local
+   $ sudo ./run.sh image_shell orangepi
    ```
 3. You can now find all zoef repositories in /usr/local/src/zoef
    ```
