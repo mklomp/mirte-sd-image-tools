@@ -13,4 +13,4 @@ umount -l /mnt/image/proc
 # Remove loop device
 loopdev=`mount | grep image | awk '{print $1}' | rev |  cut -c 3- | rev`
 umount -l /mnt/image/
-losetup -d $loopvar
+losetup -d $loopdev
