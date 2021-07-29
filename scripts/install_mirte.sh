@@ -13,8 +13,8 @@ else
    echo "Using remote repository of zoef_install_scripts"
    mkdir git_local
    cd git_local
-   git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_install_scripts
-fi 
+   git clone https://gitlab.tudelft.nl/rcj_mirte/zoef_install_scripts
+fi
 
 # Merge repos.yaml. With this you ar able to override the install repos
 if [ -f /repos.yaml ]; then
@@ -23,12 +23,12 @@ if [ -f /repos.yaml ]; then
   mv /mnt/image/working_dir/git_local/zoef_install_scripts/merged2_repos.yaml /mnt/image/working_dir/git_local/zoef_install_scripts/repos.yaml
 fi
 
-# Install zoef
+# Install mirte
 chroot /mnt/image /bin/bash -c "cd /working_dir/git_local/zoef_install_scripts/ && ./create_user.sh"
-chroot /mnt/image /bin/bash -c "sudo echo 'zoef ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers" # do not ask for sudo password
-chroot /mnt/image /bin/bash -c "sudo -i -u zoef bash -c 'cd /working_dir/git_local/zoef_install_scripts/ && ./install_zoef.sh'" # install as zoef
+chroot /mnt/image /bin/bash -c "sudo echo 'mirte ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers" # do not ask for sudo password
+chroot /mnt/image /bin/bash -c "sudo -i -u mirte bash -c 'cd /working_dir/git_local/zoef_install_scripts/ && ./install_mirte.sh'" # install as mirte
 chroot /mnt/image /bin/bash -c "sudo sed -i '$ d' /etc/sudoers" # ask again for sudo password
-chroot /mnt/image /bin/bash -c "sudo passwd --expire zoef"
+chroot /mnt/image /bin/bash -c "sudo passwd --expire mirte"
 
 # Install network
 chroot /mnt/image ./working_dir/git_local/zoef_install_scripts/network_install.sh

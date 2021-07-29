@@ -16,11 +16,11 @@ if [ "$image" = "raspberrypi" ]; then
 fi
 
 if [ "$image" = "custom" ]; then
-   cp $1 zoef_custom_sd.img
+   cp $1 mirte_custom_sd.img
 else
    # Download and unxz the file
    # TODO:aks for permission to overwrite
-   wget -O zoef_${image}_sd.img.xz $image_link
-   rm -f zoef_${image}_sd.img
-   unxz zoef_${image}_sd.img.xz
+   wget -O mirte_${image}_sd.img.xz $image_link
+   rm -f mirte_${image}_sd.img
+   unxz mirte_${image}_sd.img.xz
 fi

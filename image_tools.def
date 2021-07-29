@@ -8,7 +8,7 @@ From: ubuntu:bionic
     scripts/download_image.sh /
     scripts/mount_image.sh /
     scripts/umount_image.sh /
-    scripts/install_zoef.sh /
+    scripts/install_mirte.sh /
     scripts/resize_image.sh /
     scripts/prepare_image.sh /
 
@@ -20,7 +20,7 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
 
     # Setting permissions on scripts
-    chmod +x /mount_image.sh /umount_image.sh /install_zoef.sh /resize_image.sh /prepare_image.sh /download_image.sh
+    chmod +x /mount_image.sh /umount_image.sh /install_mirte.sh /resize_image.sh /prepare_image.sh /download_image.sh
     mkdir -p /mnt/image
     mkdir -p /git_local
 
@@ -37,8 +37,8 @@ From: ubuntu:bionic
 %apprun prepare_image
     /prepare_image.sh
 
-%apprun install_zoef
-    /mount_image.sh && /install_zoef.sh && /umount_image.sh
+%apprun install_mirte
+    /mount_image.sh && /install_mirte.sh && /umount_image.sh
 
 %apprun shrink_image
     /resize_image.sh

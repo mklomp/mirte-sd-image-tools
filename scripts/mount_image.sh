@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Mount image and resize filesystem
-loopvar=`losetup -fP --show /zoef_sd.img`
+loopvar=`losetup -fP --show /mirte_sd.img`
 mount `ls $loopvar* | tail -n1` /mnt/image/
 
 # Mount other folders
