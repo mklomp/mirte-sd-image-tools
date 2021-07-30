@@ -46,7 +46,7 @@ repositories:
 ```
 
 3. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```   $ sudo ./run.sh build_sd_card
+   ```   $ ./run.sh build_sd_image
    ```
 
 ## (For Developer) Generating an SD card image using a local repository
