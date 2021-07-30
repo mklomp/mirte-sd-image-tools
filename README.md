@@ -25,7 +25,7 @@ You need singularity container >=2.3. You can follow the instructions of the sin
 
 1. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
    ```
-   $ sudo ./run.sh build_sd_card
+   $ ./run.sh build_sd_image
    ```
 2. This will generate a zoef_sd.img in the current directory
 3. Use an image burning tool (e.g. dd or etcher ([link](https://www.balena.io/etcher/)) to burn it to an SD card
