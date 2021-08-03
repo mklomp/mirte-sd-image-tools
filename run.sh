@@ -40,7 +40,7 @@ then
    elif [ -d ./git_local ]; then
      sudo singularity run --app install_zoef --bind ./zoef_${image}_sd.img:/zoef_sd.img --bind ./git_local:/git_local image_tools.sif
    else
-     sudo singularity run --app install_zoef --bind ./zoef_${image}_sd.img:/zoef_sd.img
+     sudo singularity run --app install_zoef --bind ./zoef_${image}_sd.img:/zoef_sd.img image_tools.sif
    fi
 
    # Shrink the image to max used size and zip it for convenience
