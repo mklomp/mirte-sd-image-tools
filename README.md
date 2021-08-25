@@ -6,8 +6,11 @@ You need singularity container >=2.3. You can follow the instructions of the sin
    $ sudo wget -O- http://neuro.debian.net/lists/focal.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list && \
      sudo apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9 && \
      sudo apt-get update
+
    $ sudo apt install singularity-container
    ```
+
+Note that for other distributions you should follow the steps found on the 'NeuroDebian' site (under [Distribution Packages of Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html#distribution-packages-of-singularity) on the singularity site)
 
 ## Installing the image builder
 
@@ -25,7 +28,7 @@ You need singularity container >=2.3. You can follow the instructions of the sin
 
 1. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
    ```
-   $ sudo ./run.sh build_sd_card
+   $ ./run.sh build_sd_image
    ```
 2. This will generate a mirte_orangepi_sd.img in the current directory
 3. Use an image burning tool (e.g. dd or etcher ([link](https://www.balena.io/etcher/)) to burn it to an SD card
@@ -58,7 +61,7 @@ repositories:
 
 3. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
    ```   
-   $ sudo ./run.sh build_sd_card [raspberry]
+   $ ./run.sh build_sd_image [raspberrypi]
    ```
 
 ## (For Developer) Generating an SD card image using a local repository
