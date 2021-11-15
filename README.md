@@ -16,11 +16,11 @@ Note that for other distributions you should follow the steps found on the 'Neur
 
 1. Clone this repository
    ```
-   $ git clone https://gitlab.tudelft.nl/rcj_zoef/zoef_sd_card_image
+   $ git clone https://github.com/mirte-robot/mirte_sd_image_tools.git
    ```
 2. Install the sigularity image
    ```
-   $ cd /zoef_sd_card_image
+   $ cd /mirte_sd_image_tools
    $ sudo ./install.sh
    ```
 
@@ -50,12 +50,12 @@ Note that for other distributions you should follow the steps found on the 'Neur
    ```
    $ nano repos.yaml
    ```
-2. This yaml format used is the same as [vcstool](https://github.com/dirk-thomas/vcstool). The example below will create an image with the my_branch branch of the Mirte web_interface repository. For an overview of all the repositories used, have a look at the version in [install_scripts](https://gitlab.tudelft.nl/rcj_zoef/zoef_install_scripts/blob/master/repos.yaml).
+2. This yaml format used is the same as [vcstool](https://github.com/dirk-thomas/vcstool). The example below will create an image with the my_branch branch of the mirte-web-interface repository. For an overview of all the repositories used, have a look at the version in [install_scripts](https://github.com/mirte-robot/mirte_install_scripts/blob/main/repos.yaml).
 ```yaml
 repositories:
-  web_interface:
+  mirte-web-interface:
     type: git
-    url: https://gitlab.tudelft.nl/rcj_zoef/web_interface
+    url: https://github.com/mirte-robot/mirte-web-interface
     version: my_branch
 ```
 
@@ -66,21 +66,21 @@ repositories:
 
 ## (For Developer) Generating an SD card image using a local repository
 
-1. Make sure you have one or more local repositories in <zoef_sd_card_image>/git_local/.
+1. Make sure you have one or more local repositories in <mirte-sd-image-tools>/git_local/.
 
 ```bash
 .
 ├── git_local
-│   └── zoef_install_scripts
+│   └── mirte-install-scripts
 ```
 
 2. Now create (or use an existing) repos.yaml, but now use another url by prepeding "/working_dir/" as can be seen in the example below. Please note that this will checkout the branch mentioned, so you need to commit changes to that branch.
 
 ```yaml
 repositories:
-  mirte_install_scripts:
+  mirte-install-scripts:
     type: git
-    url: /working_dir/git_local/zoef_install_scripts
+    url: /working_dir/git_local/mirte-install-scripts
     version: master
 ```
 
@@ -104,7 +104,7 @@ TODO
    ```
    # su mirte
    ```
-4. You can now find all zoef repositories in /usr/local/src/mirte
+4. You can now find all Mirte repositories in /usr/local/src/mirte
    ```
    $ ls /usr/local/src/mirte
    ```

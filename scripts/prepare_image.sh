@@ -5,8 +5,8 @@
 # image to /mirte_sd.img
 # TODO: is there a way to do this in userspace?
 
-# Resize image and partition to a total of 8Gb
-dd if=/dev/zero bs=1G seek=8 count=0 of=/mirte_sd.img
+# Resize image and partition to a total of 9Gb
+dd if=/dev/zero bs=1G seek=9 count=0 of=/mirte_sd.img
 
 # Resize last partition
 loopvar=`losetup --partscan --show --find /mirte_sd.img`
