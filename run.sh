@@ -2,11 +2,11 @@
 
 # Ask for sudo password once, and make sure the timeout will
 # not expire.
-sudo -v
-while true; do
-   sudo -nv; sleep 1m
-   kill -0 $$ 2>/dev/null || exit
-done &
+#sudo -v
+#while true; do
+#   sudo -nv; sleep 1m
+#   kill -0 $$ 2>/dev/null || exit
+#done &
 
 
 if test "$1" == "image_shell"

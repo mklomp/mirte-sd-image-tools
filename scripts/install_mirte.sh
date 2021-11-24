@@ -24,6 +24,7 @@ if [ -f /repos.yaml ]; then
 fi
 
 # Install mirte
+update-binfmts --enable qemu-arm
 chroot /mnt/image /bin/bash -c "cd /working_dir/git_local/mirte-install-scripts/ && ./create_user.sh"
 chroot /mnt/image /bin/bash -c "sudo echo 'mirte ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers" # do not ask for sudo password
 chroot /mnt/image /bin/bash -c "sudo -i -u mirte bash -c 'cd /working_dir/git_local/mirte-install-scripts/ && ./install_mirte.sh'" # install as mirte

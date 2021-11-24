@@ -2,7 +2,7 @@
 
 # Mount image and resize filesystem
 loopvar=`losetup -fP --show /mirte_sd.img`
-mount `ls $loopvar* | tail -n1` /mnt/image/
+mount -t ext4 `ls $loopvar* | tail -n1` /mnt/image/
 
 # Mount other folders
 cp /usr/bin/qemu-arm-static /mnt/image/usr/bin/
