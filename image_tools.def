@@ -9,7 +9,6 @@ From: ubuntu:bionic
     scripts/mount_image.sh /
     scripts/umount_image.sh /
     scripts/install_mirte.sh /
-    scripts/resize_image.sh /
     scripts/prepare_image.sh /
 
 %post
@@ -20,13 +19,17 @@ From: ubuntu:bionic
     apt install -y qemu qemu-user-static binfmt-support xz-utils wget parted git
 
     # Setting permissions on scripts
-    chmod +x /mount_image.sh /umount_image.sh /install_mirte.sh /resize_image.sh /prepare_image.sh /download_image.sh
+    chmod +x /mount_image.sh /umount_image.sh /install_mirte.sh /prepare_image.sh /download_image.sh
     mkdir -p /mnt/image
     mkdir -p /git_local
 
     # Installing the yaml merge script (TODO: replsy with yq?)
     apt install -y make build-essential 
     cpan -fi YAML Hash::Merge::Simple 
+
+    # Install piShrink
+    wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh -P /
+    chmod +x /pishrink.sh
 
 %apprun load_image
     /mount_image.sh && chroot /mnt/image
@@ -41,4 +44,4 @@ From: ubuntu:bionic
     /mount_image.sh && /install_mirte.sh && /umount_image.sh
 
 %apprun shrink_image
-    /resize_image.sh
+    /pishrink.sh -s /mirte_sd.img

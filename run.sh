@@ -45,6 +45,6 @@ then
 
    # Shrink the image to max used size and zip it for convenience
    sudo singularity run --app shrink_image --bind ./mirte_${image}_sd.img:/mirte_sd.img image_tools.sif
-   cp ./mirte_${image}_sd.img ./mirte_v`date +"%Y%m%d"`_${image}_sd.img
+   mv ./mirte_${image}_sd.img ./mirte_v`date +"%Y%m%d"`_${image}_sd.img
    xz -vT6 ./mirte_v`date +"%Y%m%d"`_${image}_sd.img
 fi

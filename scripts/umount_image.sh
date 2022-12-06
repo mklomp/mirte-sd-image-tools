@@ -2,6 +2,7 @@
 
 # Cleanup
 rm /mnt/image/usr/bin/qemu-arm-static
+rm /mnt/image/usr/bin/qemu-aarch64-static
 rm -rf /mnt/image/working_dir
 
 # Unmount

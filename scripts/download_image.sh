@@ -1,17 +1,22 @@
 #!/bin/sh
 
-raspberry_pi_link="https://cdimage.ubuntu.com/releases/20.04.3/release/ubuntu-20.04.3-preinstalled-server-armhf+raspi.img.xz"
+raspberry_pi_link="https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
 orange_pi_link="https://archive.armbian.com/orangepizero/archive/Armbian_21.02.3_Orangepizero_focal_current_5.10.21.img.xz"
+orange_pi2_link="https://archive.armbian.com/orangepizero2/archive/Armbian_22.02.2_Orangepizero2_focal_legacy_4.9.255.img.xz"
 
 image="custom"
 if [ "$1" = "" ] || [ "$1" = "orangepi" ]; then
    image="orangepi"
+elif [ "$1" = "orangepi2" ]; then
+   image="orangepi2"
 elif [ "$1" = "raspberrypi" ]; then
    image="raspberrypi"
 fi
 
 image_link=$orange_pi_link
-if [ "$image" = "raspberrypi" ]; then
+if [ "$image" = "orangepi2" ]; then
+   image_link=$orange_pi2_link
+elif [ "$image" = "raspberrypi" ]; then
    image_link=$raspberry_pi_link
 fi
 
