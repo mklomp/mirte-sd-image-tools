@@ -30,6 +30,7 @@ chroot /mnt/image /bin/bash -c "sudo echo 'mirte ALL=(ALL) NOPASSWD:ALL' >> /etc
 chroot /mnt/image /bin/bash -c "sudo -i -u mirte bash -c 'cd /working_dir/git_local/mirte-install-scripts/ && ./install_mirte.sh'" # install as mirte
 chroot /mnt/image /bin/bash -c "sudo sed -i '$ d' /etc/sudoers" # ask again for sudo password
 chroot /mnt/image /bin/bash -c "sudo passwd --expire mirte"
+chroot /mnt/image /bin/bash -c "sudo apt clean" # cleanup apt downloads
 
 # Install network
 chroot /mnt/image ./working_dir/git_local/mirte-install-scripts/network_install.sh
