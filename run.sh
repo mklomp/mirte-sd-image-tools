@@ -23,7 +23,7 @@ fi
 if test "$1" == "build_sd_image"
 then
    # Determine which image to build
-   image="orangepi"
+   image="orangepi2"
    if [ $2 ]; then
       image=$2
    fi
