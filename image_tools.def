@@ -28,6 +28,7 @@ From: ubuntu:bionic
     cpan -fi YAML Hash::Merge::Simple 
 
     # Install piShrink
+    ln -s /proc/self/mounts /etc/mtab
     wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh -P /
     chmod +x /pishrink.sh
 
