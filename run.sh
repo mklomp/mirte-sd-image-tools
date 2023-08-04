@@ -13,17 +13,17 @@ if test "$1" == "image_shell"
 then
    # Shell into the SD card image. This means mounting the the image
    # and chroot 'into' the image.
-   sudo singularity run --app load_image --bind ./mirte_${2}_sd.img:/mirte_sd.img image_tools.sif
+   sudo singularity run --app load_image --bind ./${2}:/mirte_sd.img image_tools.sif
 fi
 if test "$1" == "singularity_shell"
 then
    #TODO: also bind the repos.yaml and git_local?
-   sudo singularity shell --bind ./mirte_${2}_sd.img:/mirte_sd.img image_tools.sif
+   sudo singularity shell --bind ./${2}:/mirte_sd.img image_tools.sif
 fi
 if test "$1" == "build_sd_image"
 then
-   # Determine which image to build
-   image="orangepi2"
+   # Determine which image to build (orangepizero, orangepizero2, and rpi4b supported)
+   image="orangepizero2"
    if [ $2 ]; then
       image=$2
    fi
