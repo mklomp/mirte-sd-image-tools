@@ -3,6 +3,9 @@
 rpi4b_link="https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
 orangepizero_link="https://archive.armbian.com/orangepizero/archive/Armbian_21.02.3_Orangepizero_focal_current_5.10.21.img.xz"
 orangepizero2_link="https://archive.armbian.com/orangepizero2/archive/Armbian_22.02.2_Orangepizero2_focal_legacy_4.9.255.img.xz"
+ros2_link="https://armbian.hosthatch.com/archive/orangepizero2/archive/Armbian_22.11.3_Orangepizero2_jammy_legacy_4.9.318.img.xz" 
+
+
 
 image="custom"
 if [ "$1" = "" ]; then
