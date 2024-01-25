@@ -1,110 +1,40 @@
-## Prerequisites
+# Build Mirte image using Packer
 
-You need singularity container >=2.3. You can follow the instructions of the singulairy manal to compile it ([from source](https://sylabs.io/guides/3.0/user-guide/installation.html)), or use a ([package](https://sylabs.io/guides/3.0/user-guide/installation.html#distribution-packages-of-singularity)). For Ubuntu 20.04 this means:
+## Install
+run sudo `./packerInstall.sh` to download required packages.
 
-   ```
-   $ sudo wget -O- http://neuro.debian.net/lists/focal.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list && \
-     sudo apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9 && \
-     sudo apt-get update
+## Build
+Run sudo `./packerBuild.sh` to build the image. Will take some time
+Put your local files in `git_local/` and they will be copied
+edit `settings.sh` to select features and extra scripts and edit `repos.yaml` to select the repositories/branches.
 
-   $ sudo apt install singularity-container
-   ```
+## Build as workflow in Docker
+Install [act](https://github.com/nektos/act) and run `./actBuild.sh`. It will run the workflows and copy the artifacts to `./artifacts/`.
 
-Note that for other distributions you should follow the steps found on the 'NeuroDebian' site (under [Distribution Packages of Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html#distribution-packages-of-singularity) on the singularity site)
+## Shell to edit
+run ./shell.sh \<img file> and you will get a shell after some time. You can create new shells by using `sudo chroot /tmp/armimg-XXX`. Stop by removing the `/stopshell` file. It will create your fresh image in `shell_workdir`.
 
-## Installing the image builder
-
-1. Clone this repository
-   ```
-   $ git clone https://github.com/mirte-robot/mirte_sd_image_tools.git
-   ```
-2. Install the sigularity image
-   ```
-   $ cd /mirte_sd_image_tools
-   $ sudo ./install.sh
-   ```
-
-## Generating the Mirte SD image
-
-1. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```
-   $ ./run.sh build_sd_image
-   ```
-2. This will generate a mirte_orangepi_sd.img in the current directory
-3. Use an image burning tool (e.g. dd or etcher ([link](https://www.balena.io/etcher/)) to burn it to an SD card
-
-
-## Generating the Mirte SD image for a Raspberry Pi (2,3,4)
-
-1. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```
-   $ sudo ./run.sh build_sd_card raspberry
-   ```
-2. This will generate a mirte_raspberry_sd.img in the current directory
-3. Use an image burning tool (e.g. dd or etcher ([link](https://www.balena.io/etcher/)) to burn it to an SD card
-
-
-## Generating an SD card image using branches of Mirte repos
-
-1. In the repository folder create a file called repos.yaml.
-   ```
-   $ nano repos.yaml
-   ```
-2. This yaml format used is the same as [vcstool](https://github.com/dirk-thomas/vcstool). The example below will create an image with the my_branch branch of the mirte-web-interface repository. For an overview of all the repositories used, have a look at the version in [install_scripts](https://github.com/mirte-robot/mirte_install_scripts/blob/main/repos.yaml).
-```yaml
-repositories:
-  mirte-web-interface:
-    type: git
-    url: https://github.com/mirte-robot/mirte-web-interface
-    version: my_branch
+# /bin/sh Exec format error:
+```sh
+sudo apt remove qemu-user-static -y && sudo apt install qemu-user-static
 ```
 
-3. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```   
-   $ ./run.sh build_sd_image [raspberrypi]
-   ```
-
-## (For Developer) Generating an SD card image using a local repository
-
-1. Make sure you have one or more local repositories in <mirte-sd-image-tools>/git_local/.
-
-```bash
-.
-├── git_local
-│   └── mirte-install-scripts
+# VCS issues:
+When you get 
 ```
-
-2. Now create (or use an existing) repos.yaml, but now use another url by prepeding "/working_dir/" as can be seen in the example below. Please note that this will checkout the branch mentioned, so you need to commit changes to that branch.
-
-```yaml
-repositories:
-  mirte-install-scripts:
-    type: git
-    url: /working_dir/git_local/mirte-install-scripts
-    version: master
+=== ./mirte-arduino-libraries (git) ===
+    arm-image.mirteopi: Could not clone repository 'https://github.com/arendjan/mirte-arduino-libraries.git': fatal: destination path '.' already exists and is not an empty directory.
 ```
+when building for orange pi Zero (1), you have a qemu version that has some issues, including a ``` qemu: uncaught target signal 11 (segmentation fault) - core dumped``` when using git. Update the qemu installation on your host computer by adding a ppa ( ```sh sudo add-apt-repository ppa:canonical-server/server-backports```) and updating qemu. This should resolve the issues.
 
-3. Create the sd card image (this will take some time) (NOTE: this will overwrite existing images)
-   ```
-   $ sudo ./run.sh build_sd_card [raspberry]
-   ```
+# TODOS:
+- npm prebuilt
 
-## Generating an SD card image using modifications made on a Mirte robot
-TODO
-
-
-## Run created Armbian image on non ARM machine
-1. Make sure you have a Mirte image called mirte_orangepi_sd.img in the repository directory
-
-2. Start an ARM shell
-   ```
-   $ sudo ./run.sh image_shell [orangepi|raspberry]
-   ```
-3. Note that you are logged in as root now. In order to switch to the mirte user please do (which will ask you to reset the default password (mirte_mirte)):
-   ```
-   # su mirte
-   ```
-4. You can now find all Mirte repositories in /usr/local/src/mirte
-   ```
-   $ ls /usr/local/src/mirte
-   ```
+# Editing the latest build
+Install gh or download from releases.
+```
+gh run download #select type
+sudo ./shell.sh ...
+# at end, exit out of the chroot
+# output in shell_workdir/....shrunk_$date.img.xz
+```

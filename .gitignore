@@ -1,5 +1,12 @@
-*.sif
-*.img
-*.zip
-git_local/
+/build
+/git_local
+/log.txt
+/pishrink.sh
+/test
+settings.sh
+logs/
+workdir/
+settings.sh
+shell_workdir/
 repos.yaml
+artifacts/
