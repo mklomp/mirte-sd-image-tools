@@ -6,6 +6,10 @@ permissions:
     contents: write
   
 jobs:
+    shellcheck:
+      uses: ./.github/workflows/shellcheck.yaml
+    shfmt:
+      uses: ./.github/workflows/shfmt.yaml
     build-and-push:
         # container:
         #   image: ubuntu:22.04

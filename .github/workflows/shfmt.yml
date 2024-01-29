@@ -1,7 +1,8 @@
 name: shfmt
 on:
-  - pull_request
+  # - pull_request
   - push
+  - workflow_call
 jobs:
   sh-checker:
     runs-on: ubuntu-latest
