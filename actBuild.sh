@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf /tmp/artifacts || true
 mkdir /tmp/artifacts || true
-act --container-options="-v /dev:/dev -v /proc:/proc --privileged"  --artifact-server-path /tmp/artifacts
+act --container-options="-v /dev:/dev -v /proc:/proc --privileged" --artifact-server-path /tmp/artifacts
 mkdir artifacts || true
 cp -r /tmp/artifacts/* ./artifacts
 # somehow the files get an extra __ at the end

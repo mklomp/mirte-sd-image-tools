@@ -32,10 +32,10 @@ source "arm-image" "mirte_orangepi3b" {
   qemu_binary = "qemu-aarch64-static"
 }
 
-source "arm-image" "mirte_rpi4b" {
-  image_type = "raspbian"
+source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
+  image_type = "raspberrypi"
   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
-  iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
+  iso_checksum = "sha256:065c41846ddf7a1c636a1aac5a7d49ebcee819b141f9d57fd586c5f84b9b7942"
   output_filename = "./workdir/mirte_rpi4b.img"
   target_image_size = 15*1024*1024*1024
 }

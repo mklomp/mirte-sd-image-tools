@@ -16,11 +16,11 @@ sudo packer build $only_flags build.pkr.hcl | tee logs/log-"$(date +"%Y-%m-%d %H
 if (($# > 0)); then
 	./scripts/finalize.sh "$(realpath "./workdir/$1.img")"
 else
-	
-	# ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepizero.img") & # not default type
-	./scripts/finalize.sh $(realpath "./workdir/mirte_orangepizero2.img") &
-	./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b.img") &
-	./scripts/finalize.sh $(realpath "./workdir/mirte_rpi4b.img") &
+
+	# ./scripts/finalize.sh "$(realpath "./workdir/mirte_orangepizero.img")" & # not default type
+	./scripts/finalize.sh "$(realpath "./workdir/mirte_orangepizero2.img")" &
+	./scripts/finalize.sh "$(realpath "./workdir/mirte_orangepi3b.img")" &
+	./scripts/finalize.sh "$(realpath "./workdir/mirte_rpi4b.img")" &
 	wait
 fi
 set +o pipefail
