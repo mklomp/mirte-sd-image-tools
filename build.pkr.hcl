@@ -7,32 +7,32 @@ packer {
   }
 }
 
-source "arm-image" "mirteopi2" {
+source "arm-image" "mirte_orangepizero2" {
   image_type = "armbian"
   iso_url = "https://surfdrive.surf.nl/files/index.php/s/Zoep7yE9GlX3o7m/download?path=%2F&files=Armbian_22.02.2_Orangepizero2_focal_legacy_4.9.255.img.xz"
   iso_checksum = "sha256:d2a6e59cfdb4a59fbc6f8d8b30d4fb8c4be89370e9644d46b22391ea8dff701d"
-  output_filename = "./workdir/mirteopi2.img"
+  output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
 }
 
-source "arm-image" "mirteopi" {
+source "arm-image" "mirte_orangepizero" {
   image_type = "armbian"
   iso_url = "https://surfdrive.surf.nl/files/index.php/s/Zoep7yE9GlX3o7m/download?path=%2F&files=Armbian_21.02.3_Orangepizero_focal_current_5.10.21.img.xz"
   iso_checksum = "sha256:44ceec125779d67c1786b31f9338d9edf5b4f64324cc7be6cfa4a084c838a6ca"
-  output_filename = "./workdir/mirteopi.img"
+  output_filename = "./workdir/mirte_orangepizero.img"
   target_image_size = 15*1024*1024*1024
 }
-source "arm-image" "mirteopi3b" {
+source "arm-image" "mirte_orangepi3b" {
     image_type = "armbian"
   iso_url = "https://surfdrive.surf.nl/files/index.php/s/Zoep7yE9GlX3o7m/download?path=%2F&files=Armbian-unofficial_24.2.0-trunk_Orangepi3b_focal_legacy_5.10.160_msdos.img.xz"
   iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
-  output_filename = "./workdir/mirteopi3b.img"
+  output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
 }
 
-source "arm-image" "raspberrypi4b" {
+source "arm-image" "mirte_rpi4b" {
   image_type = "raspbian"
   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
   iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
@@ -41,7 +41,7 @@ source "arm-image" "raspberrypi4b" {
 }
 
 build {
-  sources = ["source.arm-image.mirteopi2", "source.arm-image.mirteopi",  "source.arm-image.mirteopi3b", "source.arm-image.raspberrypi4b"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero",  "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_rpi4b"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"

@@ -14,9 +14,10 @@ jobs:
         strategy:
             matrix:
                 image: [
-                        # mirteopi, 
-                        mirteopi2,
-                        mirteopi3b
+                        # mirte_orangepizero, 
+                        mirte_orangepizero2,
+                        mirte_orangepi3b,
+                        mirte_rpi4b
                         ]
             fail-fast: false
         steps:

@@ -15,7 +15,7 @@ variable "image_name" {
 }
 
 
-# source "arm-image" "mirteopi2" {
+# source "arm-image" "mirte_orangepizero2" {
 #   image_type = "armbian"
 #   iso_url = "${var.image_url}"
 #   iso_checksum = "none"
@@ -35,11 +35,11 @@ source "arm-image" "image" {
   target_image_size = 15*1024*1024*1024
 
 }
-# source "arm-image" "mirteopi" {
+# source "arm-image" "mirte_orangepizero" {
 #   image_type = "armbian"
 #   iso_url = "https://archive.armbian.com/orangepizero/archive/Armbian_21.02.3_Orangepizero_focal_current_5.10.21.img.xz"
 #   iso_checksum = "sha256:44ceec125779d67c1786b31f9338d9edf5b4f64324cc7be6cfa4a084c838a6ca"
-#   output_filename = "./workdir/mirteopi.img"
+#   output_filename = "./workdir/mirte_orangepizero.img"
 #   target_image_size = 15*1024*1024*1024
 # }
 build {

@@ -23,7 +23,7 @@ cd /usr/local/src/mirte/mirte-install-scripts/ && ./create_user.sh
 echo 'mirte ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 chown -R mirte /usr/local/src/mirte/*
 
-if [[ "$type" == "mirteopi" ]]; then
+if [[ "$type" == "mirte_orangepizero" ]]; then
     pip3 install /usr/local/src/mirte/wheels/*
 fi
 rm -rf /usr/local/src/mirte/wheels

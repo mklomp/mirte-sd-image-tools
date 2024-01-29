@@ -23,7 +23,7 @@ sudo apt remove qemu-user-static -y && sudo apt install qemu-user-static
 When you get 
 ```
 === ./mirte-arduino-libraries (git) ===
-    arm-image.mirteopi: Could not clone repository 'https://github.com/arendjan/mirte-arduino-libraries.git': fatal: destination path '.' already exists and is not an empty directory.
+    arm-image.mirte_orangepizero: Could not clone repository 'https://github.com/arendjan/mirte-arduino-libraries.git': fatal: destination path '.' already exists and is not an empty directory.
 ```
 when building for orange pi Zero (1), you have a qemu version that has some issues, including a ``` qemu: uncaught target signal 11 (segmentation fault) - core dumped``` when using git. Update the qemu installation on your host computer by adding a ppa ( ```sh sudo add-apt-repository ppa:canonical-server/server-backports```) and updating qemu. This should resolve the issues.
 
