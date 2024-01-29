@@ -1,7 +1,7 @@
 name: shfmt
 on:
-  # - pull_request
-  - push
+  - pull_request
+  # - push
   - workflow_call
 jobs:
   sh-checker:
