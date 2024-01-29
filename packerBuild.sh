@@ -17,9 +17,10 @@ if (($# > 0)); then
 	./scripts/finalize.sh "$(realpath "./workdir/$1.img")"
 else
 	
-	./scripts/finalize.sh $(realpath "./workdir/mirteopi.img") &
+	# ./scripts/finalize.sh $(realpath "./workdir/mirteopi.img") & # not default type
 	./scripts/finalize.sh $(realpath "./workdir/mirteopi2.img") &
 	./scripts/finalize.sh $(realpath "./workdir/mirteopi3b.img") &
+	./scripts/finalize.sh $(realpath "./workdir/mirterpi4b.img") &
 	wait
 fi
 set +o pipefail

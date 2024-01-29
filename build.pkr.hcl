@@ -25,17 +25,23 @@ source "arm-image" "mirteopi" {
 }
 source "arm-image" "mirteopi3b" {
     image_type = "armbian"
-
   iso_url = "https://surfdrive.surf.nl/files/index.php/s/Zoep7yE9GlX3o7m/download?path=%2F&files=Armbian-unofficial_24.2.0-trunk_Orangepi3b_focal_legacy_5.10.160_msdos.img.xz"
   iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
   output_filename = "./workdir/mirteopi3b.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
+}
 
+source "arm-image" "raspberrypi4b" {
+  image_type = "raspbian"
+  iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
+  iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
+  output_filename = "./workdir/mirte_rpi4b.img"
+  target_image_size = 15*1024*1024*1024
 }
 
 build {
-  sources = ["source.arm-image.mirteopi2", "source.arm-image.mirteopi",  "source.arm-image.mirteopi3b"]
+  sources = ["source.arm-image.mirteopi2", "source.arm-image.mirteopi",  "source.arm-image.mirteopi3b", "source.arm-image.raspberrypi4b"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
