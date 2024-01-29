@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe
-echo $type
+echo "${type:=""}"
 
 # Fix DNS on rpi4b
 if [[ $type == "mirte_rpi4b" ]]; then

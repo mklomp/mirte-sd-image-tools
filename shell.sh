@@ -4,13 +4,15 @@ image_url=$(realpath $1)
 image_name=$(basename $image_url .img)
 mkdir shell_workdir || true
 packer build -var 'image_url='"$image_url"'' -var 'image_name='"$image_name"'' shell.pkr.hcl &
+
+# shellcheck disable=SC2010
 if startCount=$(ls -l /tmp/armimg-* | grep -c ^d); then
 	echo "ok"
 else
 	startCount=0
 fi
-
-until [ $( (ls -l /tmp/armimg-* || true) | grep -c ^d) -gt $startCount ]; do
+# shellcheck disable=SC2010
+until [ "$( (ls -l /tmp/armimg-* || true) | grep -c ^d)" -gt "$startCount" ]; do
 	sleep 5
 done
 tset                                      # packer messes up the shell, so reset the shell settings, no clear
