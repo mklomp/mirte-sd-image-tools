@@ -17,7 +17,7 @@ tset                                      # packer messes up the shell, so reset
 ARMDIR=$(ls -td /tmp/armimg-*/ | head -1) # get latest
 echo "run sudo chroot $ARMDIR in another shell to also log into the image. Stop by running rm /stopshell"
 
-sudo chroot "$ARMDIR" && ( rm "$ARMDIR"/stopshell || true )
+sudo chroot "$ARMDIR" && (rm "$ARMDIR"/stopshell || true)
 wait
 
 # shrink image, dont add autoexpand, otherwise image will not boot and just keeps restarting

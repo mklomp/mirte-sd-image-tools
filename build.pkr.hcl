@@ -37,8 +37,9 @@ source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
   iso_checksum = "sha256:065c41846ddf7a1c636a1aac5a7d49ebcee819b141f9d57fd586c5f84b9b7942"
   output_filename = "./workdir/mirte_rpi4b.img"
-  target_image_size = 15*1024*1024*1024
+  target_image_size = 15*1024*1024*1024 # 15GB
 }
+
 
 build {
   sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero",  "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_rpi4b"]
