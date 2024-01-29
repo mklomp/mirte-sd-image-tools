@@ -9,7 +9,7 @@ Put your local files in `git_local/` and they will be copied
 edit `settings.sh` to select features and extra scripts and edit `repos.yaml` to select the repositories/branches.
 
 ## Build as workflow in Docker
-Install [act](https://github.com/nektos/act) and run `./actBuild.sh`. It will run the workflows and copy the artifacts to `./artifacts/`.
+Install [act](https://github.com/nektos/act) and run `./actBuild.sh`. It will run the workflows and copy the artifacts to `./artifacts/`. This will not use any changes in git_local or repos.yaml.
 
 ## Shell to edit
 run ./shell.sh \<img file> and you will get a shell after some time. You can create new shells by using `sudo chroot /tmp/armimg-XXX`. Stop by removing the `/stopshell` file. It will create your fresh image in `shell_workdir`.
