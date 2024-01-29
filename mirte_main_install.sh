@@ -13,20 +13,14 @@ chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo # something with sudo 
 mkdir /usr/local/src/mirte/build_system/ || true
 apt update
 apt install -y git python3-pip curl
-# sudo pip install -U pip
-# sudo apt remove python3-distro-info -y || true
-# pip install distro-info
-# # pip install --upgrade setuptools
-# sudo apt remove python3-pyyaml -y || true
-# # Add ros repo for vcstool
-# sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-# curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
 apt update
 pip3 install vcstool
 apt install -y python3-pip python3-dev libblas-dev liblapack-dev libatlas-base-dev gfortran
 cd /usr/local/src/mirte/
 # Download all the mirte repos
 vcs import --workers 1 --input ./repos.yaml --skip-existing || true
+
 pip3 install "deepdiff[cli]"
 deep diff --ignore-order --ignore-string-case ./repos.yaml ./mirte-install-scripts/repos.yaml # to show the difference between the repos.yaml in here and in mirte-install-scripts/repos.yaml
 cp ./repos.yaml ./mirte-install-scripts/repos.yaml                                            # overwrite the repos.yaml in mirte-install-scripts with the one in here
