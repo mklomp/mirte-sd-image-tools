@@ -18,11 +18,9 @@ jobs:
         needs: [shellcheck, shfmt]
         strategy:
             matrix:
-                image: [
-                        mirte_orangepizero, 
+                image: [ 
                         mirte_orangepizero2,
-                        mirte_orangepi3b,
-                        mirte_rpi4b
+                        mirte_orangepi3b
                         ]
             fail-fast: false
         steps:
