@@ -19,7 +19,7 @@ jobs:
         strategy:
             matrix:
                 image: [
-                        # mirte_orangepizero, 
+                        mirte_orangepizero, 
                         mirte_orangepizero2,
                         mirte_orangepi3b,
                         mirte_rpi4b
