@@ -47,7 +47,7 @@ jobs:
             - name: artifacts
               uses: actions/upload-artifact@v2
               with:
-                path: build/*.img.xz
+                path: build/*.img
                 name: ${{ matrix.image }}
             - name: Push to release
               uses: softprops/action-gh-release@v1
