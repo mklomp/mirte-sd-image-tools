@@ -1,8 +1,8 @@
 repositories:
   mirte-web-interface:
     type: git
-    url: https://github.com/mirte-robot/mirte-web-interface.git
-    version: main
+    url: https://github.com/mklomp/mirte-web-interface.git
+    version: pre-university
   mirte-telemetrix4arduino:
     type: git
     url: https://github.com/mirte-robot/Telemetrix4Arduino.git
@@ -21,8 +21,8 @@ repositories:
     version: master
   mirte-ros-packages:
     type: git
-    url: https://github.com/mirte-robot/mirte-ros-packages.git
-    version: main
+    url: https://github.com/mklomp/mirte-ros-packages.git
+    version: pre-university
   mirte-oled-images:
     type: git
     url: https://github.com/mirte-robot/mirte-oled-images.git
@@ -33,8 +33,8 @@ repositories:
     version: main
   mirte-python:
     type: git
-    url: https://github.com/mirte-robot/mirte-python.git
-    version: main
+    url: https://github.com/mklomp/mirte-python.git
+    version: pre-university
   mirte-documentation:
     type: git
     url: https://github.com/mirte-robot/mirte-documentation.git
