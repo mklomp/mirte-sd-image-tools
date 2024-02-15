@@ -48,5 +48,5 @@ if $INSTALL_NETWORK; then /usr/local/src/mirte/mirte-install-scripts/network_ins
 # if $INSTALL_PROVISIONING; then
 #     mkdir /mnt/mirte # create mount point and automount it
 #     echo 'UUID="9EE2-A262" /mnt/mirte/ vfat rw,relatime,uid=1000,gid=1000,errors=remount-ro 0 0' >>/etc/fstab;
-systemctl disable armbian-resize-filesystem # this is done by pishrink
+# systemctl disable armbian-resize-filesystem # this is done by pishrink
 # fi
