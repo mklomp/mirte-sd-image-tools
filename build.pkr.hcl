@@ -25,8 +25,8 @@ source "arm-image" "mirte_orangepizero" {
 }
 source "arm-image" "mirte_orangepi3b" {
     image_type = "armbian"
-  iso_url = "https://surfdrive.surf.nl/files/index.php/s/Zoep7yE9GlX3o7m/download?path=%2F&files=Armbian-unofficial_24.2.0-trunk_Orangepi3b_focal_legacy_5.10.160_msdos.img.xz"
-  iso_checksum = "sha256:376656dce00ff2e6404dd20110af4b1f0927b847c3c49d6a705dcf31789aaa34"
+  iso_url = "http://131.180.122.9:8080/Armbian-unofficial_23.11.0-trunk_Orangepi3b_focal_edge_6.6.2.img.xz"
+  iso_checksum = "sha256:20920ed6d4ed410065e4b6f10da5b13d0ec8f1d4e55533dc43549be471f59872"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
