@@ -38,3 +38,12 @@ sudo ./shell.sh ...
 # at end, exit out of the chroot
 # output in shell_workdir/....shrunk_$date.img.xz
 ```
+
+
+# Orange Pi 3B focal image:
+- clone armbian/build
+- edit config/board/orangepi3b.csc
+- - remove line 11: IMAGE_PARTITION_TABLE="gpt"
+- compile:
+- - ./compile.sh build BOARD=orangepi3b BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=focal
+- TODO: fix for USB issue
