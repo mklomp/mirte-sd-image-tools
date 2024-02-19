@@ -30,7 +30,7 @@ jobs:
               shell: bash
               run: |
                 echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
               id: extract_branch
             
             - name: setup this repo
@@ -53,7 +53,7 @@ jobs:
             - name: artifacts
               uses: actions/upload-artifact@v4
               with:
-                path: build/*.img
+                path: build/*.img.xz
                 name: ${{ matrix.image }}-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.sha_short }}
             - name: Push to release
               uses: softprops/action-gh-release@v1
