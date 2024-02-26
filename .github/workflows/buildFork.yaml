@@ -1,9 +1,7 @@
 name: Build and Upload
 
 on:
-  push:
-      branches:
-          - main
+    [push]
 permissions:
     contents: write
   
