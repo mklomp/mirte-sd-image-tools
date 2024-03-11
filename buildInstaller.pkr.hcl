@@ -27,7 +27,7 @@ source "arm-image" "mirte_orangepi3b" {
     image_type = "armbian"
   iso_url = "http://131.180.122.9:8080/Armbian-unofficial_23.11.0-trunk_Orangepi3b_focal_edge_6.6.2.img.xz"
   iso_checksum = "sha256:fe8dac9fe9d5697377ef230de1df94d99b9740b104f0042caded44f904f5d5a4"
-  output_filename = "./workdir/mirte_orangepi3b.img"
+  output_filename = "./workdir/mirte_orangepi3b_installer.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
 }
@@ -52,7 +52,7 @@ build {
 #     destination = "/root/mirte_orangepi3b.img"
 #  }
 provisioner "file" {
-    source = "build/Armbian-unofficial_23.11.0-trunk_Orangepi3b_focal_edge_6.6.2.img"
+    source = "build/mirte_orangepi3b.img"
     destination = "/root/mirte_orangepi3b.img"
  }
  provisioner "shell" {
@@ -61,7 +61,7 @@ provisioner "file" {
       "chmod +x /root/mirte-install.sh",
       "cp /root/mirte-install.service /etc/systemd/system/",
       "systemctl enable mirte-install.service",
-      "md5sum </root/mirte_orangepi3b.img >/root/mirte_orangepi3b.img.md5sum"
+      "md5sum </root/mirte_orangepi3b.img >/root/mirte_orangepi3b.img.md5sum",
       "apt install progress -y"
     ]
   }
