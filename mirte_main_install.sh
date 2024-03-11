@@ -11,10 +11,10 @@ fi
 chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo # something with sudo otherwise complaining about "sudo: /usr/bin/sudo must be owned by uid 0 and have the setuid bit set"
 . /usr/local/src/mirte/settings.sh                        # load settings
 mkdir /usr/local/src/mirte/build_system/ || true
-apt update
+apt update || true
 apt install -y git python3-pip curl
 
-apt update
+apt update || true
 pip3 install vcstool
 apt install -y python3-pip python3-dev libblas-dev liblapack-dev libatlas-base-dev gfortran
 cd /usr/local/src/mirte/
