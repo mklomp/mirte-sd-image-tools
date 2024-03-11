@@ -57,6 +57,7 @@ jobs:
                     cp build/*.img build/${{ matrix.image }}.img # remove date from final file name
                     ls -l build
                     sudo packer build buildInstaller.pkr.hcl # create installer image
+                    sudo rm -rf /root/.cache/packer
                     rm -f build/${{ matrix.image }}.img
                     rm -f workdir/mirte_orangepi3b.img
                     ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
