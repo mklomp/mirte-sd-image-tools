@@ -25,7 +25,7 @@ packer {
 # }
 source "arm-image" "mirte_orangepi3b" {
     image_type = "armbian"
-  iso_url = "http://131.180.122.9:8080/Armbian-unofficial_23.11.0-trunk_Orangepi3b_focal_edge_6.6.2.img.xz"
+  iso_url = "https://surfdrive.surf.nl/files/index.php/s/bRRFLjMNUkU9L78/download?path=Armbian-unofficial_23.11.0-trunk_Orangepi3b_focal_edge_6.6.2.img.xz"
   iso_checksum = "sha256:fe8dac9fe9d5697377ef230de1df94d99b9740b104f0042caded44f904f5d5a4"
   output_filename = "./workdir/mirte_orangepi3b_installer.img"
   target_image_size = 15*1024*1024*1024
