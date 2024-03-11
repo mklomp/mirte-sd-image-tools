@@ -53,9 +53,12 @@ jobs:
             - name: Create installer
               if: ${{ matrix.image == 'mirte_orangepi3b' }}
               run: |
+                    df -h
                     cp build/*.img build/${{ matrix.image }}.img # remove date from final file name
                     ls -l build
                     sudo packer build buildInstaller.pkr.hcl # create installer image
+                    rm -f build/${{ matrix.image }}.img
+                    rm -f workdir/mirte_orangepi3b.img
                     ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
             - name: artifacts
               uses: actions/upload-artifact@v4
