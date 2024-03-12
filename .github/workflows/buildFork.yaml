@@ -55,7 +55,7 @@ jobs:
               run: |
                     df -h
                     rm -f workdir/*.img
-                    ln build/*.img build/${{ matrix.image }}.img # remove date from final file name
+                    sudo ln build/*.img build/${{ matrix.image }}.img # remove date from final file name
 
                     ls -l build
                     sudo packer build buildInstaller.pkr.hcl # create installer image
