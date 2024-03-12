@@ -72,7 +72,7 @@ build {
       "export type=${source.name}",
       "echo $type",
       "mkdir /usr/local/src/mirte/build_system/",
-      "sudo -E /usr/local/src/mirte/mirte_main_install.sh"
+      "# sudo -E /usr/local/src/mirte/mirte_main_install.sh"
     ]
   }
   # provisioner "file" { # Provide the logs to the sd itself, doesn't work as tee deletes it and packer is missing it

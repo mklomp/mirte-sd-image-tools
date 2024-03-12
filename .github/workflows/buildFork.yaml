@@ -54,7 +54,9 @@ jobs:
               if: ${{ matrix.image == 'mirte_orangepi3b' }}
               run: |
                     df -h
-                    cp build/*.img build/${{ matrix.image }}.img # remove date from final file name
+                    rm -f workdir/*.img
+                    ln build/*.img build/${{ matrix.image }}.img # remove date from final file name
+
                     ls -l build
                     sudo packer build buildInstaller.pkr.hcl # create installer image
                     sudo rm -rf /root/.cache/packer
