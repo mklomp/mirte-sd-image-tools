@@ -81,7 +81,9 @@ jobs:
             - name: Create installer
               run: |
                     
-                    ./installPacker.sh
+                    sudo apt update
+                    sudo apt install qemu-user-static parted -y
+                    ./packerInstall.sh
                     ls
                     ls build
                     mv build/mirte_master_mirte_orangepi3b.img.xz build/mirte_orangepi3b.img.xz
