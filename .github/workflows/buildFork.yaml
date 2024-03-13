@@ -80,8 +80,12 @@ jobs:
                 path: build
             - name: Create installer
               run: |
+                    
+                    ./installPacker.sh
                     ls
                     ls build
+                    mv build/mirte_master_mirte_orangepi3b.img.xz build/mirte_orangepi3b.img.xz
+                    xz -d build/mirte_orangepi3b.img.xz
                     df -h
                     rm -f workdir/*.img
 
