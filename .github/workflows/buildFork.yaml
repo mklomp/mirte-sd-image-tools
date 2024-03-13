@@ -47,15 +47,44 @@ jobs:
             #     yq e -i '.repositories.mirte-ros-packages.version = "fix-intro-rob"' repos.yaml
             #     yq e -i '.repositories.mirte-telemetrix4arduino.url =  "https://github.com/arendjan/telemetrix4arduino.git"' repos.yaml
             #     yq e -i '.repositories.mirte-telemetrix4arduino.version = "fix-intro-robotics"' repos.yaml
-            - name: Build
+            # - name: Build
+            #   run: |
+            #         ./packerBuild.sh ${{ matrix.image }}
+            - name: artifacts
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                path: build/*.img.xz
+                name: ${{ matrix.image }}-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.sha_short }}
+            - name: Push to release
+              uses: softprops/action-gh-release@v1
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                  files: build/*.img.xz
+    build_installer:
+      runs-on: ubuntu-latest
+      # needs: [shellcheck, shfmt, build-and-push]
+      steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Extract branch name
+              shell: bash
               run: |
-                    ./packerBuild.sh ${{ matrix.image }}
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+              id: extract_branch
+            - name: download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                name: mirte_orangepi3b-mirte-master-e49eddc
+                run-id: 8249420079
+                path: build
             - name: Create installer
-              if: ${{ matrix.image == 'mirte_orangepi3b' }}
               run: |
+                    ls
+                    ls build
                     df -h
                     rm -f workdir/*.img
-                    sudo ln build/*.img build/${{ matrix.image }}.img # remove date from final file name
 
                     ls -l build
                     df -h
@@ -68,14 +97,4 @@ jobs:
                     df -h
                     ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
                     df -h
-            - name: artifacts
-              uses: actions/upload-artifact@v4
-              if: always()
-              with:
-                path: build/*.img.xz
-                name: ${{ matrix.image }}-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.sha_short }}
-            - name: Push to release
-              uses: softprops/action-gh-release@v1
-              if: startsWith(github.ref, 'refs/tags/')
-              with:
-                  files: build/*.img.xz
+            
