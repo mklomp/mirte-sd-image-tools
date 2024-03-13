@@ -109,4 +109,10 @@ jobs:
                     df -h
                     ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
                     df -h
+            - name: artifacts
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                path: build/*.img.xz
+                name: mirte_master_installer_orangepi3b
             
