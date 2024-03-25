@@ -44,7 +44,7 @@ source "arm-image" "mirte_orangepizero2_ros2" {
   image_type = "armbian"
   iso_url = "https://archive.armbian.com/orangepizero2/archive/Armbian_22.11.3_Orangepizero2_jammy_legacy_4.9.318.img.xz"
   iso_checksum = "sha256:26f47234a98f59e8b8467e2cf2444ee1d599530745ce7857222b145662054959"
-  output_filename = "./workdir/mirte_orangepizero2_ros.img"
+  output_filename = "./workdir/mirte_orangepizero2_ros2.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
 }
