@@ -42,8 +42,8 @@ source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
 
 source "arm-image" "mirte_orangepizero2_ros2" {
   image_type = "armbian"
-  iso_url = "https://surfdrive.surf.nl/files/index.php/s/AF6IwK0HhSK0leQ/download"
-  iso_checksum = "sha256:075453f03c6b67d746571009eb677cff18850f1bcce947ab8a0048286109e613"
+  iso_url = "https://dl.armbian.com/orangepizero2/archive/Armbian_24.2.1_Orangepizero2_jammy_current_6.6.16.img.xz"
+  iso_checksum = "sha256:cc90336ebf540b02feb7d5d2e4a0360b722e7a5509cec1b1046aee41f7d882ac"
   output_filename = "./workdir/mirte_orangepizero2_ros2.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
