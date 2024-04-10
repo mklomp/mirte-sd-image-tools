@@ -116,7 +116,7 @@ jobs:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
     upload_private_server:
-      needs: [build_installer, build-and-push]
+      needs: [build-and-push] # build_installer, 
       runs-on: ubuntu-latest
       if: always()
       steps:
