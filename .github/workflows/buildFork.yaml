@@ -140,11 +140,12 @@ jobs:
                 ls ${{ github.workspace }}/upload
                 tree ${{ github.workspace }}/upload
                 # for every file ending in .img.xz, remove last part of the path
-                for file in ${{ github.workspace }}/upload/**.img.xz; do
+                for file in $(find ${{ github.workspace }}/upload/ -name '*.img.xz'); do
                     f=$(basename $file)
+                    echo $f
+                    echo ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
                     mv $file ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
                 done
-                mv ${{ github.workspace }}/upload/*.xz ${{ github.workspace }}/upload/mirte
 
             - uses: Dylan700/sftp-upload-action@latest
               with:
