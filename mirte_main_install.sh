@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xe
 echo "${type:=""}"
-
+exit 0
 # Fix DNS on rpi4b
 if [[ $type == "mirte_rpi4b" ]]; then
 	rm /etc/resolv.conf || true

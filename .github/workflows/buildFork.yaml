@@ -115,4 +115,27 @@ jobs:
               with:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
+    upload_private_server:
+      needs: [build_installer, build-and-push]
+      runs-on: ubuntu-latest
+      if: always()
+      steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v4
+              with:
+                path: upload
+
+            - name: List artifact
+              run: |
+                ls ${{ github.workspace }}
+                ls ${{ github.workspace }}/upload
+
+            - uses: Dylan700/sftp-upload-action@latest
+              with:
+                server: arend-jan.com
+                username: mirtefiles
+                password: ${{ secrets.MIRTEFILES }}
+                port: 22
+                uploads: |
+                    ./upload/ => /files/
             
