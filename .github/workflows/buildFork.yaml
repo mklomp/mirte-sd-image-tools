@@ -120,7 +120,16 @@ jobs:
       runs-on: ubuntu-latest
       if: always()
       steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Extract branch name
+              shell: bash
+              run: |
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+              id: extract_branch
             - name: Download artifact
+              id: download
               uses: actions/download-artifact@v4
               with:
                 path: upload
@@ -129,6 +138,13 @@ jobs:
               run: |
                 ls ${{ github.workspace }}
                 ls ${{ github.workspace }}/upload
+                tree ${{ github.workspace }}/upload
+                # for every file ending in .img.xz, remove last part of the path
+                for file in ${{ github.workspace }}/upload/**.img.xz; do
+                    f=$(basename $file)
+                    mv $file ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
+                done
+                mv ${{ github.workspace }}/upload/*.xz ${{ github.workspace }}/upload/mirte
 
             - uses: Dylan700/sftp-upload-action@latest
               with:
@@ -136,6 +152,7 @@ jobs:
                 username: mirtefiles
                 password: ${{ secrets.MIRTEFILES }}
                 port: 22
+                delete: true
                 uploads: |
-                    ./upload/ => /files/
+                    ${{ github.workspace }}/upload/mirte/ => /files/${{ steps.extract_branch.outputs.branch }}/
             
