@@ -158,7 +158,7 @@ jobs:
                     rm files/${{ steps.extract_branch.outputs.branch }}/*
                     rmdir files/${{ steps.extract_branch.outputs.branch }}
                     mkdir files/${{ steps.extract_branch.outputs.branch }}
-                    put upload/mirte/ /files/${{ steps.extract_branch.outputs.branch }}/
+                    put upload/mirte/* /files/${{ steps.extract_branch.outputs.branch }}/
                     bye
                 ASDF
             # - uses: Dylan700/sftp-upload-action@latest
