@@ -119,7 +119,6 @@ jobs:
       needs: [ build-and-push] # build_installer,
       runs-on: ubuntu-latest
       if: always()
-      allow_failure: true
       steps:
             - name: Checkout repository
               uses: actions/checkout@v4
