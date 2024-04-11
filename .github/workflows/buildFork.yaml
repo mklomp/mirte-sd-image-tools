@@ -116,7 +116,7 @@ jobs:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
     upload_private_server:
-      needs: [ build-and-push] # build_installer,
+      needs: [build_installer, build-and-push] # 
       runs-on: ubuntu-latest
       if: always()
       steps:
@@ -161,13 +161,3 @@ jobs:
                     put upload/mirte/* /files/${{ steps.extract_branch.outputs.branch }}/
                     bye
                 ASDF
-            # - uses: Dylan700/sftp-upload-action@latest
-            #   with:
-            #     server: arend-jan.com
-            #     username: mirtefiles
-            #     password: 
-            #     port: 22
-            #     delete: true
-            #     uploads: |
-            #         ${{ github.workspace }}/upload/mirte/ => /files/${{ steps.extract_branch.outputs.branch }}/
-            
