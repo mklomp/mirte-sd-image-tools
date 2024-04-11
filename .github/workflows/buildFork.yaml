@@ -116,7 +116,7 @@ jobs:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
     upload_private_server:
-      needs: [build_installer, build-and-push]
+      needs: [ build-and-push] # build_installer,
       runs-on: ubuntu-latest
       if: always()
       allow_failure: true
@@ -148,14 +148,27 @@ jobs:
                     echo ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
                     mv $file ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
                 done
-
-            - uses: Dylan700/sftp-upload-action@latest
-              with:
-                server: arend-jan.com
-                username: mirtefiles
-                password: ${{ secrets.MIRTEFILES }}
-                port: 22
-                delete: true
-                uploads: |
-                    ${{ github.workspace }}/upload/mirte/ => /files/${{ steps.extract_branch.outputs.branch }}/
+            - name: Upload to private server
+              run: |
+                sudo apt update
+                sudo apt install sshpass
+                mkdir -p ~/.ssh
+                ssh-keyscan arend-jan.com >> ~/.ssh/known_hosts
+                export SSHPASS=${{ secrets.MIRTEFILES }}
+                sshpass -e sftp mirtefiles@arend-jan.com << ASDF
+                    rm files/${{ steps.extract_branch.outputs.branch }}/*
+                    rmdir files/${{ steps.extract_branch.outputs.branch }}
+                    mkdir files/${{ steps.extract_branch.outputs.branch }}
+                    put upload/mirte/ /files/${{ steps.extract_branch.outputs.branch }}/
+                    bye
+                ASDF
+            # - uses: Dylan700/sftp-upload-action@latest
+            #   with:
+            #     server: arend-jan.com
+            #     username: mirtefiles
+            #     password: 
+            #     port: 22
+            #     delete: true
+            #     uploads: |
+            #         ${{ github.workspace }}/upload/mirte/ => /files/${{ steps.extract_branch.outputs.branch }}/
             
