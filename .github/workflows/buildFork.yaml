@@ -155,9 +155,13 @@ jobs:
                 ssh-keyscan arend-jan.com >> ~/.ssh/known_hosts
                 export SSHPASS=${{ secrets.MIRTEFILES }}
                 sshpass -e sftp mirtefiles@arend-jan.com << ASDF
-                    rm files/${{ steps.extract_branch.outputs.branch }}/*
-                    rmdir files/${{ steps.extract_branch.outputs.branch }}
+                    rm files/${{ steps.extract_branch.outputs.branch }}_old/*
+                    rmdir files/${{ steps.extract_branch.outputs.branch }}_old
+                    rename files/${{ steps.extract_branch.outputs.branch }} files/${{ steps.extract_branch.outputs.branch }}_old
                     mkdir files/${{ steps.extract_branch.outputs.branch }}
+                    ! touch uploading.txt
+                    put uploading.txt files/${{ steps.extract_branch.outputs.branch }}/uploading.txt
                     put upload/mirte/* /files/${{ steps.extract_branch.outputs.branch }}/
+                    rm files/${{ steps.extract_branch.outputs.branch }}/uploading.txt
                     bye
                 ASDF
