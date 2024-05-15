@@ -1,6 +1,5 @@
 #!/bin/bash
 set -xe
-echo "trigger rerun"
 echo "${type:=""}"
 # Fix DNS on rpi4b
 if [[ $type == "mirte_rpi4b" ]]; then
