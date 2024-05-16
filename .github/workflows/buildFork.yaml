@@ -66,12 +66,16 @@ jobs:
       needs: [shellcheck, shfmt, build-and-push]
       steps:
             - name: Maximize build space
-              uses: AdityaGarg8/remove-unwanted-software@v2
+              uses: AdityaGarg8/remove-unwanted-software@v3
               with:
                 remove-android: 'true'
                 remove-dotnet: 'true'
                 remove-haskell: 'true'
                 remove-docker-images: 'true'
+                remove-large-packages: 'true'
+                remove-cached-tools: 'true'
+                remove-codeql: 'true'
+                remove-swapfile: 'true'
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Extract branch name
