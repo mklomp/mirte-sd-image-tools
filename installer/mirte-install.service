@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/root/mirte-install.sh
-Restart=always
+Restart=no
 User=root
 
 [Install]
