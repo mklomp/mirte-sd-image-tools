@@ -62,7 +62,10 @@ provisioner "file" {
       "cp /root/mirte-install.service /etc/systemd/system/",
       "systemctl enable mirte-install.service",
       "md5sum </root/mirte_orangepi3b.img >/root/mirte_orangepi3b.img.md5sum",
-      "apt install progress -y"
+      "apt install progress -y",
+      "wget https://mirte.arend-jan.com/files/fixes/uboot/linux-u-boot-orangepi3b-edge_24.2.1_arm64__2023.10-S095b-P0000-H264e-V49ed-B11a8-R448a.deb",
+      "sudo apt install ./linux-u-boot-orangepi3b-edge_24.2.1_arm64__2023.10-S095b-P0000-H264e-V49ed-B11a8-R448a.deb",
+      "rm linux-u-boot-orangepi3b-edge_24.2.1_arm64__2023.10-S095b-P0000-H264e-V49ed-B11a8-R448a.deb"
     ]
   }
 }
