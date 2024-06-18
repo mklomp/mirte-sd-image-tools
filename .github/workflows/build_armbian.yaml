@@ -1,0 +1,30 @@
+name: test
+
+on:
+  push:
+    paths:
+      - .github/workflows/build_armbian.yaml
+
+  
+jobs:
+    test-push:
+        # container:
+        #   image: ubuntu:22.04
+        #   options: --privileged
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                image: [ 
+                        # mirte_orangepizero2,
+                        orangepi3b
+                        ]
+            fail-fast: false
+        steps: 
+            - uses: armbian/build@main
+              with:
+                armbian_token:     "${{ secrets.GITHUB_TOKEN }}"  # GitHub token
+                armbian_release:   "noble"                        # userspace
+                armbian_target:    "build"                        # build=image, kernel=kernel
+                armbian_board:     "${{ matrix.image }}"                   # build target
+                armbian_ui:       "minimal"                      # desktop, minimal
+                armbian_kernel_branch: "edge"
