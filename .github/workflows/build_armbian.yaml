@@ -7,15 +7,11 @@ on:
 
   
 jobs:
-    test-push:
-        # container:
-        #   image: ubuntu:22.04
-        #   options: --privileged
+    build-armbian:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                image: [ 
-                        # mirte_orangepizero2,
+                image: [
                         orangepi3b,
                         orangepizero2,
                         orangepizero
