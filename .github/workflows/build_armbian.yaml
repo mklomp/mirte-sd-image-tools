@@ -26,12 +26,11 @@ jobs:
               repository: armbian/build
               ref: main
               path: build
-          - run: cd build
-          - uses: armbian/build@v24.2.1
+          - run: |
+              cd build
+              ./compile.sh build BOARD=${{ matrix.image }} BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=noble
+          - uses: actions/upload-artifact@v4
             with:
-              armbian_token:     "${{ secrets.GITHUB_TOKEN }}"  # GitHub token
-              armbian_release:   "noble"                        # userspace
-              armbian_target:    "build"                        # build=image, kernel=kernel
-              armbian_board:     "${{ matrix.image }}"                   # build target
-              armbian_ui:       "minimal"                      # desktop, minimal
-              armbian_kernel_branch: "edge"
+              name: build_${{ matrix.image }}
+              path: build/output/images/Armbian_*.img.xz
+          
