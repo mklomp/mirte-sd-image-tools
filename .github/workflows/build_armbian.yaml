@@ -20,11 +20,18 @@ jobs:
                         ]
             fail-fast: false
         steps: 
-            - uses: armbian/build@v24.2.1
-              with:
-                armbian_token:     "${{ secrets.GITHUB_TOKEN }}"  # GitHub token
-                armbian_release:   "noble"                        # userspace
-                armbian_target:    "build"                        # build=image, kernel=kernel
-                armbian_board:     "${{ matrix.image }}"                   # build target
-                armbian_ui:       "minimal"                      # desktop, minimal
-                armbian_kernel_branch: "edge"
+          - name: Checkout
+            uses: actions/checkout@v3
+            with:
+              repository: armbian/build
+              ref: main
+              path: build
+          - run: cd build
+          - uses: armbian/build@v24.2.1
+            with:
+              armbian_token:     "${{ secrets.GITHUB_TOKEN }}"  # GitHub token
+              armbian_release:   "noble"                        # userspace
+              armbian_target:    "build"                        # build=image, kernel=kernel
+              armbian_board:     "${{ matrix.image }}"                   # build target
+              armbian_ui:       "minimal"                      # desktop, minimal
+              armbian_kernel_branch: "edge"
