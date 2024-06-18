@@ -20,7 +20,7 @@ jobs:
                         ]
             fail-fast: false
         steps: 
-            - uses: armbian/build@main
+            - uses: armbian/build@v24.2.1
               with:
                 armbian_token:     "${{ secrets.GITHUB_TOKEN }}"  # GitHub token
                 armbian_release:   "noble"                        # userspace
