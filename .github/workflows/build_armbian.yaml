@@ -32,5 +32,5 @@ jobs:
           - uses: actions/upload-artifact@v4
             with:
               name: build_${{ matrix.image }}
-              path: build/output/images/Armbian_*.img.xz
+              path: build/output/images/*.img
           
