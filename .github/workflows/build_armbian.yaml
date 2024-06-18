@@ -16,7 +16,9 @@ jobs:
             matrix:
                 image: [ 
                         # mirte_orangepizero2,
-                        orangepi3b
+                        orangepi3b,
+                        orangepizero2,
+                        orangepizero
                         ]
             fail-fast: false
         steps: 
