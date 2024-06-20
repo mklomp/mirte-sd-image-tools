@@ -58,6 +58,7 @@ jobs:
                     sudo apt install qemu-user-static parted -y
                     ./packerInstall.sh
                     ls
+                    tree
                     ls build
                     mv build/*.img.xz build/mirte_orangepi3b.img.xz
                     xz -d build/mirte_orangepi3b.img.xz
@@ -81,6 +82,8 @@ jobs:
               with:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
-            - uses: ./.github/workflows/upload.yaml
-              with:
+    upload_installer:
+            needs: [build_installer]
+            uses: ./.github/workflows/upload.yaml
+            with:
                 name: "installer"

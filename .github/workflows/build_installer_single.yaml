@@ -12,7 +12,7 @@ jobs:
         uses: ./.github/workflows/shellcheck.yml
     shfmt:
         uses: ./.github/workflows/shfmt.yml
-    build_installer:
+    build_installer_single:
         uses: ./.github/workflows/build_installer.yaml
         with:
             download_artifacts: false # download from server
