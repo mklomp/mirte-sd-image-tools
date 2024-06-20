@@ -29,10 +29,21 @@ fi
 # write the image to the emmc
 echo "Writing $IMAGE to $EMMC_DEV"
 ./set-text.sh "Writing $IMAGE to $EMMC_DEV"
+
+# start while loop in background, store pid
+while true; do
+	sleep 1
+	./set-text.sh $'Writing $IMAGE to $EMMC_DEV\n$(progress)'
+
+done &
+PID=$!
+
 # dd if=$IMAGE of=$EMMC_DEV bs=4M status=progress
 cat $IMAGE >$EMMC_DEV
 # sync
 sync
+# kill the while loop
+kill $PID
 ./set-text.sh "Mirte image written to $EMMC_DEV"
 sleep 10
 ./set-text.sh "Verifying image"
