@@ -1,0 +1,76 @@
+name: Build and Upload installer
+
+on:
+    - push
+    - workflow_call
+permissions:
+    contents: write
+  
+jobs:
+    shellcheck:
+        uses: ./.github/workflows/shellcheck.yml
+    shfmt:
+        uses: ./.github/workflows/shfmt.yml
+    build_installer:
+      runs-on: ubuntu-latest
+      needs: [shellcheck, shfmt ]
+      steps:
+            - name: Maximize build space
+              uses: AdityaGarg8/remove-unwanted-software@v3
+              if: ${{ !env.ACT }}
+              with:
+                remove-android: 'true'
+                remove-dotnet: 'true'
+                remove-haskell: 'true'
+                remove-docker-images: 'true'
+                remove-large-packages: 'true'
+                remove-cached-tools: 'true'
+                remove-codeql: 'true'
+                remove-swapfile: 'true'
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Extract branch name
+              shell: bash
+              run: |
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+              id: extract_branch
+            - name: download artifacts
+              run: |
+                mkdir build
+                cd build
+                wget https://mirte.arend-jan.com/files/mirte-master/mirte_orangepi3b.img.xz
+                cd ..
+            - name: Create installer
+              run: |
+                    
+                    sudo apt update
+                    sudo apt install qemu-user-static parted -y
+                    ./packerInstall.sh
+                    ls
+                    ls build
+                    mv build/*.img.xz build/mirte_orangepi3b.img.xz
+                    xz -d build/mirte_orangepi3b.img.xz
+                    df -h
+                    rm -f workdir/*.img
+
+                    ls -l build
+                    df -h
+                    sudo packer build buildInstaller.pkr.hcl # create installer image
+                    df -h
+                    sudo rm -rf /root/.cache/packer
+                    df -h
+                    rm -f build/${{ matrix.image }}.img
+                    rm -f workdir/mirte_orangepi3b.img
+                    df -h
+                    ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
+                    df -h
+            - name: artifacts
+              uses: actions/upload-artifact@v3
+              if: always()
+              with:
+                path: build/*.img.xz
+                name: mirte_master_installer_orangepi3b
+            - uses: ./.github/workflows/upload.yaml
+              with:
+                name: "installer"
