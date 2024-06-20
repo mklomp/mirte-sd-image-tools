@@ -12,3 +12,4 @@ shell_workdir/
 repos.yaml
 repos.old.yaml
 artifacts/
+artifacts_temp/

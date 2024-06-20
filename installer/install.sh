@@ -38,3 +38,5 @@ cd /root/ || exit 1
 # 	tr -d \" |
 # 	wget -qi -
 wget https://mirte.arend-jan.com/files/telemetrix/release/Telemetrix4RpiPico.uf2
+
+pip install git+https://github.com/arendjan/tmx-pico-aio.git@modules
