@@ -33,7 +33,8 @@ echo "Writing $IMAGE to $EMMC_DEV"
 # start while loop in background, store pid
 while true; do
 	sleep 1
-	./set-text.sh $'Writing $IMAGE to $EMMC_DEV\n$(progress)'
+	NEWLINE=$'\n'
+	./set-text.sh "Writing $IMAGE to $EMMC_DEV${NEWLINE}$(progress)"
 
 done &
 PID=$!
