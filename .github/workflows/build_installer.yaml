@@ -1,7 +1,12 @@
 name: Build and Upload installer
 
 on:
-    - workflow_call
+   workflow_call:
+        inputs:
+            download_artifacts:
+                required: false
+                type: boolean
+                default: true
 permissions:
     contents: write
   
@@ -35,11 +40,17 @@ jobs:
                 echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
               id: extract_branch
             - name: download artifacts
+              if: ${{ !inputs.download_artifacts }}
               run: |
                 mkdir build
                 cd build
                 wget https://mirte.arend-jan.com/files/${{ steps.extract_branch.outputs.branch }}_image/mirte_orangepi3b.img.xz
                 cd ..
+            - name: download from current build
+              uses: actions/download-artifact@v3
+              if: ${{ inputs.download_artifacts }}
+              with:
+                path: build
             - name: Create installer
               run: |
                     
