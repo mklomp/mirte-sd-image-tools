@@ -1,7 +1,6 @@
 name: Build and Upload installer
 
 on:
-    - push
     - workflow_call
 permissions:
     contents: write
@@ -39,7 +38,7 @@ jobs:
               run: |
                 mkdir build
                 cd build
-                wget https://mirte.arend-jan.com/files/mirte-master/mirte_orangepi3b.img.xz
+                wget https://mirte.arend-jan.com/files/${{ steps.extract_branch.outputs.branch }}_image/mirte_orangepi3b.img.xz
                 cd ..
             - name: Create installer
               run: |
