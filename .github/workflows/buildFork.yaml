@@ -67,6 +67,7 @@ jobs:
       steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v3
+              if: ${{ !env.ACT }}
               with:
                 remove-android: 'true'
                 remove-dotnet: 'true'
@@ -152,6 +153,7 @@ jobs:
                     mv $file ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
                 done
             - name: Upload to private server
+              if: ${{ !env.ACT }}
               run: |
                 sudo apt update
                 sudo apt install sshpass
