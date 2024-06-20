@@ -58,9 +58,9 @@ jobs:
                     sudo apt install qemu-user-static parted -y
                     ./packerInstall.sh
                     ls
-                    tree
+                    # tree
                     ls build
-                    mv build/**/*.img.xz build/mirte_orangepi3b.img.xz
+                    mv build/**/*.img.xz build/mirte_orangepi3b.img.xz || mv build/*.img.xz build/mirte_orangepi3b.img.xz || true
                     xz -d build/mirte_orangepi3b.img.xz
                     df -h
                     rm -f workdir/*.img
