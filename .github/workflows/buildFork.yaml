@@ -63,9 +63,11 @@ jobs:
                   files: build/*.img.xz
       
     upload_private_server:
+      needs: [build-and-push]
       uses: ./.github/workflows/upload.yaml
       with:
         name: 'image'
     build_installer_all:
+      needs: [upload_private_server]
       uses: ./.github/workflows/build_installer.yaml
             
