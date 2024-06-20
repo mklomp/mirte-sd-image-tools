@@ -60,7 +60,7 @@ jobs:
                     ls
                     tree
                     ls build
-                    mv build/*.img.xz build/mirte_orangepi3b.img.xz
+                    mv build/**/*.img.xz build/mirte_orangepi3b.img.xz
                     xz -d build/mirte_orangepi3b.img.xz
                     df -h
                     rm -f workdir/*.img
