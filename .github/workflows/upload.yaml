@@ -5,6 +5,9 @@ on:
       name:
         required: true
         type: string
+
+permissions:
+    contents: write
 jobs:
     upload_private_server:
      
