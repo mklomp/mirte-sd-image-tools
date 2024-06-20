@@ -1,7 +1,7 @@
 name: Build and Upload installer
 
 on: 
-  - push:
+  push:
       branches:
         - build_installer
 permissions:
