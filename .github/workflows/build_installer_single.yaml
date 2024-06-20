@@ -1,6 +1,9 @@
 name: Build and Upload installer
 
-on: []
+on: 
+  - push:
+      branches:
+        - build_installer
 permissions:
     contents: write
   
