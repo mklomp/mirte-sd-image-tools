@@ -87,3 +87,4 @@ jobs:
             uses: ./.github/workflows/upload.yaml
             with:
                 name: "installer"
+            secrets: inherit

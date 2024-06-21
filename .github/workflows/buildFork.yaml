@@ -71,4 +71,5 @@ jobs:
     build_installer_all:
       needs: [upload_private_server]
       uses: ./.github/workflows/build_installer.yaml
+      secrets: inherit
             
