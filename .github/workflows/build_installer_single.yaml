@@ -1,0 +1,18 @@
+name: Build and Upload installer
+
+on: 
+  push:
+      branches:
+        - build_installer
+permissions:
+    contents: write
+  
+jobs:
+    shellcheck:
+        uses: ./.github/workflows/shellcheck.yml
+    shfmt:
+        uses: ./.github/workflows/shfmt.yml
+    build_installer_single:
+        uses: ./.github/workflows/build_installer.yaml
+        with:
+            download_artifacts: false # download from server

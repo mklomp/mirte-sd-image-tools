@@ -61,113 +61,15 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/')
               with:
                   files: build/*.img.xz
-    build_installer:
-      runs-on: ubuntu-latest
-      needs: [shellcheck, shfmt, build-and-push]
-      steps:
-            - name: Maximize build space
-              uses: AdityaGarg8/remove-unwanted-software@v3
-              if: ${{ !env.ACT }}
-              with:
-                remove-android: 'true'
-                remove-dotnet: 'true'
-                remove-haskell: 'true'
-                remove-docker-images: 'true'
-                remove-large-packages: 'true'
-                remove-cached-tools: 'true'
-                remove-codeql: 'true'
-                remove-swapfile: 'true'
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: Extract branch name
-              shell: bash
-              run: |
-                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
-              id: extract_branch
-            - name: download artifacts
-              uses: actions/download-artifact@v4
-              with:
-                name: mirte_master_mirte_orangepi3b
-                path: build
-            - name: Create installer
-              run: |
-                    
-                    sudo apt update
-                    sudo apt install qemu-user-static parted -y
-                    ./packerInstall.sh
-                    ls
-                    ls build
-                    mv build/*.img.xz build/mirte_orangepi3b.img.xz
-                    xz -d build/mirte_orangepi3b.img.xz
-                    df -h
-                    rm -f workdir/*.img
-
-                    ls -l build
-                    df -h
-                    sudo packer build buildInstaller.pkr.hcl # create installer image
-                    df -h
-                    sudo rm -rf /root/.cache/packer
-                    df -h
-                    rm -f build/${{ matrix.image }}.img
-                    rm -f workdir/mirte_orangepi3b.img
-                    df -h
-                    ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
-                    df -h
-            - name: artifacts
-              uses: actions/upload-artifact@v4
-              if: always()
-              with:
-                path: build/*.img.xz
-                name: mirte_master_installer_orangepi3b
+      
     upload_private_server:
-      needs: [build_installer, build-and-push] # 
-      runs-on: ubuntu-latest
-      if: always()
-      steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: Extract branch name
-              shell: bash
-              run: |
-                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
-              id: extract_branch
-            - name: Download artifact
-              id: download
-              uses: actions/download-artifact@v4
-              with:
-                path: upload
-
-            - name: List artifact
-              run: |
-                ls ${{ github.workspace }}
-                mkdir ${{ github.workspace }}/upload/mirte
-                ls ${{ github.workspace }}/upload
-                tree ${{ github.workspace }}/upload
-                # for every file ending in .img.xz, remove last part of the path
-                for file in $(find ${{ github.workspace }}/upload/ -name '*.img.xz'); do
-                    f=$(basename $file)
-                    echo $f
-                    echo ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
-                    mv $file ${{ github.workspace }}/upload/mirte/"${f%_*_*_*_*}.${f#*.}"
-                done
-            - name: Upload to private server
-              if: ${{ !env.ACT }}
-              run: |
-                sudo apt update
-                sudo apt install sshpass
-                mkdir -p ~/.ssh
-                ssh-keyscan arend-jan.com >> ~/.ssh/known_hosts
-                export SSHPASS=${{ secrets.MIRTEFILES }}
-                sshpass -e sftp mirtefiles@arend-jan.com << ASDF
-                    rm files/${{ steps.extract_branch.outputs.branch }}_old/*
-                    rmdir files/${{ steps.extract_branch.outputs.branch }}_old
-                    rename files/${{ steps.extract_branch.outputs.branch }} files/${{ steps.extract_branch.outputs.branch }}_old
-                    mkdir files/${{ steps.extract_branch.outputs.branch }}
-                    ! touch uploading.txt
-                    put uploading.txt files/${{ steps.extract_branch.outputs.branch }}/uploading.txt
-                    put upload/mirte/* /files/${{ steps.extract_branch.outputs.branch }}/
-                    rm files/${{ steps.extract_branch.outputs.branch }}/uploading.txt
-                    bye
-                ASDF
+      needs: [build-and-push]
+      uses: ./.github/workflows/upload.yaml
+      with:
+        name: 'image'
+      secrets: inherit
+    build_installer_all:
+      needs: [upload_private_server]
+      uses: ./.github/workflows/build_installer.yaml
+      secrets: inherit
+            

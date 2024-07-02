@@ -25,7 +25,7 @@ async def ssd1306(my_board):
     while True:
         try:
             await asyncio.sleep(1)
-            with open('./text.txt', 'r') as file:
+            with open('/root/text.txt', 'r') as file:
                 txt = file.read()
             if txt != last_txt:
                 print("send text to display: ", txt)
