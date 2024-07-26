@@ -100,5 +100,8 @@ jobs:
       if: ${{ inputs.mirte_type == 'mirte-master' }}
       needs: [upload_private_server]
       uses: ./.github/workflows/build_installer.yaml
+      with:
+        # download_artifacts: true
+        sbc: ${{ inputs.sbc }}
       secrets: inherit
               
