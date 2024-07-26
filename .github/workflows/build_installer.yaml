@@ -10,7 +10,7 @@ on:
                 required: false
                 type: boolean
                 default: true
-            sbc:
+            sbc: # TODO: add this value everywhere
                 required: false
                 type: string
                 default: orangepi3b
@@ -90,9 +90,9 @@ jobs:
               with:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
-    upload_installer:
-            needs: [build_installer]
-            uses: ./.github/workflows/upload.yaml
-            with:
-                name: "installer"
-            secrets: inherit
+    # upload_installer:
+    #         needs: [build_installer]
+    #         uses: ./.github/workflows/upload.yaml
+    #         with:
+    #             name: "installer"
+    #         secrets: inherit

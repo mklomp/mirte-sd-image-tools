@@ -88,17 +88,17 @@ jobs:
                   files: build/*.img.xz
 
     # Only if mirte-master
-    upload_private_server:
-      if: ${{ inputs.mirte_type == 'mirte-master' }}
-      needs: [build-and-push]
-      uses: ./.github/workflows/upload.yaml
-      with:
-        name: 'image'
-      secrets: inherit
+    # upload_private_server:
+    #   if: ${{ inputs.mirte_type == 'mirte-master' }} && false
+    #   needs: [build-and-push]
+    #   uses: ./.github/workflows/upload.yaml
+    #   with:
+    #     name: 'image'
+    #   secrets: inherit
 
     build_installer_all:
       if: ${{ inputs.mirte_type == 'mirte-master' }}
-      needs: [upload_private_server]
+      needs: [build-and-push]
       uses: ./.github/workflows/build_installer.yaml
       with:
         # download_artifacts: true
