@@ -33,7 +33,7 @@ jobs:
                 if [[ "${{ inputs.mirte_type }}" != "default" ]]; then
                     echo "artifact_name=${{ inputs.mirte_type }}_${{ inputs.sbc }}" | tr '-' '_' >> $GITHUB_OUTPUT
                 else
-                                echo "artifact_name=mirte_${{ inputs.sbc }}" >> $GITHUB_OUTPUT
+                    echo "artifact_name=${{ inputs.sbc }}" >> $GITHUB_OUTPUT
                 fi
               id: extract_branch
             - name: setup this repo
