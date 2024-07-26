@@ -1,5 +1,9 @@
 name: Build and Upload
 
+
+# build a single image, based on sbc and type inputs.
+# uploads to artifacts and releases
+# runs installer build if mirte-master
 on:
   workflow_call:
     inputs:
@@ -11,6 +15,23 @@ on:
             required: false
             type: string
             default: orangepizero2
+  workflow_dispatch:
+    inputs:
+        mirte_type:
+            required: true
+            type: choice
+            default: default
+            options:
+              - default
+              - mirte-master
+        sbc:
+            required: false
+            type: choice
+            default: orangepizero2
+            options:
+              - orangepizero2
+              - orangepi3b
+              - rpi4b
 
 permissions:
     contents: write
@@ -65,6 +86,8 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/')
               with:
                   files: build/*.img.xz
+
+    # Only if mirte-master
     upload_private_server:
       if: ${{ inputs.mirte_type == 'mirte-master' }}
       needs: [build-and-push]

@@ -1,5 +1,8 @@
 name: Build and Upload installer
 
+
+# This will take the image from the previous build and create an installer image.
+# TODO: don't upload to server but to artifacts
 on:
    workflow_call:
         inputs:

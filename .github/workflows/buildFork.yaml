@@ -1,7 +1,7 @@
 name: Build and Upload
 
 on:
-    [push]
+    [push] # todo add on release build
 permissions:
     contents: write
   
@@ -23,7 +23,7 @@ jobs:
         with:
           sbc: ${{ matrix.image }}
         secrets: inherit
-    build-and-push-master:
+    master-build-and-push:
         needs: [shellcheck, shfmt]
         # strategy:
         #     matrix:
