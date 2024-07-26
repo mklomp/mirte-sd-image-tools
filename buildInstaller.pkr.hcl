@@ -63,7 +63,7 @@ provisioner "file" {
     inline_shebang = "/bin/bash -e"
     inline = [
       "chmod +x /root/install.sh",
-      "/root/install.sh"
+      # "/root/install.sh"
     
     ]
   }
