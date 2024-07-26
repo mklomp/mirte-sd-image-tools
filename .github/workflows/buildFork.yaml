@@ -14,11 +14,8 @@ jobs:
         # container:
         #   image: ubuntu:22.04
         #   options: --privileged
-        runs-on: ubuntu-latest
+        # runs-on: ubuntu-latest
         needs: [shellcheck, shfmt]
-        uses: ./.github/workflows/build_single.yaml
-        with: 
-          download_artifacts: false
         strategy:
             matrix:
                 image: [ 
@@ -30,16 +27,10 @@ jobs:
                         ]
         
             fail-fast: false
-
+        uses: ./.github/workflows/build_single.yaml
+        with:
+          mirte_type: ${{ matrix.type }}
+          sbc: ${{ matrix.image }}
+        secrets: inherit
       
-    upload_private_server:
-      needs: [build-and-push]
-      uses: ./.github/workflows/upload.yaml
-      with:
-        name: 'image'
-      secrets: inherit
-    build_installer_all:
-      needs: [upload_private_server]
-      uses: ./.github/workflows/build_installer.yaml
-      secrets: inherit
             

@@ -65,3 +65,17 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/')
               with:
                   files: build/*.img.xz
+    upload_private_server:
+      if: ${{ inputs.mirte_type == 'mirte-master' }}
+      needs: [build-and-push]
+      uses: ./.github/workflows/upload.yaml
+      with:
+        name: 'image'
+      secrets: inherit
+
+    build_installer_all:
+      if: ${{ inputs.mirte_type == 'mirte-master' }}
+      needs: [upload_private_server]
+      uses: ./.github/workflows/build_installer.yaml
+      secrets: inherit
+              
