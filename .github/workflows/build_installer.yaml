@@ -58,7 +58,7 @@ jobs:
               if: ${{ inputs.download_artifacts }}
               with:
                 path: build
-                name: mirte_master_mirte_${{ inputs.sbc }}
+                name: mirte_master_${{ inputs.sbc }}
             - name: Create installer
               run: |
                     
