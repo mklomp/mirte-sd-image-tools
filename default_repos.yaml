@@ -9,7 +9,7 @@ repositories:
     version: master
   mirte-install-scripts:
     type: git
-    url: https://github.com/mklomp/mirte-install-scripts.git
+    url: https://github.com/arendjan/mirte-install-scripts.git
     version: ros2
   mirte-telemetrix-aio:
     type: git
@@ -21,7 +21,7 @@ repositories:
     version: master
   mirte-ros-packages:
     type: git
-    url: https://github.com/mklomp/mirte-ros-packages.git
+    url: https://github.com/arendjan/mirte-ros-packages.git
     version: ros2
   mirte-oled-images:
     type: git

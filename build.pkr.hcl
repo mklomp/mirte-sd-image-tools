@@ -49,8 +49,18 @@ source "arm-image" "mirte_orangepizero2_ros2" {
   qemu_binary = "qemu-aarch64-static"
 }
 
+source "arm-image" "mirte_orangepi3b_ros2" {
+  image_type = "armbian"
+  iso_url = "https://armbian.hosthatch.com/archive/orangepi3b/archive/Armbian_23.8.2_Orangepi3b_jammy_edge_6.5.2.img.xz"
+  iso_checksum = "sha256:59f0f58073ff27b95e6187ed644e952a60fd51e70fe6f9b64e18c966fe130069"
+  output_filename = "./workdir/mirte_orangepi3b_ros2.img"
+  target_image_size = 15*1024*1024*1024
+  qemu_binary = "qemu-aarch64-static"
+}
+  
+
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero",  "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_rpi4b", "source.arm-image.mirte_orangepizero2_ros2"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero",  "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_rpi4b", "source.arm-image.mirte_orangepizero2_ros2", "source.arm-image.mirte_orangepi3b_ros2"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
