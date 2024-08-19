@@ -2,6 +2,11 @@
 set -xe
 echo "${type:=""}"
 
+# disable ipv6, as not all package repositories are available over ipv6
+sudo tee /etc/apt/apt.conf.d/99force-ipv4 <<EOF
+Acquire::ForceIPv4 "true";
+EOF
+
 # Fix DNS on rpi4b
 if [[ $type == "mirte_rpi4b" ]]; then
 	rm /etc/resolv.conf || true
