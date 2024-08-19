@@ -8,10 +8,11 @@ Acquire::ForceIPv4 "true";
 EOF
 
 # Fix DNS on rpi4b
-if [[ $type == "mirte_rpi4b" ]]; then
-	rm /etc/resolv.conf || true
-	echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
-fi
+# if [[ $type == "mirte_rpi4b" ]]; then
+rm /etc/resolv.conf || true
+echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
+# fi
+nslookup ports.ubuntu.com || true
 
 chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo # something with sudo otherwise complaining about "sudo: /usr/bin/sudo must be owned by uid 0 and have the setuid bit set"
 . /usr/local/src/mirte/settings.sh                        # load settings
