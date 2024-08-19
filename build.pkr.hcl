@@ -51,8 +51,8 @@ source "arm-image" "mirte_orangepizero2_ros2" {
 
 source "arm-image" "mirte_orangepi3b_ros2" {
   image_type = "armbian"
-  iso_url = "https://armbian.hosthatch.com/archive/orangepi3b/archive/Armbian_23.8.2_Orangepi3b_jammy_edge_6.5.2.img.xz"
-  iso_checksum = "sha256:59f0f58073ff27b95e6187ed644e952a60fd51e70fe6f9b64e18c966fe130069"
+  iso_url = "https://mirte.arend-jan.com/files/test/Armbian-unofficial_24.8.0-trunk_Orangepi3b_jammy_edge_6.10.1.img"
+  iso_checksum = "sha256:313f1278445eb3f44f5ff29ce7d2288648a3fb450a5b0a0ca5830c442cf51821"
   output_filename = "./workdir/mirte_orangepi3b_ros2.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
