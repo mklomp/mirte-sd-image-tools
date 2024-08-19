@@ -23,6 +23,10 @@ repositories:
     type: git
     url: https://github.com/arendjan/mirte-ros-packages.git
     version: ros2
+  mirte-telemetrix-cpp:
+    type: git
+    url: https://github.com/arendjan/mirte-telemetrix-cpp.git
+    version: main
   mirte-oled-images:
     type: git
     url: https://github.com/mirte-robot/mirte-oled-images.git
