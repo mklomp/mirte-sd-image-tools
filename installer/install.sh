@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# disable ipv6, as not all package repositories are available over ipv6
+sudo tee /etc/apt/apt.conf.d/99force-ipv4 <<EOF
+Acquire::ForceIPv4 "true";
+EOF
+
+rm /etc/resolv.conf || true
+echo "nameserver 8.8.8.8" >/etc/resolv.conf || true 
+
 chmod +x /root/mirte-install.sh
 cp /root/mirte-install.service /etc/systemd/system/
 systemctl enable mirte-install.service
