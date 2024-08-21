@@ -1,7 +1,9 @@
 name: Build and Upload
 
 on:
-    [push]
+  push:
+      branches:
+          - main
 permissions:
     contents: write
   
@@ -21,19 +23,30 @@ jobs:
                 image: [
                         mirte_orangepi3b_ros2
                         ]
+                type: [
+                  default, mirte-master
+                ]
             fail-fast: false
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-
+            - name: Extract branch name
+              shell: bash
+              run: |
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+              id: extract_branch
+            
             - name: setup this repo
               run: |
                     sudo apt update
                     sudo apt install qemu-user-static parted -y
                     ./packerInstall.sh
-            # - name: setup build files
-            #   run: |
-            #         echo -e "#!/bin/bash\n\nexport INSTALL_DOCS=false\nexport INSTALL_ROS=false\nexport INSTALL_ARDUINO=false\nexport INSTALL_WEB=false\nexport INSTALL_PYTHON=false\nexport INSTALL_JUPYTER=false\nexport EXPIRE_PASSWD=true\nexport INSTALL_NETWORK=true\nexport INSTALL_PROVISIONING=true\nexport INSTALL_VSCODE=true\nexport INSTALL_PAM=true\nexport EXTRA_SCRIPTS=()\nexport PARALLEL=true" > settings.sh
+
+            - name: setup build files
+              run: |
+                    echo -e "MIRTE_TYPE=${{ matrix.type }}" >> settings.sh
+                    cat settings.sh
             # - name: setup repos
             #   run: |
             #     cp main_repos.yaml repos.yaml
@@ -47,7 +60,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 path: build/*.img.xz
-                name: ${{ matrix.image }}
+                name: ${{ matrix.image }}-${{ matrix.type }}-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.sha_short }}
             - name: Push to release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
