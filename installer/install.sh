@@ -6,7 +6,7 @@ Acquire::ForceIPv4 "true";
 EOF
 
 rm /etc/resolv.conf || true
-echo "nameserver 8.8.8.8" >/etc/resolv.conf || true 
+echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
 
 chmod +x /root/mirte-install.sh
 cp /root/mirte-install.service /etc/systemd/system/
