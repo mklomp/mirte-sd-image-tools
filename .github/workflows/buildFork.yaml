@@ -15,8 +15,8 @@ jobs:
         strategy:
             matrix:
                 image: [ 
-                        mirte_orangepizero2,
-                        mirte_orangepi3b
+                        mirte_orangepizero2_ros2,
+                        mirte_orangepi3b_ros2
                         ]
             fail-fast: false
         uses: ./.github/workflows/build_single.yaml
