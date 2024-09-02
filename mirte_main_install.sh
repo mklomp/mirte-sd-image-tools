@@ -29,12 +29,11 @@ cd /usr/local/src/mirte/
 # Download all the mirte repos
 vcs import --workers 1 --input ./repos.yaml --skip-existing || true
 # Initialize the submodule of mirte-telemetrix-cpp
-if [ -d ./mirte-telemetrix-cpp ]; then 
+if [ -d ./mirte-telemetrix-cpp ]; then
 	cd mirte-telemetrix-cpp
 	git submodules update --init --recursive
 	cd -
 fi
-
 
 pip3 install "deepdiff[cli]"
 deep diff --ignore-order --ignore-string-case ./repos.yaml ./mirte-install-scripts/repos.yaml # to show the difference between the repos.yaml in here and in mirte-install-scripts/repos.yaml
