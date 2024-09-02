@@ -44,7 +44,7 @@ source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
 
 source "arm-image" "mirte_orangepizero2_ros2" {
   image_type = "armbian"
-  iso_url = "https://dl.armbian.com/orangepizero2/archive/Armbian_24.2.1_Orangepizero2_jammy_current_6.6.16.img.xz"
+  iso_url = "https://surfdrive.surf.nl/files/index.php/s/2wfidBQcSt81PnS/download?path=Download Armbian-unofficial_24.8.1_Orangepizero2_jammy_current_6.6.44.img.xz"
   iso_checksum = "sha256:cc90336ebf540b02feb7d5d2e4a0360b722e7a5509cec1b1046aee41f7d882ac"
   output_filename = "./workdir/mirte_orangepizero2_ros2.img"
   target_image_size = 15*1024*1024*1024
@@ -62,7 +62,7 @@ source "arm-image" "mirte_orangepi3b_ros2" {
   
 
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero",  "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_rpi4b", "source.arm-image.mirte_orangepizero2_ros2", "source.arm-image.mirte_orangepi3b_ros2"]
+  sources = ["source.arm-image.mirte_orangepizero2_ros2", "source.arm-image.mirte_orangepi3b_ros2"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
