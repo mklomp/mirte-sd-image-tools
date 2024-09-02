@@ -25,8 +25,9 @@ repositories:
     version: mirte-ros2
   mirte-telemetrix-cpp:
     type: git
-    url: https://github.com/arendjan/mirte-telemetrix-cpp.git
+    url: https://github.com/SuperJappie08/mirte-telemetrix-cpp.git
     version: main
+    recursive: true
   mirte-oled-images:
     type: git
     url: https://github.com/mirte-robot/mirte-oled-images.git
