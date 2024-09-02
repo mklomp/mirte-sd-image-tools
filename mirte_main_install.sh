@@ -31,7 +31,7 @@ vcs import --workers 1 --input ./repos.yaml --skip-existing || true
 # Initialize the submodule of mirte-telemetrix-cpp
 if [ -d ./mirte-telemetrix-cpp ]; then
 	cd mirte-telemetrix-cpp
-	git submodules update --init --recursive
+	git submodule update --init --recursive
 	cd -
 fi
 
