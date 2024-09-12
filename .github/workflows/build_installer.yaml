@@ -99,13 +99,13 @@ jobs:
                     df -h
             - name: artifacts
               uses: actions/upload-artifact@v4
-              if: ${{ inputs.mirte_type == "mirte-master"  }}
+              if: ${{ inputs.mirte_type == 'mirte-master'  }}
               with:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
             - name: artifacts_mirte
               uses: actions/upload-artifact@v4
-              if: ${{ inputs.mirte_type == "default" }}
+              if: ${{ inputs.mirte_type == 'default' }}
               with:
                 path: build/*.img.xz
                 name: mirte_installer_orangepi3b
