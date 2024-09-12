@@ -12,13 +12,10 @@ on:
                 default: true
             mirte_type:
                 required: false
-                type: choice
+                type: string
                 # Default is mirte master, since that is the only default configuration,
                 # which supports installers
                 default: mirte-master
-                options:
-                    - default
-                    - mirte-master
             sbc: # TODO: add this value everywhere
                 required: false
                 type: string
