@@ -35,7 +35,7 @@ jobs:
         uses: ./.github/workflows/build_single.yaml
         with:
           mirte_type: mirte-master
-          sbc: mirte_orangepi3b_ros2
+          sbc: mirte_orangepi3b
         secrets: inherit
       
             
