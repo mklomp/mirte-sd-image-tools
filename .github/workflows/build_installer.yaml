@@ -10,6 +10,15 @@ on:
                 required: false
                 type: boolean
                 default: true
+            mirte_type:
+                required: false
+                type: choice
+                # Default is mirte master, since that is the only default configuration,
+                # which supports installers
+                default: mirte-master
+                options:
+                    - default
+                    - mirte-master
             sbc: # TODO: add this value everywhere
                 required: false
                 type: string
@@ -53,11 +62,18 @@ jobs:
                 cd build
                 wget https://mirte.arend-jan.com/files/${{ steps.extract_branch.outputs.branch }}_image/mirte_orangepi3b.img.xz
                 cd ..
-            - name: download from current build
+            - name: download from current build (default)
               uses: actions/download-artifact@v4
-              if: ${{ inputs.download_artifacts }}
+              if: ${{ inputs.download_artifacts && inputs.mirte_type == 'default'}}
               with:
                 path: build
+                name: ${{ inputs.sbc }}
+            - name: download from current build ()
+              uses: actions/download-artifact@v4
+              if: ${{ inputs.download_artifacts && inputs.mirte_type != 'default' }}
+              with:
+                path: build
+                # FIXME: Currently hardcoded for the mirte-master
                 name: mirte_master_${{ inputs.sbc }}
             - name: Create installer
               run: |
@@ -86,10 +102,16 @@ jobs:
                     df -h
             - name: artifacts
               uses: actions/upload-artifact@v4
-              if: always()
+              if: ${{ inputs.mirte_type == mirte-master  }}
               with:
                 path: build/*.img.xz
                 name: mirte_master_installer_orangepi3b
+            - name: artifacts_mirte
+              uses: actions/upload-artifact@v4
+              if: ${{ inputs.mirte_type == default }}
+              with:
+                path: build/*.img.xz
+                name: mirte_installer_orangepi3b
     # upload_installer:
     #         needs: [build_installer]
     #         uses: ./.github/workflows/upload.yaml

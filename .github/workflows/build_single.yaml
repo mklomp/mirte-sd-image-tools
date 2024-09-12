@@ -98,11 +98,12 @@ jobs:
 
     build_installer_all:
       # TODO: Add a flag for building installers, based on some configuration
-      if: ${{ inputs.sbc == 'mirte_orangepi3b' }}
+      if: ${{ endsWith(inputs.sbc, 'orangepi3b') }}
       needs: [build-and-push]
       uses: ./.github/workflows/build_installer.yaml
       with:
         # download_artifacts: true
+        mirte_type: ${{ inputs.mirte_type }}
         sbc: ${{ inputs.sbc }}
       secrets: inherit
               
