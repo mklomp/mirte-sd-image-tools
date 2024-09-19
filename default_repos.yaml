@@ -18,7 +18,7 @@ repositories:
   mirte-tmx-pico-aio:
     type: git
     url: https://github.com/mirte-robot/tmx-pico-aio.git
-    version: master
+    version: v0.1.1-dev
   mirte-ros-packages:
     type: git
     url: https://github.com/mirte-robot/mirte-ros-packages.git
@@ -42,4 +42,4 @@ repositories:
   mirte-telemetrix4rpipico:
     type: git
     url: https://github.com/mirte-robot/Telemetrix4RpiPico.git
-    version: master
+    version: v0.1.1-dev
