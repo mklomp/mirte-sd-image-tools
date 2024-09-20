@@ -10,7 +10,7 @@ repositories:
   mirte-install-scripts:
     type: git
     url: https://github.com/mirte-robot/mirte-install-scripts.git
-    version: main
+    version: v0.1.1-dev
   mirte-telemetrix-aio:
     type: git
     url: https://github.com/mirte-robot/telemetrix-aio.git
