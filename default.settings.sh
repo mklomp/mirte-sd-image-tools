@@ -3,8 +3,8 @@
 export INSTALL_DOCS=false
 export INSTALL_ROS=true
 export INSTALL_ARDUINO=false
-export INSTALL_WEB=false # TODO: Currently broken
-export INSTALL_PYTHON=false
+export INSTALL_WEB=true # TODO: Currently broken
+export INSTALL_PYTHON=true
 export INSTALL_JUPYTER=false
 export EXPIRE_PASSWD=true
 export INSTALL_NETWORK=true
