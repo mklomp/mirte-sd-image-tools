@@ -19,11 +19,7 @@ repositories:
   mirte-oled-images:
     type: git
     url: https://github.com/mirte-robot/mirte-oled-images.git
-    version: develop
-  mirte-arduino-libraries:
-    type: git
-    url: https://github.com/mirte-robot/mirte-arduino-libraries.git
-    version: develop
+    version: main
   mirte-python:
     type: git
     url: https://github.com/mirte-robot/mirte-python.git
@@ -35,4 +31,5 @@ repositories:
   mirte-telemetrix4rpipico:
     type: git
     url: https://github.com/mirte-robot/Telemetrix4RpiPico.git
+    recursive: true
     version: develop
