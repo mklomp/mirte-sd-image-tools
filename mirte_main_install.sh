@@ -2,11 +2,19 @@
 set -xe
 echo "${type:=""}"
 
+# disable ipv6, as not all package repositories are available over ipv6
+sudo tee /etc/apt/apt.conf.d/99force-ipv4 <<EOF
+Acquire::ForceIPv4 "true";
+EOF
+
 # Fix DNS on rpi4b
-if [[ $type == "mirte_rpi4b" ]]; then
-	rm /etc/resolv.conf || true
-	echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
-fi
+# if [[ $type == "mirte_rpi4b" ]]; then
+rm /etc/resolv.conf || true
+echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
+# fi
+nslookup ports.ubuntu.com || true
+
+sudo rm /etc/apt/sources.list.d/armbian.list || true
 
 chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo # something with sudo otherwise complaining about "sudo: /usr/bin/sudo must be owned by uid 0 and have the setuid bit set"
 . /usr/local/src/mirte/settings.sh                        # load settings
@@ -14,12 +22,18 @@ mkdir /usr/local/src/mirte/build_system/ || true
 apt update
 apt install -y git python3-pip curl
 
-apt update
+apt update || true
 pip3 install vcstool
 apt install -y python3-pip python3-dev libblas-dev liblapack-dev libatlas-base-dev gfortran
 cd /usr/local/src/mirte/
 # Download all the mirte repos
 vcs import --workers 1 --input ./repos.yaml --skip-existing || true
+# Initialize the submodule of mirte-telemetrix-cpp
+if [ -d ./mirte-telemetrix-cpp ]; then
+	cd mirte-telemetrix-cpp
+	git submodule update --init --recursive
+	cd -
+fi
 
 pip3 install "deepdiff[cli]"
 deep diff --ignore-order --ignore-string-case ./repos.yaml ./mirte-install-scripts/repos.yaml # to show the difference between the repos.yaml in here and in mirte-install-scripts/repos.yaml
@@ -48,5 +62,5 @@ if $INSTALL_NETWORK; then /usr/local/src/mirte/mirte-install-scripts/network_ins
 # if $INSTALL_PROVISIONING; then
 #     mkdir /mnt/mirte # create mount point and automount it
 #     echo 'UUID="9EE2-A262" /mnt/mirte/ vfat rw,relatime,uid=1000,gid=1000,errors=remount-ro 0 0' >>/etc/fstab;
-#     systemctl disable armbian-resize-filesystem
+# systemctl disable armbian-resize-filesystem # this is done by pishrink
 # fi

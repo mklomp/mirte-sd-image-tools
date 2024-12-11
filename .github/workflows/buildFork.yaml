@@ -1,0 +1,41 @@
+name: Build and Upload
+
+on:
+    [push] # todo add on release build
+permissions:
+    contents: write
+  
+jobs:
+    shellcheck:
+      uses: ./.github/workflows/shellcheck.yml
+    shfmt:
+      uses: ./.github/workflows/shfmt.yml
+    build-and-push:
+        needs: [shellcheck, shfmt]
+        strategy:
+            matrix:
+                image: [ 
+                        mirte_orangepizero2,
+                        mirte_orangepi3b
+                        ]
+            fail-fast: false
+        uses: ./.github/workflows/build_single.yaml
+        with:
+          sbc: ${{ matrix.image }}
+        secrets: inherit
+    master-build-and-push:
+        needs: [shellcheck, shfmt]
+        # strategy:
+        #     matrix:
+        #         image: [ 
+        #                 # mirte_orangepizero2,
+        #                 mirte_orangepi3b
+        #                 ]
+        #     fail-fast: false
+        uses: ./.github/workflows/build_single.yaml
+        with:
+          mirte_type: mirte-master
+          sbc: mirte_orangepi3b
+        secrets: inherit
+      
+            
