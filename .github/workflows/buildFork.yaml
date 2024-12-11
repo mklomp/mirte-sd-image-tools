@@ -10,8 +10,10 @@ jobs:
       uses: ./.github/workflows/shellcheck.yml
     shfmt:
       uses: ./.github/workflows/shfmt.yml
+    repocheck:
+      uses: ./.github/workflows/repocheck.yml
     build-and-push:
-        needs: [shellcheck, shfmt]
+        needs: [shellcheck, shfmt, repocheck]
         strategy:
             matrix:
                 image: [ 
@@ -22,6 +24,8 @@ jobs:
         uses: ./.github/workflows/build_single.yaml
         with:
           sbc: ${{ matrix.image }}
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
+
         secrets: inherit
     master-build-and-push:
         needs: [shellcheck, shfmt]
