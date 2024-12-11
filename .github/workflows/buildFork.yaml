@@ -28,7 +28,8 @@ jobs:
 
         secrets: inherit
     master-build-and-push:
-        needs: [shellcheck, shfmt]
+        needs: [shellcheck, shfmt, repocheck]
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
         # strategy:
         #     matrix:
         #         image: [ 
