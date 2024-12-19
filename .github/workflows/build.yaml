@@ -12,14 +12,16 @@ jobs:
       uses: ./.github/workflows/shellcheck.yml
     shfmt:
       uses: ./.github/workflows/shfmt.yml
-    reposcheck:
+    repocheck:
       uses: ./.github/workflows/repocheck.yml
+  
     build-and-push:
         # container:
         #   image: ubuntu:22.04
         #   options: --privileged
         runs-on: ubuntu-latest
-        needs: [shellcheck, shfmt, reposcheck]
+        needs: [shellcheck, shfmt, repocheck]
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
         strategy:
             matrix:
                 image: [
