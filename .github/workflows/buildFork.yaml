@@ -1,7 +1,9 @@
 name: Build and Upload
 
 on:
-    [push] # todo add on release build
+    push:
+    schedule:
+      - cron: '0 4 * * 1' # every Monday at 4:00 AM  
 permissions:
     contents: write
   
@@ -10,8 +12,10 @@ jobs:
       uses: ./.github/workflows/shellcheck.yml
     shfmt:
       uses: ./.github/workflows/shfmt.yml
+    reposcheck:
+      uses: ./.github/workflows/repocheck.yml
     build-and-push:
-        needs: [shellcheck, shfmt]
+        needs: [shellcheck, shfmt, reposcheck]
         strategy:
             matrix:
                 image: [ 
@@ -24,7 +28,7 @@ jobs:
           sbc: ${{ matrix.image }}
         secrets: inherit
     master-build-and-push:
-        needs: [shellcheck, shfmt]
+        needs: [shellcheck, shfmt, reposcheck]
         # strategy:
         #     matrix:
         #         image: [ 
