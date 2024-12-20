@@ -44,7 +44,7 @@ jobs:
               ./compile.sh build BOARD=${{ matrix.image }} BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=${{ matrix.ubuntu }}
           - uses: actions/upload-artifact@v4
             with:
-              name: build_${{ matrix.image }}
+              name: build_${{ matrix.image }}_${{ matrix.ubuntu }}
               path: build/output/images/*.img
 
  
