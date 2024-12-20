@@ -34,6 +34,11 @@ jobs:
               repository: arendjan/build
               ref: fix-orangepizero-wifi-usb-otg
               path: build
+          - name: setup cache
+            uses: actions/cache@v4
+            with:
+              path: build/cache
+              key: ${{ runner.os }}-build-${{ matrix.image }}-${{ matrix.ubuntu }}
           - run: |
               cd build
               ./compile.sh build BOARD=${{ matrix.image }} BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy
