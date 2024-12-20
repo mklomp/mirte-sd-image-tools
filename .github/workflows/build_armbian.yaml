@@ -16,17 +16,27 @@ jobs:
                         orangepizero2,
                         orangepizero
                         ]
+                ubuntu: [
+                        focal,
+                        jammy,
+                        noble
+                        ]
+                exclude:
+                    - image: orangepi3b
+                      ubuntu: focal
+                    - image: orangepizero2
+                      ubuntu: focal
             fail-fast: false
         steps: 
           - name: Checkout
             uses: actions/checkout@v4
             with:
-              repository: armbian/build
-              ref: main
+              repository: arendjan/build
+              ref: fix-orangepizero-wifi-usb-otg
               path: build
           - run: |
               cd build
-              ./compile.sh build BOARD=${{ matrix.image }} BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=noble
+              ./compile.sh build BOARD=${{ matrix.image }} BRANCH=edge BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy
           - uses: actions/upload-artifact@v4
             with:
               name: build_${{ matrix.image }}
