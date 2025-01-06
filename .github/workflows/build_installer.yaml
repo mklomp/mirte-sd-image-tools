@@ -1,0 +1,117 @@
+name: Build and Upload installer
+
+
+# This will take the image from the previous build and create an installer image.
+# TODO: don't upload to server but to artifacts
+on:
+   workflow_call:
+        inputs:
+            download_artifacts:
+                required: false
+                type: boolean
+                default: true
+            mirte_type:
+                required: false
+                type: string
+                # Default is mirte master, since that is the only default configuration,
+                # which supports installers
+                default: mirte-master
+            sbc: # TODO: add this value everywhere
+                required: false
+                type: string
+                default: orangepi3b
+permissions:
+    contents: write
+  
+jobs:
+    shellcheck:
+        uses: ./.github/workflows/shellcheck.yml
+    shfmt:
+        uses: ./.github/workflows/shfmt.yml
+    build_installer:
+      runs-on: ubuntu-22.04
+      needs: [shellcheck, shfmt ]
+      steps:
+            - name: Maximize build space
+              uses: AdityaGarg8/remove-unwanted-software@v3
+              if: ${{ !env.ACT }}
+              with:
+                remove-android: 'true'
+                remove-dotnet: 'true'
+                remove-haskell: 'true'
+                remove-docker-images: 'true'
+                remove-large-packages: 'true'
+                remove-cached-tools: 'true'
+                remove-codeql: 'true'
+                remove-swapfile: 'true'
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Extract branch name
+              shell: bash
+              run: |
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+                echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+              id: extract_branch
+            - name: download artifacts
+              if: ${{ !inputs.download_artifacts }}
+              run: |
+                mkdir build
+                cd build
+                wget https://mirte.arend-jan.com/files/${{ steps.extract_branch.outputs.branch }}_image/mirte_orangepi3b.img.xz
+                cd ..
+            - name: download from current build (default)
+              uses: actions/download-artifact@v4
+              if: ${{ inputs.download_artifacts && inputs.mirte_type == 'default'}}
+              with:
+                path: build
+                name: ${{ inputs.sbc }}
+            - name: download from current build ()
+              uses: actions/download-artifact@v4
+              if: ${{ inputs.download_artifacts && inputs.mirte_type != 'default' }}
+              with:
+                path: build
+                # FIXME: Currently hardcoded for the mirte-master
+                name: mirte_master_${{ inputs.sbc }}
+            - name: Create installer
+              run: |
+                    
+                    sudo apt update
+                    sudo apt install qemu-user-static parted -y
+                    ./packerInstall.sh
+                    ls
+                    # tree
+                    ls build
+                    mv build/**/*.img.xz build/mirte_orangepi3b.img.xz || mv build/*.img.xz build/mirte_orangepi3b.img.xz || true
+                    xz -d build/mirte_orangepi3b.img.xz
+                    df -h
+                    rm -f workdir/*.img
+
+                    ls -l build
+                    df -h
+                    sudo packer build buildInstaller.pkr.hcl # create installer image
+                    df -h
+                    sudo rm -rf /root/.cache/packer
+                    df -h
+                    rm -f build/${{ matrix.image }}.img
+                    rm -f workdir/mirte_orangepi3b.img
+                    df -h
+                    ./scripts/finalize.sh $(realpath "./workdir/mirte_orangepi3b_installer.img") # finalize installer
+                    df -h
+            - name: artifacts
+              uses: actions/upload-artifact@v4
+              if: ${{ inputs.mirte_type == 'mirte-master'  }}
+              with:
+                path: build/*.img.xz
+                name: mirte_master_installer_orangepi3b
+            - name: artifacts_mirte
+              uses: actions/upload-artifact@v4
+              if: ${{ inputs.mirte_type == 'default' }}
+              with:
+                path: build/*.img.xz
+                name: mirte_installer_orangepi3b
+    # upload_installer:
+    #         needs: [build_installer]
+    #         uses: ./.github/workflows/upload.yaml
+    #         with:
+    #             name: "installer"
+    #         secrets: inherit
