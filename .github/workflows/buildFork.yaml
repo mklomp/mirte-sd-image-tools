@@ -37,13 +37,19 @@ jobs:
             CHANGES=false
             for repo in $(ls); do
                 cd $repo
-                changes=$(git log --since="24 hours ago" | wc -l)
-                if [[ $changes -eq 0 ]]; then
+                THISCHANGES=$(git log --since="24 hours ago" | wc -l)
+                if [[ $THISCHANGES -ne 0 ]]; then
                     CHANGES=true
                     echo "repo $repo has a commit in the last 24H"
                 fi
                 cd ..
             done
+            cd ..
+            THISCHANGES=$(git log --since="24 hours ago" | wc -l) # check the main repo
+            if [[ $THISCHANGES -ne 0 ]]; then
+                CHANGES=true
+                echo "repo sd image tools has a commit in the last 24H"
+            fi
             if [[ $CHANGES == true ]]; then
                 echo "There are changes in the last 24H, continue schedule!"
                 exit 0
