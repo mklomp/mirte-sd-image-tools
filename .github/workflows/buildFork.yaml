@@ -37,8 +37,8 @@ jobs:
             CHANGES=false
             for repo in $(ls); do
                 cd $repo
-                git log --since="24 hours ago" > /dev/null
-                if [[ $? -eq 0 ]]; then
+                changes=$(git log --since="24 hours ago" | wc -l)
+                if [[ $changes -eq 0 ]]; then
                     CHANGES=true
                     echo "repo $repo has a commit in the last 24H"
                 fi
