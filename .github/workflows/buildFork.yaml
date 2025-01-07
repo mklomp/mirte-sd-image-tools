@@ -3,7 +3,7 @@ name: Build and Upload
 on:
     push:
     schedule:
-      - cron: '0 4 * * 1' # every Monday at 4:00 AM # TODO: branch gebeuren....
+      - cron: '10 11 * * 2' # 
 permissions:
     contents: write
   
@@ -27,8 +27,13 @@ jobs:
         with:
           sbc: ${{ matrix.image }}
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
-
         secrets: inherit
+    publish_rolling_release:
+        needs: [build-and-push]
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
     master-build-and-push:
         needs: [shellcheck, shfmt, repocheck]
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
