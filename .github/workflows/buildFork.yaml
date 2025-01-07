@@ -3,7 +3,7 @@ name: Build and Upload
 on:
     push:
     schedule:
-      - cron: '20 * * * 2' # 
+      - cron: '20 3 * * *' # 
 permissions:
     contents: write
   
@@ -14,8 +14,45 @@ jobs:
       uses: ./.github/workflows/shfmt.yml
     repocheck:
       uses: ./.github/workflows/repocheck.yml
+    schedulecheck:
+      runs-on: ubuntu-22.04
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+        - run: |
+            # check if scheduled
+            if [[ ${{ github.event_name }} == 'schedule' ]]; then
+                echo "Scheduled run"
+            else
+                echo "Not a scheduled run"
+                exit 0
+            fi
+            sudo apt update
+            curl -s https://packagecloud.io/install/repositories/dirk-thomas/vcstool/script.deb.sh | sudo bash
+            sudo apt-get update
+            sudo apt-get install python3-vcstool -y
+            mkdir check
+            vcs import --shallow --input default_repos.yaml check
+            cd check
+            CHANGES=false
+            for repo in $(ls); do
+                cd $repo
+                git log --since="24 hours ago" > /dev/null
+                if [[ $? -eq 0 ]]; then
+                    CHANGES=true
+                    echo "repo $repo has a commit in the last 24H"
+                fi
+                cd ..
+            done
+            if [[ $CHANGES == true ]]; then
+                echo "There are changes in the last 24H, continue schedule!"
+                exit 0
+            else
+                echo "No changes in the last 24H"
+                exit 1
+            fi
     build-and-push:
-        needs: [shellcheck, shfmt, repocheck]
+        needs: [shellcheck, shfmt, repocheck, schedulecheck]
         strategy:
             matrix:
                 image: [ 
@@ -35,7 +72,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
     master-build-and-push:
-        needs: [shellcheck, shfmt, repocheck]
+        needs: [shellcheck, shfmt, repocheck, schedulecheck]
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
         # strategy:
         #     matrix:
