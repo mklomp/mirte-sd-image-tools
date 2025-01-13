@@ -71,3 +71,5 @@ echo 'overlayroot=device:dev=LABEL=mirte_root,timeout=2' | sudo tee -a /etc/over
 if $ADD_OVERLAY_PARTITION; then
 	systemctl disable armbian-resize-filesystem # this will be done better by our script
 fi
+
+sudo apt autoremove && sudo apt clean

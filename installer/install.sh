@@ -48,3 +48,5 @@ cd /root/ || exit 1
 wget https://github.com/ArendJan/Telemetrix4RpiPico/releases/download/rolling/Telemetrix4RpiPico.uf2
 
 pip install git+https://github.com/arendjan/tmx-pico-aio.git@modules
+
+sudo apt autoremove && sudo apt clean
