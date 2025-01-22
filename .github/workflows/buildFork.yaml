@@ -19,12 +19,15 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
-        - run: |
+        - name: check schedule
+          id: schedulecheck
+          run: |
             # check if scheduled
             if [[ ${{ github.event_name }} == 'schedule' ]]; then
                 echo "Scheduled run"
             else
                 echo "Not a scheduled run"
+                echo "continue=0" >> $GITHUB_OUTPUT
                 exit 0
             fi
             sudo apt update
@@ -52,11 +55,17 @@ jobs:
             fi
             if [[ $CHANGES == true ]]; then
                 echo "There are changes in the last 24H, continue schedule!"
+                echo "continue=2" >> $GITHUB_OUTPUT
                 exit 0
             else
                 echo "No changes in the last 24H"
-                exit 1
+                echo "continue=0" >> $GITHUB_OUTPUT
             fi
+            "
+        - name: cancelling
+          if: steps.schedulecheck.outputs.continue == '0'
+          uses: andymckay/cancel-action@0.5
+
     build-and-push:
         needs: [shellcheck, shfmt, repocheck, schedulecheck]
         strategy:
@@ -69,7 +78,7 @@ jobs:
         uses: ./.github/workflows/build_single.yaml
         with:
           sbc: ${{ matrix.image }}
-        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x')}}
         secrets: inherit
     publish_rolling_release:
         needs: [build-and-push]
