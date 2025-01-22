@@ -66,6 +66,7 @@ jobs:
           if: steps.schedulecheck.outputs.continue == '0'
           uses: actions/github-script@v6
           with:
+            github-token: ${{ secrets.CANCEL_PAT }}
             script: |
               const delay = ms => new Promise(res => setTimeout(res, ms));
               
