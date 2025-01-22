@@ -65,7 +65,9 @@ jobs:
         - name: cancelling
           if: steps.schedulecheck.outputs.continue == '0'
           uses: andymckay/cancel-action@0.5
-
+        - name: waiting after cancel
+          if: steps.schedulecheck.outputs.continue == '0'
+          run: while true; do echo "Waiting for job to be cancelled"; sleep 5; done
     build-and-push:
         needs: [shellcheck, shfmt, repocheck, schedulecheck]
         strategy:
