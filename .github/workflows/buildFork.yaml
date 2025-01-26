@@ -61,7 +61,6 @@ jobs:
                 echo "No changes in the last 24H"
                 echo "continue=0" >> $GITHUB_OUTPUT
             fi
-            "
         - name: cancelling
           if: steps.schedulecheck.outputs.continue == '0'
           uses: actions/github-script@v6
