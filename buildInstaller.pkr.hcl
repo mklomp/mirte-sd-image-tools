@@ -26,7 +26,7 @@ packer {
 source "arm-image" "mirte_orangepi3b" {
     image_type = "armbian"
   iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
-  iso_checksum = "sha256:8ed6b5cd54ff0ba7db900326f9ae9ddfd61ac5b2f131c51cf6de534feab73e0b"
+  iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
   output_filename = "./workdir/mirte_orangepi3b_installer.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
