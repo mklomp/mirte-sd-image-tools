@@ -19,13 +19,22 @@ source "arm-image" "mirte_orangepizero2" {
 
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
-  iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.0-rc5.img.xz"
-  iso_checksum = "sha256:42b250d28b31e0f7e2cd0109105a3f0390ff99c04d918865a9c9865c488d9cec"
+  iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
+  iso_checksum = "sha256:8ed6b5cd54ff0ba7db900326f9ae9ddfd61ac5b2f131c51cf6de534feab73e0b"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = "qemu-aarch64-static"
 }
-  
+
+source "arm-image" "mirte_x86" {
+  image_type = "armbian"
+  iso_url = "/home/arendjan/Downloads/Armbian-unofficial_25.02.0-trunk_Uefi-x86_jammy_current_6.12.10 (1).img"
+  iso_checksum = "sha256:d847269f9be318be2c8bbbfde3ea43418686ce9f779e3552979a45d01cc030e8"
+  target_image_size = 15*1024*1024*1024
+  image_mounts = [ "", "", "/" ]
+}
+
+
 # source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
 #   image_type = "raspberrypi"
 #   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
@@ -35,7 +44,7 @@ source "arm-image" "mirte_orangepi3b" {
 # }
 
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepi3b"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
