@@ -71,6 +71,8 @@ jobs:
                 echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
               id: extract_branch
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
             - name: setup this repo
               run: |
                     sudo apt update
