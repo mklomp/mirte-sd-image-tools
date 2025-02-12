@@ -15,7 +15,7 @@ jobs:
     repocheck:
       uses: ./.github/workflows/repocheck.yml
     schedulecheck:
-      runs-on: ubuntu-22.04
+      runs-on: ubuntu-22.04-arm
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
@@ -96,7 +96,7 @@ jobs:
         secrets: inherit
     publish_rolling_release:
         needs: [build-and-push]
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-22.04-arm
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
