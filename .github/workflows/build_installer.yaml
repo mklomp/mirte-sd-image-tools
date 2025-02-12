@@ -29,12 +29,13 @@ jobs:
     shfmt:
         uses: ./.github/workflows/shfmt.yml
     build_installer:
-      runs-on: ubuntu-22.04
+      runs-on: ubuntu-22.04-arm
       needs: [shellcheck, shfmt ]
       steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v3
-              if: ${{ !env.ACT }}
+              # run not in act and not in arm runner
+              if: ${{ !env.ACT }} && ${{ !contains(runner.arch, 'ARM') }}
               with:
                 remove-android: 'true'
                 remove-dotnet: 'true'

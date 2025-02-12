@@ -29,7 +29,7 @@ source "arm-image" "mirte_orangepi3b" {
   iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
   output_filename = "./workdir/mirte_orangepi3b_installer.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = "qemu-aarch64-static"
+  qemu_binary = ""
 }
 
 # source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
