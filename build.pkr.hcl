@@ -14,7 +14,7 @@ source "arm-image" "mirte_orangepizero2" {
   iso_checksum = "sha256:d8abb93bdc5df0512f30295f3c18c35bb96af8bf618e063bc19352903d38a225"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = "qemu-aarch64-static"
+  qemu_binary = ""
 }
 
 source "arm-image" "mirte_orangepi3b" {
