@@ -14,7 +14,7 @@ source "arm-image" "mirte_orangepizero2" {
   iso_checksum = "sha256:d8abb93bdc5df0512f30295f3c18c35bb96af8bf618e063bc19352903d38a225"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = ""
+  image_arch = "arm64"
 }
 
 source "arm-image" "mirte_orangepi3b" {
@@ -23,7 +23,7 @@ source "arm-image" "mirte_orangepi3b" {
   iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = ""
+  # qemu_binary = ""
   image_arch = "arm64"
 }
 
