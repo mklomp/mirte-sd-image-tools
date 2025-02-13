@@ -24,7 +24,7 @@ source "arm-image" "mirte_orangepi3b" {
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   qemu_binary = ""
-  arch = "arm64"
+  image_arch = "arm64"
 }
 
 source "arm-image" "mirte_x86" {
