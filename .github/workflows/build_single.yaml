@@ -41,12 +41,12 @@ jobs:
         # container:
         #   image: ubuntu:22.04
         #   options: --privileged
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-22.04-arm
         
         steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v4
-              if: ${{ !env.ACT }}
+              if: ${{ !env.ACT && runner.arch != 'ARM' && runner.arch != 'ARM64' }}
               with:
                 remove-android: 'true'
                 remove-dotnet: 'true'
@@ -71,6 +71,8 @@ jobs:
                 echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
               id: extract_branch
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
             - name: setup this repo
               run: |
                     sudo apt update
