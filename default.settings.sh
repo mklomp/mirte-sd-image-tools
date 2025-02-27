@@ -10,16 +10,16 @@ export INSTALL_PYTHON=true
 export INSTALL_JUPYTER=false # FIXME: Non-functional: Not setup for ROS2
 export EXPIRE_PASSWD=true
 export INSTALL_NETWORK=true
-export INSTALL_PROVISIONING=false
+export INSTALL_PROVISIONING=false # FIXME: Non-functional: Not setup
 export INSTALL_VSCODE=true
-export INSTALL_PAM=true # FIXME: Non-functional: can a useable mirte install be made without?
-export MIRTE_TYPE="default"
+export INSTALL_PAM=true     # FIXME: Non-functional: can a useable mirte install be made without?
+export MIRTE_TYPE="default" # or mirte-master
 export EXTRA_SCRIPTS=(
 	# "testExtra.sh"
 	# "testExtra2.sh"
 )
 export PARALLEL=true
-
+export ADD_OVERLAY_PARTITION=true
 # Functional Settings:
 #  - INSTALL_WEB
 #  - INSTALL_PYTHON

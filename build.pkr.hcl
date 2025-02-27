@@ -14,18 +14,28 @@ source "arm-image" "mirte_orangepizero2" {
   iso_checksum = "sha256:d8abb93bdc5df0512f30295f3c18c35bb96af8bf618e063bc19352903d38a225"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = "qemu-aarch64-static"
+  image_arch = "arm64"
 }
 
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
-  iso_url = "https://surfdrive.surf.nl/files/index.php/s/2bocOCKFyCYMYBo/download?path=Armbian-unofficial_24.8.1_Orangepi3b_jammy_edge_6.10.3.img.xz"
-  iso_checksum = "sha256:546ccf471b24ee7794f633f79c4893892e541c32d3f494dcd1d59312b3496948"
+  iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
+  iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
-  qemu_binary = "qemu-aarch64-static"
+  # qemu_binary = ""
+  image_arch = "arm64"
 }
-  
+
+source "arm-image" "mirte_x86" {
+  image_type = "armbian"
+  iso_url = "/home/arendjan/Downloads/Armbian-unofficial_25.02.0-trunk_Uefi-x86_jammy_current_6.12.10 (1).img"
+  iso_checksum = "sha256:d847269f9be318be2c8bbbfde3ea43418686ce9f779e3552979a45d01cc030e8"
+  target_image_size = 15*1024*1024*1024
+  image_mounts = [ "", "", "/" ]
+}
+
+
 # source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
 #   image_type = "raspberrypi"
 #   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
@@ -35,7 +45,7 @@ source "arm-image" "mirte_orangepi3b" {
 # }
 
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepi3b"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"

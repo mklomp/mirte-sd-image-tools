@@ -41,9 +41,21 @@ jobs:
         # container:
         #   image: ubuntu:22.04
         #   options: --privileged
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04-arm
         
         steps:
+            - name: Maximize build space
+              uses: AdityaGarg8/remove-unwanted-software@v5
+              if: ${{ !env.ACT && runner.arch != 'ARM' && runner.arch != 'ARM64' }}
+              with:
+                remove-android: 'true'
+                remove-dotnet: 'true'
+                remove-haskell: 'true'
+                remove-docker-images: 'true'
+                remove-large-packages: 'true'
+                remove-cached-tools: 'true'
+                remove-codeql: 'true'
+                remove-swapfile: 'true'
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Extract branch name
@@ -56,7 +68,11 @@ jobs:
                 else
                     echo "artifact_name=${{ inputs.sbc }}" >> $GITHUB_OUTPUT
                 fi
+                echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
               id: extract_branch
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
             - name: setup this repo
               run: |
                     sudo apt update
@@ -65,7 +81,10 @@ jobs:
             - name: setup build files
               run: |
                   echo -e "MIRTE_TYPE=${{ inputs.mirte_type }}" >> settings.sh
-                  # cat settings.sh
+                    if [[ "${{ inputs.mirte_type }}" != "default" || "${{ inputs.sbc }}" != "orangepizero2" ]]; then
+                      echo -e "ADD_OVERLAY_PARTITION=false" >> settings.sh
+                  fi
+                  cat settings.sh
                   # - name: setup repos
             #   run: |
             #     cp main_repos.yaml repos.yaml
@@ -82,19 +101,30 @@ jobs:
                 path: build/*.img.xz
                 name: ${{ steps.extract_branch.outputs.artifact_name }}
             - name: Push to release
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
                   files: build/*.img.xz
+            
+            # fails when image is too large
+            # - name: Push to rolling release
+            #   uses: softprops/action-gh-release@v2
+            #   if: ${{ github.event_name == 'schedule' }}
+            #   with:
+            #       body: "Rolling release for ${{ steps.extract_branch.outputs.artifact_name }}"
+            #       files: build/*.img.xz
+            #       prerelease: true
+            #       name: "Rolling release for ${{ steps.extract_branch.outputs.artifact_name }} ${{ steps.extract_branch.outputs.NOW }}"
+            #       tag_name: "rolling"
 
     # Only if mirte-master
-    # upload_private_server:
-    #   if: ${{ inputs.mirte_type == 'mirte-master' }} && false
-    #   needs: [build-and-push]
-    #   uses: ./.github/workflows/upload.yaml
-    #   with:
-    #     name: 'image'
-    #   secrets: inherit
+    upload_private_server:
+      if: ${{ github.event_name == 'schedule' }}
+      needs: [build-and-push]
+      uses: ./.github/workflows/upload.yaml
+      with:
+        name: 'image'
+      secrets: inherit
 
     build_installer_all:
       # TODO: Add a flag for building installers, based on some configuration

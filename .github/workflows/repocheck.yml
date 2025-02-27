@@ -9,7 +9,7 @@ permissions: {}
 jobs:
   reposcheck:
     name: reposcheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: |
@@ -19,4 +19,4 @@ jobs:
           sudo apt-get install python3-vcstool -y
           mkdir check
       - name: check
-        run: vcs import --input default_repos.yaml check
+        run: vcs import --shallow --input default_repos.yaml check

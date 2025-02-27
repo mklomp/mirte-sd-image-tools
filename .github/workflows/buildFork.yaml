@@ -3,7 +3,7 @@ name: Build and Upload
 on:
     push:
     schedule:
-      - cron: '0 4 * * 1' # every Monday at 4:00 AM  
+      - cron: '20 3 * * *' # 
 permissions:
     contents: write
   
@@ -12,10 +12,76 @@ jobs:
       uses: ./.github/workflows/shellcheck.yml
     shfmt:
       uses: ./.github/workflows/shfmt.yml
-    reposcheck:
+    repocheck:
       uses: ./.github/workflows/repocheck.yml
+    schedulecheck:
+      runs-on: ubuntu-22.04-arm
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+        - name: check schedule
+          id: schedulecheck
+          run: |
+            # check if scheduled
+            if [[ ${{ github.event_name }} == 'schedule' ]]; then
+                echo "Scheduled run"
+            else
+                echo "Not a scheduled run"
+                echo "continue=1" >> $GITHUB_OUTPUT
+                exit 0
+            fi
+            sudo apt update
+            curl -s https://packagecloud.io/install/repositories/dirk-thomas/vcstool/script.deb.sh | sudo bash
+            sudo apt-get update
+            sudo apt-get install python3-vcstool -y
+            mkdir check
+            vcs import --shallow --input default_repos.yaml check
+            cd check
+            CHANGES=false
+            for repo in $(ls); do
+                cd $repo
+                THISCHANGES=$(git log --since="24 hours ago" | wc -l)
+                if [[ $THISCHANGES -ne 0 ]]; then
+                    CHANGES=true
+                    echo "repo $repo has a commit in the last 24H"
+                fi
+                cd ..
+            done
+            cd ..
+            THISCHANGES=$(git log --since="24 hours ago" | wc -l) # check the main repo
+            if [[ $THISCHANGES -ne 0 ]]; then
+                CHANGES=true
+                echo "repo sd image tools has a commit in the last 24H"
+            fi
+            if [[ $CHANGES == true ]]; then
+                echo "There are changes in the last 24H, continue schedule!"
+                echo "continue=2" >> $GITHUB_OUTPUT
+                exit 0
+            else
+                echo "No changes in the last 24H"
+                echo "continue=0" >> $GITHUB_OUTPUT
+            fi
+        - name: cancelling
+          if: steps.schedulecheck.outputs.continue == '0'
+          uses: actions/github-script@v7
+          with:
+            github-token: ${{ secrets.CANCEL_PAT }}
+            script: |
+              const delay = ms => new Promise(res => setTimeout(res, ms));
+              
+              github.rest.actions.cancelWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.runId
+              });
+                
+              while (true) {
+                core.info('Waiting for workflow to cancel ...');
+                await delay(5000);
+              }
+
     build-and-push:
-        needs: [shellcheck, shfmt, reposcheck]
+        needs: [shellcheck, shfmt, repocheck, schedulecheck]
         strategy:
             matrix:
                 image: [ 
@@ -26,9 +92,17 @@ jobs:
         uses: ./.github/workflows/build_single.yaml
         with:
           sbc: ${{ matrix.image }}
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x')}}
         secrets: inherit
+    publish_rolling_release:
+        needs: [build-and-push]
+        runs-on: ubuntu-22.04-arm
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
     master-build-and-push:
-        needs: [shellcheck, shfmt, reposcheck]
+        needs: [shellcheck, shfmt, repocheck, schedulecheck]
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
         # strategy:
         #     matrix:
         #         image: [ 
