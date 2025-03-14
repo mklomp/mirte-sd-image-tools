@@ -17,6 +17,15 @@ source "arm-image" "mirte_orangepizero2" {
   image_arch = "arm64"
 }
 
+source "arm-image" "mirte_orangepizero2_noble" {
+  image_type = "armbian"
+  iso_url = "https://imola.armbian.com/archive/orangepizero2/archive/Armbian_24.5.1_Orangepizero2_noble_current_6.6.31.img.xz"
+  iso_checksum = "none"
+  output_filename = "./workdir/mirte_orangepizero2.img"
+  target_image_size = 15*1024*1024*1024
+  image_arch = "arm64"
+}
+
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
   iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
