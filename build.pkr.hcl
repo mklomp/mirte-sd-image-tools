@@ -54,7 +54,7 @@ source "arm-image" "mirte_x86" {
 # }
 
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero2_noble", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
