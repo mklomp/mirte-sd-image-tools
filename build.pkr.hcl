@@ -10,8 +10,8 @@ packer {
 
 source "arm-image" "mirte_orangepizero2" {
   image_type = "armbian"
-  iso_url = "https://surfdrive.surf.nl/files/index.php/s/2wfidBQcSt81PnS/download?path=Download Armbian-unofficial_24.8.1_Orangepizero2_jammy_current_6.6.44.img.xz"
-  iso_checksum = "sha256:d8abb93bdc5df0512f30295f3c18c35bb96af8bf618e063bc19352903d38a225"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepizero2_jammy_edge_6.11.9.img.xz"
+  iso_checksum = "sha256:7dc29ddc019f505c43988d3267b1690a6f8504d3ddd98646eaf5c8c72f7906ad"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
   image_arch = "arm64"
@@ -28,8 +28,8 @@ source "arm-image" "mirte_orangepizero2_noble" {
 
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
-  iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
-  iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.12.0.img.xz"
+  iso_checksum = "sha256:0a3a519760855617c21edce483a99b9f438640eedcaf0ec6278453307b8eee2c"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   # qemu_binary = ""
