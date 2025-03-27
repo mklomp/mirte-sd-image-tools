@@ -10,8 +10,8 @@ packer {
 
 source "arm-image" "mirte_orangepizero2" {
   image_type = "armbian"
-  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepizero2_jammy_edge_6.11.9.img.xz"
-  iso_checksum = "sha256:560e9a0282246569b306d6ee059ef0f03ea8dd3e8355ad9d62ecf63f8f19380f"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepizero2_jammy_current_6.6.62.img.xz"
+  iso_checksum = "sha256:f37f28d2c0b6c8b26933ca0e9622d88be3d0ece81aec985f7fe7fa0a0cbbc6d9"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
   image_arch = "arm64"
@@ -82,7 +82,7 @@ build {
       "export type=${source.name}",
       "echo $type",
       "mkdir /usr/local/src/mirte/build_system/",
-      # "sudo -E /usr/local/src/mirte/mirte_main_install.sh"
+      "sudo -E /usr/local/src/mirte/mirte_main_install.sh"
     ]
   }
   # provisioner "file" { # Provide the logs to the sd itself, doesn't work as tee deletes it and packer is missing it
