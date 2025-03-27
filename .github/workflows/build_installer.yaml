@@ -84,7 +84,7 @@ jobs:
                     ls build
                     mv build/**/*.img.xz build/mirte_orangepi3b.img.xz || mv build/*.img.xz build/mirte_orangepi3b.img.xz || true
                     # xz -d --keep build/mirte_orangepi3b.img.xz
-                    xzcat build/mirte_orangepi3b.img | md5sum >build/mirte_orangepi3b.img.md5sum
+                    xzcat build/mirte_orangepi3b.img.xz | md5sum >build/mirte_orangepi3b.img.md5sum
                     df -h
                     rm -f workdir/*.img
 
