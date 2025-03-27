@@ -24,10 +24,10 @@ packer {
 #   target_image_size = 15*1024*1024*1024
 # }
 source "arm-image" "mirte_orangepi3b" {
-    image_type = "armbian"
-  iso_url = "https://mirte.arend-jan.com/files/base_img/Armbian-unofficial_25.02.0-trunk_Orangepi3b_jammy_edge_6.13.1.img.xz"
-  iso_checksum = "sha256:28fb7218ba216822af9a4fb1ee55fe59c8f147ccc32d65cf23ce59f62070b6ac"
-  output_filename = "./workdir/mirte_orangepi3b_installer.img"
+  image_type = "armbian"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.12.0.img.xz"
+  iso_checksum = "sha256:53be4439ed94fb6a3c6e9f3f38b577ff672c45eee61aa5563a49e5cc802f5ebc"
+  output_filename = "./workdir/mirte_orangepi3b_installer.img.xz"
   target_image_size = 15*1024*1024*1024
   image_arch = "arm64"
 }
@@ -52,9 +52,14 @@ build {
 #     destination = "/root/mirte_orangepi3b.img"
 #  }
 provisioner "file" {
-    source = "build/mirte_orangepi3b.img"
-    destination = "/root/mirte_orangepi3b.img"
+    source = "build/mirte_orangepi3b.img.xz"
+    destination = "/root/mirte_orangepi3b.img.xz"
  }
+ provisioner "file" {
+    source = "build/mirte_orangepi3b.img.md5sum"
+    destination = "/root/mirte_orangepi3b.img.md5sum"
+ }
+ 
  provisioner "file" {
     source = "installer/install.sh"
     destination = "/root/install.sh"

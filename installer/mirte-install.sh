@@ -41,7 +41,7 @@ done &
 PID=$!
 
 # dd if=$IMAGE of=$EMMC_DEV bs=4M status=progress
-cat $IMAGE >$EMMC_DEV
+xzcat $IMAGE >$EMMC_DEV
 # sync
 sync
 # kill the while loop
@@ -60,6 +60,7 @@ if [ $? -eq 0 ]; then
 else
 	/root/set-text.sh "Mirte image installation failed"
 	echo "Mirte image installation failed"
+	exit 1
 fi
 sleep 10
 /root/set-text.sh "Installing u-boot to spi"
