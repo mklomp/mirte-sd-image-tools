@@ -103,13 +103,13 @@ jobs:
               uses: actions/upload-artifact@v4
               if: ${{ inputs.mirte_type == 'mirte-master'  }}
               with:
-                path: build/*.img.xz
+                path: build/*installer*.img.xz
                 name: mirte_master_installer_orangepi3b
             - name: artifacts_mirte
               uses: actions/upload-artifact@v4
               if: ${{ inputs.mirte_type == 'default' }}
               with:
-                path: build/*.img.xz
+                path: build/*installer*.img.xz
                 name: mirte_installer_orangepi3b
     # upload_installer:
     #         needs: [build_installer]
