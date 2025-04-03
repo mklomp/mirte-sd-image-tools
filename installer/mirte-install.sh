@@ -62,6 +62,22 @@ else
 	echo "Mirte image installation failed"
 	exit 1
 fi
+
+# removing overlay partition as we don't want it on the emmc.
+echo "Removing overlay partition"
+/root/set-text.sh "Removing overlay partition"
+# remove the overlay partition
+parted $EMMC_DEV rm 2
+# check if the overlay partition is removed
+if [ $? -eq 0 ]; then
+	/root/set-text.sh "Overlay partition removed successfully"
+	echo "Overlay partition removed successfully"
+else
+	/root/set-text.sh "Overlay partition removal failed"
+	echo "Overlay partition removal failed"
+	exit 1
+fi
+
 sleep 10
 /root/set-text.sh "Installing u-boot to spi"
 source /usr/lib/u-boot/platform_install.sh
