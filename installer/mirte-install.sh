@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EMMC_DEV=/dev/mmcblk0
-IMAGE=/root/mirte_orangepi3b.img
+IMAGE=/root/mirte_orangepi3b.img.xz
 # This script is used to install the Mirte image onto the emmc.
 picotool load -f /root/Telemetrix4RpiPico.uf2
 picotool reboot -f
