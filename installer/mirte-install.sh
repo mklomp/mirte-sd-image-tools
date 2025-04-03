@@ -2,6 +2,7 @@
 
 EMMC_DEV=/dev/mmcblk0
 IMAGE=/root/mirte_orangepi3b.img.xz
+IMAGE_NO_XZ=${IMAGE%.xz}
 # This script is used to install the Mirte image onto the emmc.
 picotool load -f /root/Telemetrix4RpiPico.uf2
 picotool reboot -f
@@ -51,8 +52,8 @@ sleep 10
 /root/set-text.sh "Verifying image"
 # check if the image was written successfully by using checksum
 echo "Verifying $IMAGE"
-head -c "$(stat -c %s $IMAGE)" $EMMC_DEV | md5sum -c $IMAGE.md5sum
-
+uncomp_size=$(xz --robot --list "${IMAGE}" | grep ^totals | cut -f5)
+head -c "$uncomp_size" $EMMC_DEV | md5sum -c $IMAGE_NO_XZ.md5sum
 # check return code
 if [ $? -eq 0 ]; then
 	/root/set-text.sh "Mirte image installed successfully"
