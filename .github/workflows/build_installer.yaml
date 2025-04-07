@@ -75,9 +75,9 @@ jobs:
                 name: mirte_master_${{ inputs.sbc }}
             - name: Create installer
               run: |
-                    
                     sudo apt update
                     sudo apt install qemu-user-static parted -y
+                    PACKER_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}
                     ./packerInstall.sh
                     ls
                     # tree
