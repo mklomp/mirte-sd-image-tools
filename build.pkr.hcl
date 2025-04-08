@@ -28,8 +28,8 @@ source "arm-image" "mirte_orangepizero2_noble" {
 
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
-  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.12.0.img.xz"
-  iso_checksum = "sha256:53be4439ed94fb6a3c6e9f3f38b577ff672c45eee61aa5563a49e5cc802f5ebc"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz"
+  iso_checksum = "sha256:5a6aab63948049c0c5d265642f55b153975a60a44903f3379dd4c4872e4b00e5"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   # qemu_binary = ""
