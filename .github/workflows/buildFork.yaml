@@ -86,7 +86,8 @@ jobs:
             matrix:
                 image: [ 
                         mirte_orangepizero2,
-                        mirte_orangepi3b, 
+                        mirte_orangepi3b,
+                        mirte_rpi4b,
                         # mirte_orangepizero2_noble
                         ]
             fail-fast: false

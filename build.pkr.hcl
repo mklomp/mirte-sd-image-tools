@@ -45,16 +45,16 @@ source "arm-image" "mirte_x86" {
 }
 
 
-# source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
-#   image_type = "raspberrypi"
-#   iso_url = "https://cdimage.ubuntu.com/releases/20.04.5/release/ubuntu-20.04.5-preinstalled-server-armhf+raspi.img.xz"
-#   iso_checksum = "sha256:065c41846ddf7a1c636a1aac5a7d49ebcee819b141f9d57fd586c5f84b9b7942"
-#   output_filename = "./workdir/mirte_rpi4b.img"
-#   target_image_size = 15*1024*1024*1024 # 15GB
-# }
+source "arm-image" "mirte_rpi4b" {
+  image_type = "armbian"
+  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian_24.8.1_Rpi4b_jammy_current_6.6.45.img.xz" # not built by CI, but downloaded and uploaded from arbian archives.
+  iso_checksum = "sha256:20c7a96087c80a84f901cb11e58cb966e30810f71890d64bcaebdf296a7a6ad8"
+  output_filename = "./workdir/mirte_rpi4b.img"
+  target_image_size = 15*1024*1024*1024 # 15GB
+}
 
 build {
-  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero2_noble", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86"]
+  sources = ["source.arm-image.mirte_orangepizero2", "source.arm-image.mirte_orangepizero2_noble", "source.arm-image.mirte_orangepi3b", "source.arm-image.mirte_x86", "source.arm-image.mirte_rpi4b"]
   provisioner "file" {
     source = "git_local"
     destination = "/usr/local/src/mirte"
