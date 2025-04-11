@@ -26,7 +26,7 @@ packer {
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
   iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz"
-  iso_checksum = "sha256:6cf1f1c6cac20b141bb7ee7e027159f5ca4558ed8994ca0e8a5c17a035dd5c28"
+  iso_checksum = "file:https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz.sha"
   output_filename = "./workdir/mirte_orangepi3b_installer.img"
   target_image_size = 15*1024*1024*1024
   image_arch = "arm64"

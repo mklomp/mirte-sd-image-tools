@@ -11,7 +11,7 @@ packer {
 source "arm-image" "mirte_orangepizero2" {
   image_type = "armbian"
   iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepizero2_jammy_current_6.6.62.img.xz"
-  iso_checksum = "sha256:f37f28d2c0b6c8b26933ca0e9622d88be3d0ece81aec985f7fe7fa0a0cbbc6d9"
+  iso_checksum = "file:https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepizero2_jammy_current_6.6.62.img.xz.sha"
   output_filename = "./workdir/mirte_orangepizero2.img"
   target_image_size = 15*1024*1024*1024
   image_arch = "arm64"
@@ -29,7 +29,7 @@ source "arm-image" "mirte_orangepizero2_noble" {
 source "arm-image" "mirte_orangepi3b" {
   image_type = "armbian"
   iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz"
-  iso_checksum = "sha256:6cf1f1c6cac20b141bb7ee7e027159f5ca4558ed8994ca0e8a5c17a035dd5c28"
+  iso_checksum = "file:https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz.sha"
   output_filename = "./workdir/mirte_orangepi3b.img"
   target_image_size = 15*1024*1024*1024
   # qemu_binary = ""
@@ -48,7 +48,7 @@ source "arm-image" "mirte_x86" {
 source "arm-image" "mirte_rpi4b" {
   image_type = "raspberrypi"
   iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian_24.8.1_Rpi4b_jammy_current_6.6.45.img.xz" # not built by CI, but downloaded and uploaded from arbian archives.
-  iso_checksum = "sha256:20c7a96087c80a84f901cb11e58cb966e30810f71890d64bcaebdf296a7a6ad8"
+  iso_checksum = "file:https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian_24.8.1_Rpi4b_jammy_current_6.6.45.img.xz.sha"
   output_filename = "./workdir/mirte_rpi4b.img"
   target_image_size = 15*1024*1024*1024 # 15GB
   image_arch = "arm64"
