@@ -117,5 +117,10 @@ jobs:
           mirte_type: mirte-master
           sbc: mirte_orangepi3b
         secrets: inherit
+    overlay-build-and-push:
+        needs: [shellcheck, shfmt, repocheck, schedulecheck]
+        if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
+        uses: ./.github/workflows/create_overlay.yaml
+        secrets: inherit
       
             
