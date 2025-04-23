@@ -44,8 +44,10 @@ cp ./repos.yaml ./mirte-install-scripts/repos.yaml
 cd /usr/local/src/mirte/mirte-install-scripts/ && ./create_user.sh
 echo 'mirte ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 chown -R mirte /usr/local/src/mirte/*
-sed -i 's/PermitRootLogin.*$/PermitRootLogin no/g' /etc/ssh/sshd_config
 
+if false; then
+	sed -i 's/PermitRootLogin.*$/PermitRootLogin no/g' /etc/ssh/sshd_config
+fi
 # install prebuilt wheels when on orangepizero, as numpy takes ages to build
 if [[ $type == "mirte_orangepizero" ]]; then
 	pip3 install /usr/local/src/mirte/wheels/*
