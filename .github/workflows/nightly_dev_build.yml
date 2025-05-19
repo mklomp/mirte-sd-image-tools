@@ -1,0 +1,13 @@
+name: Nightly Development Build
+# This workflow will just make sure that the buildFork from
+# develop branch will be ran every night. Github does not 
+# allow schedules on non-deault branched. In this way
+# we are building nightly builds from develop.
+
+on:
+    schedule:
+      - cron: '*/5 * * * *'
+
+jobs:
+    on-main:
+      uses: ./.github/workflows/buildFork.yml@develop
