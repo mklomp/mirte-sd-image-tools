@@ -7,9 +7,5 @@ on:
     
 jobs:
     testing:
-      runs-on: ubuntu-latest
-      steps:
-        - name: check schedule
-          id: schedulecheck
-          run: |
-            echo "I am triggered by cron"
+      uses: ./.github/workflows/buildFork.yml@develop
+
