@@ -3,5 +3,10 @@ on:
     schedule:
       - cron: '0/5 * * * *'
 jobs:
-    on-main:
-      uses: ./.github/workflows/buildFork.yml@develop
+    testing:
+      runs-on: ubuntu-latest
+      steps:
+        - name: check schedule
+          id: schedulecheck
+          run: |
+            echo "I am triggered by cron"
