@@ -1,7 +1,7 @@
 name: Nightly Development Build
 on:
     schedule:
-      - cron: '*/5 * * * *'
+      - cron: '0/5 * * * *'
 jobs:
     on-main:
       uses: ./.github/workflows/buildFork.yml@develop
