@@ -1,0 +1,19 @@
+name: Nightly Development Build
+
+on:
+    schedule:
+      - cron: '* * * * *'
+permissions:
+    contents: write
+  
+jobs:
+    build:
+      runs-on: ubuntu-22.04-arm
+      steps:
+        - name: Checkout develop branch
+          uses: actions/checkout@v4
+          with:
+            ref: develop
+        - name: Do something
+          run: |
+            echo "We are running this"
