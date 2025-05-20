@@ -1,7 +1,8 @@
 #!/bin/bash
 
 EMMC_DEV=/dev/mmcblk0
-IMAGE=/root/mirte_orangepi3b.img
+IMAGE=/root/mirte_orangepi3b.img.xz
+IMAGE_NO_XZ=${IMAGE%.xz}
 # This script is used to install the Mirte image onto the emmc.
 picotool load -f /root/Telemetrix4RpiPico.uf2
 picotool reboot -f
@@ -41,7 +42,7 @@ done &
 PID=$!
 
 # dd if=$IMAGE of=$EMMC_DEV bs=4M status=progress
-cat $IMAGE >$EMMC_DEV
+xzcat $IMAGE >$EMMC_DEV
 # sync
 sync
 # kill the while loop
@@ -51,8 +52,8 @@ sleep 10
 /root/set-text.sh "Verifying image"
 # check if the image was written successfully by using checksum
 echo "Verifying $IMAGE"
-head -c "$(stat -c %s $IMAGE)" $EMMC_DEV | md5sum -c $IMAGE.md5sum
-
+uncomp_size=$(xz --robot --list "${IMAGE}" | grep ^totals | cut -f5)
+head -c "$uncomp_size" $EMMC_DEV | md5sum -c $IMAGE_NO_XZ.md5sum
 # check return code
 if [ $? -eq 0 ]; then
 	/root/set-text.sh "Mirte image installed successfully"
@@ -60,7 +61,24 @@ if [ $? -eq 0 ]; then
 else
 	/root/set-text.sh "Mirte image installation failed"
 	echo "Mirte image installation failed"
+	exit 1
 fi
+
+# removing overlay partition as we don't want it on the emmc.
+echo "Removing overlay partition"
+/root/set-text.sh "Removing overlay partition"
+# remove the overlay partition
+parted $EMMC_DEV rm 2
+# check if the overlay partition is removed
+if [ $? -eq 0 ]; then
+	/root/set-text.sh "Overlay partition removed successfully"
+	echo "Overlay partition removed successfully"
+else
+	/root/set-text.sh "Overlay partition removal failed"
+	echo "Overlay partition removal failed"
+	exit 1
+fi
+
 sleep 10
 /root/set-text.sh "Installing u-boot to spi"
 source /usr/lib/u-boot/platform_install.sh

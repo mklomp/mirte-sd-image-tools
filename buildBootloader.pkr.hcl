@@ -24,12 +24,12 @@ packer {
 #   target_image_size = 15*1024*1024*1024
 # }
 source "arm-image" "mirte_orangepi3b" {
-  image_type = "armbian"
-  iso_url = "https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz"
-  iso_checksum = "file:https://github.com/ArendJan/mirte_base_images/releases/download/25.2.3/Armbian-unofficial_25.2.3_Orangepi3b_jammy_edge_6.13.3.img.xz.sha"
-  output_filename = "./workdir/mirte_orangepi3b_installer.img"
+    image_type = "armbian"
+  iso_url = "/home/arendjan/build123/output/images/Armbian-unofficial_24.11.1_Orangepi3b_bookworm_current_6.6.62.img"
+  iso_checksum = "none"
+  output_filename = "./workdir/mirte_orangepi3b_uboot.img"
   target_image_size = 15*1024*1024*1024
-  image_arch = "arm64"
+  qemu_binary = "qemu-aarch64-static"
 }
 
 # source "arm-image" "mirte_rpi4b" { # TODO: change to armbian image
@@ -44,26 +44,21 @@ source "arm-image" "mirte_orangepi3b" {
 build {
   sources = ["source.arm-image.mirte_orangepi3b"]
   provisioner "file" {
-    source = "installer/"
+    source = "uboot/"
     destination = "/root/"
   }
 #  provisioner "file" {
 #     source = "build/mirte_orangepi3b_2024-02-01_21_00_25.img"
 #     destination = "/root/mirte_orangepi3b.img"
 #  }
-provisioner "file" {
-    source = "build/mirte_orangepi3b.img.xz"
-    destination = "/root/mirte_orangepi3b.img.xz"
- }
- provisioner "file" {
-    source = "build/mirte_orangepi3b.img.md5sum"
-    destination = "/root/mirte_orangepi3b.img.md5sum"
- }
- 
- provisioner "file" {
-    source = "installer/install.sh"
-    destination = "/root/install.sh"
- }
+# provisioner "file" {
+#     source = "build/mirte_orangepi3b.img"
+#     destination = "/root/mirte_orangepi3b.img"
+#  }
+#  provisioner "file" {
+#     source = "uboot/install.sh"
+#     destination = "/root/install.sh"
+#  }
  provisioner "shell" {
     inline_shebang = "/bin/bash -e"
     inline = [

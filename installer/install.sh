@@ -11,7 +11,7 @@ echo "nameserver 8.8.8.8" >/etc/resolv.conf || true
 chmod +x /root/mirte-install.sh
 cp /root/mirte-install.service /etc/systemd/system/
 systemctl enable mirte-install.service
-md5sum </root/mirte_orangepi3b.img >/root/mirte_orangepi3b.img.md5sum
+# md5sum </root/mirte_orangepi3b.img.xz >/root/mirte_orangepi3b.img.md5sum
 apt update
 apt install progress cmake python3 python3-pip -y
 
