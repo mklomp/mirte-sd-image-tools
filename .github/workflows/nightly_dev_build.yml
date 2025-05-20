@@ -7,5 +7,5 @@ on:
     
 jobs:
     testing:
-      uses: mirte-robot/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
+      uses: mirte-robot/mirte-sd-image-tools/.github/workflows/buildFork.yaml@8efeaf7ed639320db87a50fe99ef2f36eb4268c4
 
