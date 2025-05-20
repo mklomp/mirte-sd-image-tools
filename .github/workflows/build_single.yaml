@@ -77,13 +77,14 @@ jobs:
               run: |
                     sudo apt update
                     sudo apt install qemu-user-static parted -y
+                    PACKER_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}
                     ./packerInstall.sh
             - name: setup build files
               run: |
                   echo -e "MIRTE_TYPE=${{ inputs.mirte_type }}" >> settings.sh
-                    if [[ "${{ inputs.mirte_type }}" != "default" || "${{ inputs.sbc }}" != "orangepizero2" ]]; then
-                      echo -e "ADD_OVERLAY_PARTITION=false" >> settings.sh
-                  fi
+                  #   if [[ "${{ inputs.mirte_type }}" != "default" || "${{ inputs.sbc }}" != "orangepizero2" ]]; then
+                  #     echo -e "ADD_OVERLAY_PARTITION=false" >> settings.sh
+                  # fi
                   cat settings.sh
                   # - name: setup repos
             #   run: |
