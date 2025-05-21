@@ -21,4 +21,4 @@ jobs:
               ls -la
               pwd
           - name: Build images 
-            uses: ./.github/workflows/buildFork.yaml
+            uses: ./.github/workflows/buildFork
