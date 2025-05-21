@@ -20,6 +20,10 @@ on:
                 required: false
                 type: string
                 default: orangepi3b
+            branch:
+                required: false
+                type: string
+                default: main
 permissions:
     contents: write
   
@@ -42,6 +46,8 @@ jobs:
                 remove-swapfile: 'true'
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                 ref: ${{ inputs.branch }}
             - name: Extract branch name
               shell: bash
               run: |
