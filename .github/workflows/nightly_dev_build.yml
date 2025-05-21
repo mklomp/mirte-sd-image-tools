@@ -2,10 +2,10 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '0 3 * * *'
+      - cron: '0 5 * * *'
     workflow_dispatch:
     
 jobs:
     testing:
-      uses: mirte-robot/mirte-sd-image-tools/.github/workflows/buildFork.yaml@06b93d42c616f31f432ebf9c56e241e588fc6878
+      uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@06b93d42c616f31f432ebf9c56e241e588fc6878
 
