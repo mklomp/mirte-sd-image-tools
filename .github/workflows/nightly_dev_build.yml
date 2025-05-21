@@ -1,4 +1,5 @@
 name: Nightly Development Build
+# mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
 
 on:
     schedule:
@@ -14,7 +15,6 @@ jobs:
             if: github.ref == 'refs/heads/main'
             with:
               ref: develop
-          - uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
-            name: Build images 
-            if: github.repository_owner == 'mirte-robot' || github.event_name != 'schedule'
+          - name: Build images 
+            run: echo "Running only on main branch"
         
