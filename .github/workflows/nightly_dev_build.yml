@@ -9,7 +9,7 @@ jobs:
     checkout-dev:
         # Only checkout development branch when on main.
         # Otherwise, just use the branch that this workflow is
-	# part of.
+        # part of.
         if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-22.04
         steps:
@@ -18,6 +18,6 @@ jobs:
               ref: develop
     build:
         # Build ony when started as schedule on the mirte-robot org.
-	# This should not build on a schedule on forks.
+        # This should not build on a schedule on forks.
         if: github.repository_owner == 'mirte-robot' || github.event_name != 'schedule'
         uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
