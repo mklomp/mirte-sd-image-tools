@@ -11,12 +11,10 @@ jobs:
         steps:
           - uses: actions/checkout@v4
             name: Checkout develop branch
-            # Only checkout development branch when on main.
             if: github.ref == 'refs/heads/main'
             with:
               ref: develop
           - uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
             name: Build images 
-            # Only build scheduled runs when on the mirte-robot org
             if: github.repository_owner == 'mirte-robot' || github.event_name != 'schedule'
         
