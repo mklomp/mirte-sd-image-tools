@@ -7,20 +7,17 @@ on:
     
 jobs:
     checkout-dev:
-        # Only checkout development branch if on main
-        # Otherwise, just use the branch that this workflow is in
+        # Only checkout development branch when on main.
+        # Otherwise, just use the branch that this workflow is
+	# part of.
         if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-22.04
         steps:
-            - name: Checkout development branch
-              uses: actions/checkout@v4
-              with:
-	        ref: develop
-	 
-    build-images:
-        # Build the images based on the latest development branch. Build
-        # when dispached (on all forks), but also as schedule on mirte-robot.
-        if: >
-            github.repository_owner == 'mirte-robot' || 
-            github.event_name != 'schedule'
+          - uses: actions/checkout@v4
+            with:
+              ref: develop
+    build:
+        # Build ony when started as schedule on the mirte-robot org.
+	# This should not build on a schedule on forks.
+        if: github.repository_owner == 'mirte-robot' || github.event_name != 'schedule'
         uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
