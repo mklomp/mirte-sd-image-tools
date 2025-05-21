@@ -24,13 +24,29 @@ permissions:
     contents: write
   
 jobs:
-#    shellcheck:
-#        uses: ./.github/workflows/shellcheck.yml
-#    shfmt:
-#        uses: ./.github/workflows/shfmt.yml
+    shellcheck:
+      name: Shellcheck
+      runs-on: ubuntu-22.04
+      steps:
+        - uses: actions/checkout@v4
+        - name: Run ShellCheck
+          uses: ludeeus/action-shellcheck@master
+          with:
+            severity: warning
+    shfmt:
+      runs-on: ubuntu-22.04
+      steps:
+        - uses: actions/checkout@v4
+        - name: Run the sh-checker
+          uses: luizm/action-sh-checker@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            sh_checker_shellcheck_disable: true
+            sh_checker_comment: true
     build_installer:
       runs-on: ubuntu-22.04-arm
-#      needs: [shellcheck, shfmt ]
+      needs: [shellcheck, shfmt ]
       steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v5
