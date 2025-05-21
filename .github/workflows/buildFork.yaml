@@ -27,7 +27,7 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
           with:
-             ref: ${{ inputs.branch }}"
+             ref: ${{ inputs.branch }}
         - name: check schedule
           id: schedulecheck
           run: |
@@ -103,6 +103,7 @@ jobs:
         uses: ./.github/workflows/build_single.yaml
         with:
           sbc: ${{ matrix.image }}
+          branch: ${{ input.branch }}
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x')}}
         secrets: inherit
     publish_rolling_release:
@@ -111,6 +112,8 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                 ref: ${{ input.branch }}
     master-build-and-push:
         needs: [shellcheck, shfmt, repocheck, schedulecheck]
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}
@@ -125,6 +128,7 @@ jobs:
         with:
           mirte_type: mirte-master
           sbc: mirte_orangepi3b
+          branch: ${{ input.branch }}
         secrets: inherit
     overlay-build-and-push:
         needs: [shellcheck, shfmt, repocheck, schedulecheck]
