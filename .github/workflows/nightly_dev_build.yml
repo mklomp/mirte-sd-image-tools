@@ -16,5 +16,8 @@ jobs:
             with:
               ref: develop
           - name: Build images 
-            run: echo "Running only on main branch"
+            run: |
+              echo "Running only on main branch"
+              ls
+              pwd
         
