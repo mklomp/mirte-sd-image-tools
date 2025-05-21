@@ -25,7 +25,6 @@ permissions:
   
 jobs:
     shellcheck:
-      name: Shellcheck
       runs-on: ubuntu-22.04
       steps:
         - uses: actions/checkout@v4
