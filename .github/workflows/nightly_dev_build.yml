@@ -9,7 +9,7 @@ on:
 jobs:
     nightly-build:
        if: (github.repository_owner == 'mirte-robot' || github.event_name != 'schedule')
-       uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@a1254863402f25eb4c3cab909a633c049dcb8a72
+       uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@c279e4c37c5fa7a1c3e3511cd9f029928104482e
        with:
          branch: "develop"
 
