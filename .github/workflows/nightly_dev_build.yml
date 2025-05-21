@@ -18,7 +18,7 @@ jobs:
           - name: Get info
             run: |
               echo "Running only on main branch"
-              ls
+              ls -la
               pwd
           - name: Build images 
             uses: ./.github/workflows/buildFork.yaml
