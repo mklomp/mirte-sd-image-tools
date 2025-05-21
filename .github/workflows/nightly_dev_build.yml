@@ -7,4 +7,4 @@ on:
     
 jobs:
     testing:
-      uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@c064cba59bdb2449178ea681ac1e8eee4657ad22
+      uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@33b261ed1cb36171e392a28a957d05464d3636e9
