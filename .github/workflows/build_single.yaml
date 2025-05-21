@@ -142,5 +142,6 @@ jobs:
         # download_artifacts: true
         mirte_type: ${{ inputs.mirte_type }}
         sbc: ${{ inputs.sbc }}
+        branch: ${{ inputs.branch }}
       secrets: inherit
               
