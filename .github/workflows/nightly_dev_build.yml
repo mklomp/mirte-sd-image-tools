@@ -21,4 +21,4 @@ jobs:
               ls
               pwd
           - name: Build images 
-            uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
+            uses: ./.github/workflows/buildFork.yaml
