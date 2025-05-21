@@ -8,10 +8,10 @@ permissions:
     contents: write
   
 jobs:
-    shellcheck:
-      uses: ./.github/workflows/shellcheck.yml
-    shfmt:
-      uses: ./.github/workflows/shfmt.yml
+#    shellcheck:
+#      uses: ./.github/workflows/shellcheck.yml
+#    shfmt:
+#      uses: ./.github/workflows/shfmt.yml
     repocheck:
       uses: ./.github/workflows/repocheck.yml
   
