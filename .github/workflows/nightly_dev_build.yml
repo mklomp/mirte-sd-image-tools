@@ -2,9 +2,25 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '0 2 * * *'
+      - cron: '0 2 * * *' # Will only run on main
     workflow_dispatch:
     
 jobs:
-    testing:
-      uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
+    checkout-dev:
+        # Only checkout development branch if on main
+        # Otherwise, just use the branch that this workflow is in
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout development branch
+              uses: actions/checkout@v4
+              with:
+	             ref: develop
+    build-images:
+        build-images:
+        # Build the images based on the latest development branch. Build
+        # when dispached (on all forks), but also as schedule on mirte-robot.
+        if: >
+            github.repository_owner == 'mirte-robot' || 
+            github.event_name != 'schedule'
+        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@e72d96450aa76e57917731ff5ca38f298e0779f4
