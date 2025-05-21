@@ -15,9 +15,9 @@ jobs:
             - name: Checkout development branch
               uses: actions/checkout@v4
               with:
-	             ref: develop
+	        ref: develop
+	 
     build-images:
-        build-images:
         # Build the images based on the latest development branch. Build
         # when dispached (on all forks), but also as schedule on mirte-robot.
         if: >
