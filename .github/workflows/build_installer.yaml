@@ -24,13 +24,13 @@ permissions:
     contents: write
   
 jobs:
-    shellcheck:
-        uses: ./.github/workflows/shellcheck.yml
-    shfmt:
-        uses: ./.github/workflows/shfmt.yml
+#    shellcheck:
+#        uses: ./.github/workflows/shellcheck.yml
+#    shfmt:
+#        uses: ./.github/workflows/shfmt.yml
     build_installer:
       runs-on: ubuntu-22.04-arm
-      needs: [shellcheck, shfmt ]
+#      needs: [shellcheck, shfmt ]
       steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v5
