@@ -1,11 +1,5 @@
 name: Build and Upload
 
-on:
-    push:
-    workflow_dispatch:
-    workflow_call:
-    schedule:
-      - cron: '20 3 * * *' # 
 permissions:
     contents: write
     actions: write
