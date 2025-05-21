@@ -8,17 +8,7 @@ on:
     
 jobs:
     nightly-build:
-        runs-on: ubuntu-22.04
-        steps:
-          - uses: actions/checkout@v4
-            name: Checkout develop branch
-            if: github.ref == 'refs/heads/main'
-            with:
-              ref: develop
-          - name: Get info
-            run: |
-              echo "Running only on main branch"
-              ls -la .github/workflows/
-              pwd
-          - name: Build images 
-            uses: ./.github/workflows/buildFork.yaml
+       uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@5b6243fb49bdf83857a815acb46376213abd7563
+       with:
+         branch: "develop"
+
