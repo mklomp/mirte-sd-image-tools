@@ -15,9 +15,10 @@ jobs:
             if: github.ref == 'refs/heads/main'
             with:
               ref: develop
-          - name: Build images 
+          - name: Get info
             run: |
               echo "Running only on main branch"
               ls
               pwd
-        
+          - name: Build images 
+            uses: ./.github/workflows/buildFork.yaml
