@@ -13,13 +13,7 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
           with:
-             ref: ${{ inputs.branch }}
-        - name: Check repo
-          run: |
-               echo "checing out ${{ inputs.branch }}"
-               ls -la
-               pwd
-               git branch
+             ref: develop
         - name: check schedule
           id: schedulecheck
           run: |
