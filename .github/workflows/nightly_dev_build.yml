@@ -54,8 +54,8 @@ jobs:
                 exit 78  # Neutral exit
             fi
     nightly-build:
-       needs: schedulecheck
-       if: check-if-build-needed.outputs.run_build == 'true'
+       needs: check-if-build-needed
+       if: needs.check-if-build-needed.outputs.should_build == 'true'
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
