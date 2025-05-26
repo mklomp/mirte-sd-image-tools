@@ -7,23 +7,18 @@ on:
     
 jobs:
     check-if-build-needed:
+      if: github.event_name == 'schedule'
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
       steps:
-        - name: Check run type
-          # This can not be done by using 'if' for this job since
-          # the nighly-build job needs this job as input.
-          run: |
-            if [[ ${{ github.event_name }} != 'schedule' ]]; then
-                echo "Scheduled workflow, continue."
-                exit 0 # continue to nightly-build job
-            fi            
         - name: Checkout repository
+          #if: github.event_name == 'schedule'
           uses: actions/checkout@v4
           with:
              ref: develop
         - name: Check repo updates
+          #if: github.event_name == 'schedule'
           id: check
           run: |
             sudo apt update
