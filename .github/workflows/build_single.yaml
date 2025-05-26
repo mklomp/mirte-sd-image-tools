@@ -87,7 +87,7 @@ jobs:
                     ./packerInstall.sh
             - name: setup build files
               run: |
-                  if [[ "${{ inputs.branch }}" != "develop" ]]; then
+                  if [[ "${{ inputs.branch }}" == "develop" ]]; then
                     cp develop_repos.yaml default_repos.yaml
                     echo "Using develop_repos.yaml"
                   fi
