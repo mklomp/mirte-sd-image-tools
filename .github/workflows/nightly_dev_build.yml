@@ -64,7 +64,7 @@ jobs:
        if: >
           github.event_name != 'schedule' ||
           needs.check-repo-changes.outputs.repo_changes == 'true'
-       uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@0a08a8f92bf8a441c5ec023b77f306736f698584
+       uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@b896a556c25e2dab90796493d6516c1a0a9fcde7
        with:
          branch: "develop"
 
