@@ -87,6 +87,10 @@ jobs:
                     ./packerInstall.sh
             - name: setup build files
               run: |
+                  if [[ "${{ inputs.branch }}" != "develop" ]]; then
+                    cp develop_repos.yaml default_repos.yaml
+                    echo "Using develop_repos.yaml"
+                  fi
                   echo -e "MIRTE_TYPE=${{ inputs.mirte_type }}" >> settings.sh
                   #   if [[ "${{ inputs.mirte_type }}" != "default" || "${{ inputs.sbc }}" != "orangepizero2" ]]; then
                   #     echo -e "ADD_OVERLAY_PARTITION=false" >> settings.sh
