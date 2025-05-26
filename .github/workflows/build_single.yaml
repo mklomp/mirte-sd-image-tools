@@ -15,6 +15,10 @@ on:
             required: false
             type: string
             default: orangepizero2
+        branch:
+            required: false
+            type: string
+            default: "main"
   workflow_dispatch:
     inputs:
         mirte_type:
@@ -58,6 +62,8 @@ jobs:
                 remove-swapfile: 'true'
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                ref: ${{ inputs.branch }}
             - name: Extract branch name
               shell: bash
               run: |
@@ -81,6 +87,10 @@ jobs:
                     ./packerInstall.sh
             - name: setup build files
               run: |
+                  if [[ "${{ inputs.branch }}" == "develop" ]]; then
+                    cp develop_repos.yaml repos.yaml
+                    echo "Using develop_repos.yaml"
+                  fi
                   echo -e "MIRTE_TYPE=${{ inputs.mirte_type }}" >> settings.sh
                   #   if [[ "${{ inputs.mirte_type }}" != "default" || "${{ inputs.sbc }}" != "orangepizero2" ]]; then
                   #     echo -e "ADD_OVERLAY_PARTITION=false" >> settings.sh
@@ -94,6 +104,7 @@ jobs:
             #     yq e -i '.repositories.mirte-telemetrix4arduino.version = "fix-intro-robotics"' repos.yaml
             - name: Build
               run: |
+                    cat repos.yaml
                     ./packerBuild.sh ${{ inputs.sbc }}
             - name: artifacts
               uses: actions/upload-artifact@v4
@@ -136,5 +147,6 @@ jobs:
         # download_artifacts: true
         mirte_type: ${{ inputs.mirte_type }}
         sbc: ${{ inputs.sbc }}
+        branch: ${{ inputs.branch }}
       secrets: inherit
               
