@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
     
 jobs:
-    check-if-build-needed:
+    check-repo-changes:
       # We can not use "if: github.event_name == 'schedule'" for this job
       # since the nighlt-build job needs it. So we have to set this "if"
       # for each individual step.
@@ -60,10 +60,10 @@ jobs:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
        # only be ran from our own organization.
-       needs: check-if-build-needed
+       needs: check-repo-changes
        if: >
           github.event_name != 'schedule' ||
-          needs.check-if-build-needed.outputs.repo_changes == 'true'
+          needs.check-repo-changes.outputs.repo_changes == 'true'
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
