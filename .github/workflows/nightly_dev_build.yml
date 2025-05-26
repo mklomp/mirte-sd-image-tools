@@ -56,7 +56,7 @@ jobs:
     nightly-build:
        needs: schedulecheck
        if: check-if-build-needed.outputs.run_build == 'true'
-       uses: .github/workflows/buildFork.yaml@develop
+       uses: ./.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
 
