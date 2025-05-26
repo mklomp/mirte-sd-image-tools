@@ -6,6 +6,11 @@ name: Build and Upload
 # runs installer build if mirte-master
 on:
   workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
+        default: main
   workflow_dispatch:
 
 permissions:
@@ -21,6 +26,8 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                ref: ${{ inputs.branch }}
             - name: Create overlay image
               run: |
                 sudo ./scripts/create_overlay.sh

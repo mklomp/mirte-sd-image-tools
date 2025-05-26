@@ -20,17 +20,16 @@ on:
                 required: false
                 type: string
                 default: orangepi3b
+            branch:
+                required: false
+                type: string
+                default: main
 permissions:
     contents: write
   
 jobs:
-    shellcheck:
-        uses: ./.github/workflows/shellcheck.yml
-    shfmt:
-        uses: ./.github/workflows/shfmt.yml
     build_installer:
       runs-on: ubuntu-22.04-arm
-      needs: [shellcheck, shfmt ]
       steps:
             - name: Maximize build space
               uses: AdityaGarg8/remove-unwanted-software@v5
@@ -47,6 +46,8 @@ jobs:
                 remove-swapfile: 'true'
             - name: Checkout repository
               uses: actions/checkout@v4
+              with:
+                 ref: ${{ inputs.branch }}
             - name: Extract branch name
               shell: bash
               run: |
