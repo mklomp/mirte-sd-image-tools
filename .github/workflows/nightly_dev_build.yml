@@ -7,12 +7,17 @@ on:
     
 jobs:
     check-if-build-needed:
-      # To test the logic of this job, comment the if statement below:
-      if: github.event_name == 'schedule'
       outputs:
-        should_build: ${{ steps.check.outputs.should_build }}
+        repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
       steps:
+        - name: Check run type
+          # This can not be done by using 'if' for this job since
+          # the nighly-build job needs this job as input.
+          run: |
+            if [[ ${{ github.event_name }} != 'schedule' ]]; then
+                exit 0 # continue to nightly-build job
+            fi            
         - name: Checkout repository
           uses: actions/checkout@v4
           with:
@@ -45,10 +50,10 @@ jobs:
             fi
             if [[ $CHANGES == true ]]; then
                 echo "There are changes in the last 24H, continue schedule!"
-                echo "should_build=true" >> $GITHUB_OUTPUT
+                echo "repo_changes=true" >> $GITHUB_OUTPUT
             else
                 echo "No changes in the last 24H"
-                echo "should_build=false" >> $GITHUB_OUTPUT
+                echo "repo_changes=false" >> $GITHUB_OUTPUT
                 exit 78  # Neutral exit
             fi
     nightly-build:
@@ -56,7 +61,7 @@ jobs:
        # when on our own repositories.
        needs: check-if-build-needed
        if: >
-          needs.check-if-build-needed.outputs.should_build == 'true' || 
+          needs.check-if-build-needed.outputs.repo_changes == 'true' || 
           (github.repository_owner == 'mirte-robot' && github.event_name != 'schedule')
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
