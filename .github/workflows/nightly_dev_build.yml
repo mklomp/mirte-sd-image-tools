@@ -2,7 +2,7 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '0 0 * * *' # Will only run on main branch
+      - cron: '0 0 * * *' # Scheduled workflows will only run on main branch
     workflow_dispatch:
     
 jobs:
@@ -10,17 +10,19 @@ jobs:
       # We can not use "if: github.event_name == 'schedule'" for this job
       # since the nighlt-build job needs it. So we have to set this "if"
       # for each individual step.
+      # NOTE: The scheduled nightly builds will only be build on our own 
+      # repository. 
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
       steps:
         - name: Checkout repository
-          if: github.event_name == 'schedule'
+          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
           uses: actions/checkout@v4
           with:
              ref: develop
         - name: Check repo updates
-          if: github.event_name == 'schedule'
+          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
           id: check
           run: |
             sudo apt update
@@ -55,12 +57,13 @@ jobs:
                 exit 78  # Neutral exit
             fi
     nightly-build:
-       # This build can be started manually. It will only start from a schedule
-       # when on our own repositories.
+       # This build can be started manually, or from schedule when the repo's 
+       # have changed in the past 24hrs. This schedule will, by default,
+       # only be ran from our own organization.
        needs: check-if-build-needed
        if: >
-          needs.check-if-build-needed.outputs.repo_changes == 'true' || 
-          (github.repository_owner == 'mirte-robot' && github.event_name != 'schedule')
+          github.event_name != 'schedule' ||
+          needs.check-if-build-needed.outputs.repo_changes == 'true'
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
