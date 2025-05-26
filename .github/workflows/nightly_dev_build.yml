@@ -7,18 +7,20 @@ on:
     
 jobs:
     check-if-build-needed:
-      if: github.event_name == 'schedule'
+      # We can not use "if: github.event_name == 'schedule'" for this job
+      # since the nighlt-build job needs it. So we have to set this "if"
+      # for each individual step.
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
       steps:
         - name: Checkout repository
-          #if: github.event_name == 'schedule'
+          if: github.event_name == 'schedule'
           uses: actions/checkout@v4
           with:
              ref: develop
         - name: Check repo updates
-          #if: github.event_name == 'schedule'
+          if: github.event_name == 'schedule'
           id: check
           run: |
             sudo apt update
