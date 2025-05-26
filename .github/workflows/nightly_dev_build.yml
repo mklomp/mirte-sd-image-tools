@@ -15,7 +15,8 @@ jobs:
           # This can not be done by using 'if' for this job since
           # the nighly-build job needs this job as input.
           run: |
-            if [[ ! ${{ github.event_name }} == 'schedule' ]]; then
+            if [[ ${{ github.event_name }} != 'schedule' ]]; then
+                echo "Scheduled workflow, continue."
                 exit 0 # continue to nightly-build job
             fi            
         - name: Checkout repository
