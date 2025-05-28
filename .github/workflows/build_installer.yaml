@@ -6,10 +6,6 @@ name: Build and Upload installer
 on:
    workflow_call:
         inputs:
-            download_artifacts:
-                required: false
-                type: boolean
-                default: true
             mirte_type:
                 required: false
                 type: string
@@ -54,13 +50,6 @@ jobs:
                 echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
                 echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
               id: extract_branch
-            - name: download artifacts
-              if: ${{ !inputs.download_artifacts }}
-              run: |
-                mkdir build
-                cd build
-                wget https://mirte.arend-jan.com/files/${{ steps.extract_branch.outputs.branch }}_image/mirte_orangepi3b.img.xz
-                cd ..
             - name: download from current build (default)
               uses: actions/download-artifact@v4
               if: ${{ inputs.download_artifacts && inputs.mirte_type == 'default'}}
@@ -112,9 +101,3 @@ jobs:
               with:
                 path: build/*installer*.img.xz
                 name: mirte_installer_orangepi3b
-    # upload_installer:
-    #         needs: [build_installer]
-    #         uses: ./.github/workflows/upload.yaml
-    #         with:
-    #             name: "installer"
-    #         secrets: inherit

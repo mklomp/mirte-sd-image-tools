@@ -38,14 +38,6 @@ jobs:
           branch: ${{ inputs.branch }}
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x')}}
         secrets: inherit
-    publish_rolling_release:
-        needs: [build-and-push]
-        runs-on: ubuntu-22.04-arm
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                 ref: ${{ inputs.branch }}
     master-build-and-push:
         needs: [shellcheck, shfmt, repocheck]
         if:  ${{ ! startsWith(github.event.head_commit.message, 'x') }}

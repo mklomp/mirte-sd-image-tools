@@ -129,15 +129,6 @@ jobs:
             #       name: "Rolling release for ${{ steps.extract_branch.outputs.artifact_name }} ${{ steps.extract_branch.outputs.NOW }}"
             #       tag_name: "rolling"
 
-    # Only if mirte-master
-    upload_private_server:
-      if: ${{ github.event_name == 'schedule' }}
-      needs: [build-and-push]
-      uses: ./.github/workflows/upload.yaml
-      with:
-        name: 'image'
-      secrets: inherit
-
     build_installer_all:
       # TODO: Add a flag for building installers, based on some configuration
       if: ${{ endsWith(inputs.sbc, 'orangepi3b') }}
