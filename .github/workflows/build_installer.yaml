@@ -52,13 +52,13 @@ jobs:
               id: extract_branch
             - name: download from current build (default)
               uses: actions/download-artifact@v4
-              if: ${{ inputs.download_artifacts && inputs.mirte_type == 'default'}}
+              if: ${{ inputs.mirte_type == 'default'}}
               with:
                 path: build
                 name: ${{ inputs.sbc }}
             - name: download from current build ()
               uses: actions/download-artifact@v4
-              if: ${{ inputs.download_artifacts && inputs.mirte_type != 'default' }}
+              if: ${{ inputs.mirte_type != 'default' }}
               with:
                 path: build
                 # FIXME: Currently hardcoded for the mirte-master
