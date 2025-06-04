@@ -5,6 +5,7 @@ on:
     inputs:
       original_run_id:
         description: "Run ID to rerun"
+        type: string
         required: true
 
 jobs:
