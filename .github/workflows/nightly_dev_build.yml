@@ -4,6 +4,11 @@ on:
     schedule:
       - cron: '0 0 * * *' # Scheduled workflows will only run on main branch
     workflow_dispatch:
+        inputs:
+          rerun_id:
+            description: "Rerun ID to remove"
+            type: number
+            required: false
 permissions:
     contents: write
     actions: write
@@ -66,6 +71,13 @@ jobs:
             #    echo "No changes in the last 24H"
             #    echo "repo_changes=false" >> $GITHUB_OUTPUT
             #fi
+    remove-rerun:
+      if: github.run_attempt == 2
+      runs-on: ubuntu-22.04-arm
+      steps:
+        - name: Remove rerun
+          run: |
+            gh 
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
