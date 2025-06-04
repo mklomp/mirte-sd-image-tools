@@ -12,6 +12,9 @@ jobs:
   rerun:
     runs-on: ubuntu-latest
     steps:
+      - name: Echo inputs
+        run: |
+          echo "Original run ID: ${{ github.event.inputs.original_run_id }}"
       - name: Rerun the original workflow
         run: |
           gh run rerun ${{ github.event.inputs.original_run_id }}
