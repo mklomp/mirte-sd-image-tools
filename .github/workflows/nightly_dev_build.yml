@@ -55,7 +55,7 @@ jobs:
             else
                 echo "No changes in the last 24H"
                 echo "repo_changes=false" >> $GITHUB_OUTPUT
-                exit 78  # Neutral exit
+                #exit 78  # Neutral exit
             fi
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
