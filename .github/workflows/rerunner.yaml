@@ -1,0 +1,18 @@
+name: Rerunner
+
+on:
+  workflow_dispatch:
+    inputs:
+      original_run_id:
+        description: "Run ID to rerun"
+        required: true
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rerun the original workflow
+        run: |
+          gh run rerun ${{ github.event.inputs.original_run_id }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
