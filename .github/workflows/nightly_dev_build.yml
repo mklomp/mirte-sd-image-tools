@@ -66,12 +66,6 @@ jobs:
             #    echo "No changes in the last 24H"
             #    echo "repo_changes=false" >> $GITHUB_OUTPUT
             #fi
-    rerun:
-       needs: check-repo-changes
-       if: needs.check-repo-changes.outputs.repo_changes == 'false'
-       uses: ./.github/workflows/rerunner.yaml
-       with:
-          original_run_id: "${{ github.run_id }}"
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
