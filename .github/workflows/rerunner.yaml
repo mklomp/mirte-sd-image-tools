@@ -12,6 +12,10 @@ jobs:
   rerun:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: develop
       - name: Echo inputs
         run: |
           echo "Original run ID: ${{ github.event.inputs.original_run_id }}"
