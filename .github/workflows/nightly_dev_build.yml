@@ -63,7 +63,7 @@ jobs:
        # only be ran from our own organization.
        needs: check-repo-changes
        if: >
-          github.event_name != 'schedule' ||
+        #  github.event_name != 'schedule' ||
           needs.check-repo-changes.outputs.repo_changes == 'true'
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
