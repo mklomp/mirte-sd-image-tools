@@ -62,9 +62,9 @@ jobs:
        # have changed in the past 24hrs. This schedule will, by default,
        # only be ran from our own organization.
        needs: check-repo-changes
-       if: >
+       if: needs.check-repo-changes.outputs.repo_changes == 'true'
         #  github.event_name != 'schedule' ||
-          needs.check-repo-changes.outputs.repo_changes == 'true'
+        #  needs.check-repo-changes.outputs.repo_changes == 'true'
        uses: mklomp/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
