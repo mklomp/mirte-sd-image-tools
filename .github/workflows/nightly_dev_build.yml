@@ -62,7 +62,7 @@ jobs:
                 #exit 78  # Neutral exit
             fi
         - name: cancelling
-          if: steps.check.outputs.repo_changes == false
+          if: steps.check.outputs.repo_changes == 'false'
           uses: actions/github-script@v7
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
