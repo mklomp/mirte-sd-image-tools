@@ -20,6 +20,8 @@ jobs:
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout repository
           #if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
@@ -58,16 +60,9 @@ jobs:
                 echo "There are changes in the last 24H, continue schedule!"
                 echo "repo_changes=true" >> $GITHUB_OUTPUT
             else
-                echo "No changes in the last 24H"
-                echo "repo_changes=false" >> $GITHUB_OUTPUT
-                #exit 78  # Neutral exit
+                # This will rerun this workflow, and it will skipp all jobs
+                gh run rerun ${{ github.run_id }}
             fi
-        - name: Rename workflow
-          if: steps.check.outputs.repo_changes == 'false'
-          run: |
-               gh run edit ${{ github.run_id }} --name "Custom name based on ${{ github.ref }}"
-          env:
-               GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
