@@ -33,7 +33,8 @@ jobs:
           id: check
           continue-on-error: true
           run: |
-            echo "repo_changes=false" >> $GITHUB_OUTPUT
+            gh workflow run rerunner.yaml --ref main --field original_run_id=${{ github.run_id }}
+            #echo "repo_changes=false" >> $GITHUB_OUTPUT
             #sudo apt update
             #curl -s https://packagecloud.io/install/repositories/dirk-thomas/vcstool/script.deb.sh | sudo bash
             #sudo apt-get update
