@@ -11,21 +11,6 @@ permissions:
     repository-projects: write
     pull-requests: write
 jobs:
-    remove-previous-reruns:
-      if: github.run_attempt == 1
-      runs-on: ubuntu-latest
-      permissions:
-        actions: write
-        contents: read
-      steps:
-        - name: Delete workflow runs
-          uses: Mattraks/delete-workflow-runs@v2
-          with:
-            token: ${{ github.token }}
-            repository: ${{ github.repository }}
-            delete_workflow_pattern: "Rerunner"
-            keep_minimum_runs: 0
-            retain_days: 0
     check-repo-changes:
       # We can not use "if: github.event_name == 'schedule'" for this job
       # since the nighlt-build job needs it. So we have to set this "if"
