@@ -32,6 +32,8 @@ jobs:
           #if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
           id: check
           run: |
+            echo "repo_changes=false" >> $GITHUB_OUTPUT
+            exit 0
             sudo apt update
             curl -s https://packagecloud.io/install/repositories/dirk-thomas/vcstool/script.deb.sh | sudo bash
             sudo apt-get update
