@@ -60,9 +60,14 @@ jobs:
                 echo "There are changes in the last 24H, continue schedule!"
                 echo "repo_changes=true" >> $GITHUB_OUTPUT
             else
-                # This will rerun this workflow, and it will skipp all jobs
-                gh run rerun ${{ github.run_id }}
+                echo "No changes in the last 24H"
+                echo "repo_changes=false" >> $GITHUB_OUTPUT
             fi
+    rerun:
+       if: needs.check-repo-changes.outputs.repo_changes == 'false'
+       uses: ./.github/workflows/rerunner.yaml
+       with:
+          original_run_id: ${{ github.run_id }}
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
