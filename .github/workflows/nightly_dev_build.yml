@@ -31,6 +31,7 @@ jobs:
         - name: Check repo updates
           #if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
           id: check
+          continue-on-error: true
           run: |
             echo "repo_changes=false" >> $GITHUB_OUTPUT
             exit 0
