@@ -16,6 +16,7 @@ jobs:
       # for each individual step.
       # NOTE: The scheduled nightly builds will only be build on our own
       # repository.
+      if: github.run_attempt == 2
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04-arm
