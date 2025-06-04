@@ -70,7 +70,7 @@ jobs:
        if: needs.check-repo-changes.outputs.repo_changes == 'false'
        uses: ./.github/workflows/rerunner.yaml
        with:
-          original_run_id: ${{ github.run_id }}
+          original_run_id: "${{ github.run_id }}"
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
