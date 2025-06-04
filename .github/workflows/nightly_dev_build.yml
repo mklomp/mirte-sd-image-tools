@@ -25,6 +25,7 @@ jobs:
             repository: ${{ github.repository }}
             delete_workflow_pattern: "Rerunner"
             keep_minimum_runs: 0
+            retain_days: 0
     check-repo-changes:
       # We can not use "if: github.event_name == 'schedule'" for this job
       # since the nighlt-build job needs it. So we have to set this "if"
