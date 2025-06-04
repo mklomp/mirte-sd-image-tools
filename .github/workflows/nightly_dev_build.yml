@@ -77,7 +77,7 @@ jobs:
       steps:
         - name: Remove rerun
           run: |
-            gh 
+            gh run delete ${{ github.event.inputs.original_run_id }}
     nightly-build:
        # This build can be started manually, or from schedule when the repo's 
        # have changed in the past 24hrs. This schedule will, by default,
