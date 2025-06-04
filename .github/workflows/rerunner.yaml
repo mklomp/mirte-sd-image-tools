@@ -1,7 +1,7 @@
 name: Rerunner
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       original_run_id:
         description: "Run ID to rerun"
