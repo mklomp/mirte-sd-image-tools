@@ -2,7 +2,7 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '10 18 * * *' # Scheduled workflows will only run on main branch
+      - cron: '10 20 * * *' # Scheduled workflows will only run on main branch
     workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
       # for each individual step.
       # NOTE: The scheduled nightly builds will only be build on our own
       # repository.
-      if: github.run_attempt == null || github.run_attempt <= 1
+      if: github.event_name == 'schedule' || github.run_attempt == null || github.run_attempt <= 1
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-latest
