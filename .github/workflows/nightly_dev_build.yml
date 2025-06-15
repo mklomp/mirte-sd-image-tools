@@ -2,7 +2,7 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '0 11 * * *' # Scheduled workflows will only run on main branch
+      - cron: '0 0 * * *' # Scheduled workflows will only run on main branch
     workflow_dispatch:
 
 permissions:
