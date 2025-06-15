@@ -2,7 +2,7 @@ name: Nightly Development Build
 
 on:
     schedule:
-      - cron: '0 0 * * *' # Scheduled workflows will only run on main branch
+      - cron: '0 6 * * *' # Scheduled workflows will only run on main branch
     workflow_dispatch:
 
 permissions:
@@ -25,12 +25,12 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout repository
-          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
+          if: github.event_name == 'schedule' && github.repository_owner == 'mklomp'
           uses: actions/checkout@v4
           with:
              ref: develop
         - name: Check repo updates
-          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
+          if: github.event_name == 'schedule' && github.repository_owner == 'mklomp'
           id: check
           continue-on-error: true
           run: |
