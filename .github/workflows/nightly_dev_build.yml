@@ -17,7 +17,7 @@ jobs:
       # for each individual step.
       # NOTE: The scheduled nightly builds will only be build on our own
       # repository.
-      if: github.run_attempt == null || github.run_attempt <= 1
+      if: github.triggering_actor != 'github-actions[bot]'
       outputs:
         repo_changes: ${{ steps.check.outputs.repo_changes }}
       runs-on: ubuntu-22.04
@@ -25,12 +25,14 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout repository
-          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
+          if: github.event_name != 'schedule'
+              || (github.event_name == 'schedule' && github.repository_owner == 'mirte-robot')
           uses: actions/checkout@v4
           with:
              ref: develop
         - name: Check repo updates
-          if: github.event_name == 'schedule' && github.repository_owner == 'mirte-robot'
+          if: github.event_name != 'schedule'
+              || (github.event_name == 'schedule' && github.repository_owner == 'mirte-robot')
           id: check
           continue-on-error: true
           run: |
@@ -72,8 +74,8 @@ jobs:
        # only be ran from our own organization.
        needs: check-repo-changes
        if: >
-          github.event_name != 'schedule' ||
-          needs.check-repo-changes.outputs.repo_changes == 'true'
+           needs.check-repo-changes.outputs.repo_changes == 'true'
+           || (github.event_name == 'schedule' && github.repository_owner == 'mirte-robot')
        uses: mirte-robot/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
