@@ -75,7 +75,7 @@ jobs:
        needs: check-repo-changes
        if: >
            needs.check-repo-changes.outputs.repo_changes == 'true'
-           || (github.event_name == 'schedule' && github.repository_owner == 'mirte-robot')
+           || github.event_name != 'schedule'
        uses: mirte-robot/mirte-sd-image-tools/.github/workflows/buildFork.yaml@develop
        with:
          branch: "develop"
